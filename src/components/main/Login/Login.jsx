@@ -45,24 +45,24 @@ export const Login = () => {
 
   return (
     <main>
-      <article className="login">
-        <div className="login__container">
-          <form className="login__form" method="POST">
-            <div className="login__form-container">
-              <div className="login__inputs-container">
-                <Input className="login__email form-input" placaholder="Enter your email" name="email" onChange={onChangeInfo} />
-                <Input className="login__password form-input" type="password" placaholder="Enter your password" name="password" onChange={onChangeInfo} />
-                <Button className="login__submit form-button" type="submit" onClick={login} text="Login" />
+      <article className="form">
+        <div className="form__container">
+          <form className="form__form" method="POST">
+            <div className="form__form-container">
+              <div className="form__inputs-container login">
+                <Input className="form__email form-input" placaholder="Enter your email" name="email" onChange={onChangeInfo} />
+                <Input className="form__password form-input" type="password" placaholder="Enter your password" name="password" onChange={onChangeInfo} />
+                <Button className="form__submit form-button button" type="submit" onClick={login} text="Login" />
               </div>
-              <div className="login__error">
+              <div className="form__error">
                 {emailError && 
-                  <p className="login__email-error error">Wrong email or password!</p>
+                  <p className="form__email-error error">Wrong email or password!</p>
                 }
               </div>
-              <div className="login__regirect">
-                <p className="login__redirect-text">
+              <div className="form__regirect">
+                <p className="form__redirect-text">
                   If you don`t have an account you can{' '}
-                  <Link className='login__link' to='/register'>
+                  <Link className='form__link' to='/register'>
                     Register
                   </Link>
                 </p>

@@ -40,11 +40,12 @@
 
   &__info {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__header-info {
-    padding: 20px 0;
+    padding: 20px 0 60px;
     width: 70%;
     display: flex;
     justify-content: space-between;
@@ -57,4 +58,38 @@
     align-items: center;
   }
 
+  &__fullname {
+    text-align: center;
+  }
+
+  &__contacts {
+    width: 70%;
+  }
+
+  &__contacts-heading {
+    text-align: center;
+  }
+
+  &__email-container {
+    text-align: right;
+  }
+
+  &__email-phone {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+  }
+
+  &__button-group {
+    display: flex;
+    justify-content: space-around;
+    width: 70%;
+  }
+
+}
+
+.fio {
+  font-size: 1.2em;
+  font-weight: 600;
+  word-spacing: 10px;
 }

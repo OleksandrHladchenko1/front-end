@@ -1,4 +1,5 @@
 import React from 'react';
+import { noop } from 'lodash';
 
 import PropTypes from 'prop-types';
 
@@ -11,8 +12,11 @@ export const Button = ({ text, type, className, onClick }) => {
 };
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  text: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.element.isRequired,
+  ]),
+  onClick: PropTypes.func,
   className: PropTypes.string.isRequired,
   type: PropTypes.string,
 
@@ -20,4 +24,5 @@ Button.propTypes = {
 
 Button.defaultProps = {
   type: 'button',
+  onClick: noop,
 };

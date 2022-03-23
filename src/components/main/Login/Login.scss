@@ -1,31 +1,3 @@
-.login {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(#127199, #123d99);
-
-  &__container {
-    background: #fff;
-    padding: 20px;
-  }
-
-  &__form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 500px;
-  }
-
-  &__inputs-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 50%;
-  }
-
-  &__inputs-container {
-    display: flex;
-    flex-direction: column;
-  }
+.login.login {
+  height: 50%;
 }

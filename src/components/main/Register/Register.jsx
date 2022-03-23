@@ -79,33 +79,33 @@ export const Register = () => {
 
   return (
     <main>
-      <article className="register">
-        <div className="register__container">
-          <form className="register__form" method="POST">
-            <div className="register__form-container">
-              <div className="register__inputs-container">
-                <Input className="register__email form-input" placaholder="Enter your email" name="email" onChange={onChangeInfo} />
+      <article className="form">
+        <div className="form__container">
+          <form className="form__form" method="POST">
+            <div className="form__form-container">
+              <div className="form__inputs-container">
+                <Input className="form__email form-input" placaholder="Enter your email" name="email" onChange={onChangeInfo} />
                 {errors.email.error &&
-                  <p className="register__email-error error">{errors.email.message}</p>
+                  <p className="form__email-error error">{errors.email.message}</p>
                 }
-                <Input className="register__first-name form-input" placaholder="Enter your firstname" name="firstName" onChange={onChangeInfo} />
+                <Input className="form__first-name form-input" placaholder="Enter your firstname" name="firstName" onChange={onChangeInfo} />
                 {errors.firstName.error &&
-                  <p className="register__first-name-error error">{errors.firstName.message}</p>
+                  <p className="form__first-name-error error">{errors.firstName.message}</p>
                 }
-                <Input className="register__phone-number form-input" placaholder="Enter your phone number" name="phoneNumber" onChange={onChangeInfo} />
+                <Input className="form__phone-number form-input" placaholder="Enter your phone number" name="phoneNumber" onChange={onChangeInfo} />
                 {errors.phoneNumber.error &&
-                  <p className="register__phone-number-error error">{errors.phoneNumber.message}</p>
+                  <p className="form__phone-number-error error">{errors.phoneNumber.message}</p>
                 }
-                <Input className="register__password form-input" type="password" placaholder="Enter your password" name="password" onChange={onChangeInfo} />
+                <Input className="form__password form-input" type="password" placaholder="Enter your password" name="password" onChange={onChangeInfo} />
                 {errors.password.error &&
-                  <p className="register__password-error error">{errors.password.message}</p>
+                  <p className="form__password-error error">{errors.password.message}</p>
                 }
-                <Button className="register__submit form-button" type="submit" onClick={register} text="Register" />
+                <Button className="form__submit form-button button" type="submit" onClick={register} text="Register" />
               </div>
-              <div className="register__regirect">
-                <p className="register__redirect-text">
+              <div className="form__regirect">
+                <p className="form__redirect-text">
                   If you don`t have an account you can{' '}
-                  <Link className='register__link' to='/login'>
+                  <Link className='form__link' to='/login'>
                     Login
                   </Link>
                 </p>

@@ -18,17 +18,9 @@
 
 .form-button {
   background: linear-gradient(#127199, #123d99);
-  color: #fff;
-  height: 50px;
-  font-size: 1.1em;
-  padding: 0 7px;
-  outline: none;
-  border: none;
 
   &:hover {
     background: linear-gradient(#1d72ab, #1744a6);
-    transform: scale(1.01);
-    transition: .2s;
     box-shadow: 3px 3px 3px #29648c;
   }
 }
@@ -37,4 +29,31 @@
   display: flex;
   justify-content: center;
   color: #a6241f;
+}
+
+.form {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(#127199, #123d99);
+
+  &__container {
+    background: #fff;
+    padding: 20px;
+  }
+
+  &__form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 500px;
+  }
+
+  &__inputs-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 90%;
+  }
 }
