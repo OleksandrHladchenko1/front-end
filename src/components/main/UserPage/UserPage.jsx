@@ -39,13 +39,13 @@ export class UserPage extends Component {
     } = this.state.user;
 
     const changePasswordButton = (
-      <Link className='user__change-password success button' to='/changePassword'>
+      <Link className='user__change-password link' to='/changePassword'>
         Change Password
       </Link>
     );
 
     const addCarButton = (
-      <Link className='user__change-password success button' to='/changePassword'>
+      <Link className='user__change-password link' to='/changePassword'>
         Add car
       </Link>
     );

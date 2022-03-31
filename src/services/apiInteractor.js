@@ -66,7 +66,6 @@ export class APIInteractor {
 			}).then((data) => data.data.visits);
 			return result;
 		} catch (err) {
-			console.log(err);
 			throw err.response.data.message;
 		}
 	};

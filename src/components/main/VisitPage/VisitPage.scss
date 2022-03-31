@@ -8,7 +8,7 @@
 
   &__my {
     width: 500px;
-    height: 400px;
+    height: 440px;
     padding: 20px;
     background-color: #fff;
   }
@@ -36,8 +36,34 @@
   &__results-container {
     margin: 0 auto;
   }
+
+  &__add-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 13px;
+  }
+
+  &__add-button {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+  }
 }
 
 .active {
   background: rgb(226, 221, 221);
+}
+
+.new-visit {
+  height: 500px;
+  width: 400px;
+  background: #fff;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+
+  &__heading {
+    text-align: center;
+  }
 }

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Button } from "../../common/Button";
 import { SearchResultList } from "../../common/SearchResultList/SearchResultList";
+import { Modal } from "../../common/Modal";
+import { Close } from "../../common/Close";
 
 import { APIInteractor } from "../../../services";
 import { removeClassName, upperFirstLetter, getLastElement } from "../../../services/utils";
@@ -16,6 +18,7 @@ export class VisitPage extends Component {
       status: 'Planned',
       visits: [],
       filterVisits: [],
+      isModalOpen: false,
     }
 
     this.apiInteractor = new APIInteractor();
@@ -60,19 +63,35 @@ export class VisitPage extends Component {
     console.log('details');
   }
 
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+  }
+
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  }
+
   render() {
     const filterVisits = <SearchResultList result={this.state.filterVisits} onClick={this.showDetails} />
-    /* const filteredVisits = this.state.filterVisits.map((visit) => {
-      return (
-        <div key={visit.id}>
-          <span>{visit.id_user}</span>
-          <span>{visit.dateOfVisit}</span>
-        </div>
-      )
-    }); */
 
     return (
       <main>
+        <Modal isModalOpen={this.state.isModalOpen}>
+          <form className="new-visit">
+            <div className="new-visit__heading-container">
+              <div className="new-visit__heading">
+                <h2 className="new-visit-title">Create new visit</h2>
+              </div>
+            </div>
+            <div className="new-visit__inputs-container">
+
+            </div>
+            <div className="new-visit__button-container">
+
+            </div>
+            <Close onClick={this.closeModal}/>
+          </form>
+        </Modal>
         <article className="visits">
           <div className="visits__my">
             <div className="visits__filter-container">
@@ -102,6 +121,13 @@ export class VisitPage extends Component {
             </div>
             <div className="visits__results-container">
               {filterVisits}
+            </div>
+            <div className="visits__add-container">
+              <Button
+                text="Create visit"
+                onClick={this.openModal}
+                className="visits__add-button button success"
+              />
             </div>
           </div>
         </article>
