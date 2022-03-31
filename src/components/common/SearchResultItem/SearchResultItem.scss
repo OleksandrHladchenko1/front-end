@@ -1,0 +1,41 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+
+  &:hover {
+    background-color: rgb(211, 216, 215);
+  }
+
+  & > * {
+    padding: 0 10px;
+  }
+
+  &__date {
+    width: 180px;
+  }
+
+  &__details-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+
+    &:hover:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 70%;
+      height: 1px;
+      background: blue;
+    }
+  }
+}
+
+.even {
+  background-color: rgb(214, 232, 245);
+}
+
+.odd {
+  background-color: rgb(225, 228, 231);
+}

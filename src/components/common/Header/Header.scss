@@ -1,0 +1,41 @@
+.header {
+  height: 60px;
+  background: #000;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+  }
+
+  &__logo-container {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 0 3px;
+    /* justify-content: space-between;
+    width: 200px; */
+  }
+
+  &__link-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__link {
+    padding-left: 20px;
+  }
+
+  &__user-page,
+  &__logout,
+  &__visits {
+    color: #fff;
+
+    &:hover {
+      border-bottom: 2px solid #fff;
+      transform: scale(2);
+      transition: .2s;
+    }
+  }
+}

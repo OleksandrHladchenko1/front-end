@@ -13,33 +13,40 @@ export const Input = ({
   name,
   value,
   pattern,
+  label,
 }) => {
   return (
-    <input
-      type={type} 
-      name={name}
-      placeholder={placaholder}
-      className={className}
-      onChange={onChange}
-      value={value}
-      pattern={pattern}
-    />
+    <div className='input-container'>
+      <label className='input-label' htmlFor={name}>{label}</label>
+      <input
+        type={type} 
+        name={name}
+        placeholder={placaholder}
+        className={`input-text ${className}`}
+        onChange={onChange}
+        value={value}
+        pattern={pattern}
+      />
+    </div>
   );
 };
 
 Input.propTypes = {
   className: PropTypes.string,
-  placaholder: PropTypes.string.isRequired,
+  placaholder: PropTypes.string,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
   pattern: PropTypes.string,
+  label: PropTypes.string,
 };
 
 Input.defaultProps = {
+  placaholder: ' ',
   type: 'text',
   onChange: noop,
   value: undefined,
   pattern: null,
+  label: '',
 };

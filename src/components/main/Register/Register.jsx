@@ -82,21 +82,46 @@ export const Register = () => {
       <article className="form">
         <div className="form__container">
           <form className="form__form" method="POST">
-            <div className="form__form-container">
+            <div className="form__form-container" id="register">
               <div className="form__inputs-container">
-                <Input className="form__email form-input" placaholder="Enter your email" name="email" onChange={onChangeInfo} />
+                <Input
+                  className="form__email form-input"
+                  placaholder="Enter your email"
+                  name="email"
+                  onChange={onChangeInfo}
+                  label="Email"
+                />
                 {errors.email.error &&
                   <p className="form__email-error error">{errors.email.message}</p>
                 }
-                <Input className="form__first-name form-input" placaholder="Enter your firstname" name="firstName" onChange={onChangeInfo} />
+                <Input
+                  className="form__first-name form-input"
+                  placaholder="Enter your firstname"
+                  name="firstName"
+                  onChange={onChangeInfo}
+                  label="First Name"
+                />
                 {errors.firstName.error &&
                   <p className="form__first-name-error error">{errors.firstName.message}</p>
                 }
-                <Input className="form__phone-number form-input" placaholder="Enter your phone number" name="phoneNumber" onChange={onChangeInfo} />
+                <Input
+                  className="form__phone-number form-input"
+                  placaholder="Enter your phone number"
+                  name="phoneNumber"
+                  onChange={onChangeInfo}
+                  label="Phone Number"
+                />
                 {errors.phoneNumber.error &&
                   <p className="form__phone-number-error error">{errors.phoneNumber.message}</p>
                 }
-                <Input className="form__password form-input" type="password" placaholder="Enter your password" name="password" onChange={onChangeInfo} />
+                <Input
+                  className="form__password form-input"
+                  type="password"
+                  placaholder="Enter your password"
+                  name="password"
+                  onChange={onChangeInfo}
+                  label="Password"  
+                />
                 {errors.password.error &&
                   <p className="form__password-error error">{errors.password.message}</p>
                 }

@@ -1,9 +1,10 @@
 .user {
+  background: linear-gradient(#127199, #123d99);
+  height: 91.6vh;
 
   &__background {
     position: relative;
     height: 200px;
-    background: linear-gradient(#127199, #123d99);
   }
 
   &__image-container {
@@ -37,11 +38,18 @@
     height: 205px;
     border-radius: 50%;
   }
+  &__info-container {
+    display: flex;
+    justify-content: center;
+  }
 
   &__info {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #fff;
+    width: 85%;
+    padding-bottom: 115px;
   }
 
   &__header-info {

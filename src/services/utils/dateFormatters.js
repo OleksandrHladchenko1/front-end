@@ -1,6 +1,6 @@
 import { months } from "./constants";
 
-export const formatBirthday = (date) => {
+export const formatDate = (date) => {
   if(!date) return;
   const shortDate = date.substr(0, 10);
   const year = shortDate.substr(0, 4);
@@ -11,9 +11,16 @@ export const formatBirthday = (date) => {
   return `${month} ${day}, ${year}`;
 };
 
+export const formatTime = (date) => {
+  const hour = date.substring(11, 13);
+  const minute = date.substring(14, 16);
+
+  return `${hour}:${minute}`;
+};
+
 export const findMonth = (index) => {
   const updatedIndex = transformMonthIndex(index);
-  return months.find((el, i) => i.toString() === updatedIndex);
+  return months.find((el, i) => i === parseInt(updatedIndex) - 1);
 };
 
 export const transformMonthIndex = (index) => {

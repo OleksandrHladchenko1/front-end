@@ -6,9 +6,16 @@ import { Input } from "../../common/Input";
 import { APIInteractor } from "../../../services";
 
 import './ChangePassword.scss';
+import { validatePassword } from "../../../services/utils";
+import { useNavigate } from "react-router";
 
 export const ChangePassword = () => {
+  const navigate = useNavigate();
   const apiInteractor = new APIInteractor();
+  const [errors, setErrors] = useState({
+    isError: false,
+    message: ''
+  });
   const [passwordInfo, setPasswordInfo] = useState({
     oldPassword: '',
     newPassword1: '',
@@ -16,18 +23,35 @@ export const ChangePassword = () => {
   });
 
   useEffect(() => {
-    console.log(passwordInfo);
+    console.log(errors);
   });
 
   const onChangeInfo = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setPasswordInfo({ ...passwordInfo, [name]: value });
+    setErrors({ ...errors, isError: false, message: '' });
   };
 
-  const changePassword = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
-    apiInteractor.changePassword({ ...passwordInfo, email: localStorage.getItem('email') });
+    if(validatePassword(passwordInfo.newPassword1) && validatePassword(passwordInfo.newPassword2)) {
+      await apiInteractor.changePassword({ ...passwordInfo, email: localStorage.getItem('email') })
+      .then(() => navigate('/userPage'))
+      .catch((data) => {
+        setErrors({
+          ...errors,
+          isError: true,
+          message: data,
+        });
+      });
+    } else {
+      setErrors({
+        ...errors,
+        isError: true,
+        message: 'Empty password or shorter than 6 symbols',
+      });
+    }
   }
 
   return (
@@ -63,6 +87,9 @@ export const ChangePassword = () => {
                 onClick={changePassword}
                 text="Change Password"
               />
+              {
+                errors.isError && <p className="form__error error">{errors.message}</p>
+              }
             </div>
           </form>
         </div>

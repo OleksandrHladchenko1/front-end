@@ -51,9 +51,23 @@ export class APIInteractor {
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: passwords,
 			});
-			console.log(result);
+			return result;
 		} catch (err) {
-			console.log(err.response);
+			throw err.response.data.message;
+		}
+	};
+
+	getUserVisits = async (body) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/userVisits/allUserVisits/${body.userId}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			}).then((data) => data.data.visits);
+			return result;
+		} catch (err) {
+			console.log(err);
+			throw err.response.data.message;
 		}
 	};
 };

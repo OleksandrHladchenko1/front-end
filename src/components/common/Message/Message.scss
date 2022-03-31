@@ -1,0 +1,62 @@
+.toast {
+  font-size: 0.875rem;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(0.25rem);
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075);
+  opacity: 0;
+  position: absolute;
+  top: 90%;
+  left: 65%;
+  overflow: hidden;
+  width: 350px;
+}
+
+.toast_default {
+  color: #212529;
+  background-color: #fff;
+}
+.toast_sucess {
+  background-color: #37c255;
+  color: #fff;
+}
+.toast_error {
+  background-color: rgb(180, 39, 39);
+  color: #fff;
+}
+
+.toast:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.toast__close {
+  content: "X";
+  position: absolute;
+  color: #fff;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 0.875em;
+  height: 0.875em;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/0.875em auto no-repeat;
+  border: 0;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.toast__close:hover {
+  opacity: 1;
+}
+
+.toast__body {
+  padding: 1rem;
+}
+
+.toast_message .toast__body {
+  padding-right: 2.25rem;
+}
+
+.toast_show {
+  transition: opacity 2s;
+  opacity: 1;
+}

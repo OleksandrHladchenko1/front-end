@@ -50,8 +50,20 @@ export const Login = () => {
           <form className="form__form" method="POST">
             <div className="form__form-container">
               <div className="form__inputs-container login">
-                <Input className="form__email form-input" placaholder="Enter your email" name="email" onChange={onChangeInfo} />
-                <Input className="form__password form-input" type="password" placaholder="Enter your password" name="password" onChange={onChangeInfo} />
+                <Input
+                  className="form__email form-input"
+                  placaholder="Enter your email"
+                  name="email" onChange={onChangeInfo}
+                  label="Email"
+                />
+                <Input
+                  className="form__password form-input"
+                  type="password"
+                  placaholder="Enter your password"
+                  name="password"
+                  onChange={onChangeInfo}
+                  label="Password"
+                />
                 <Button className="form__submit form-button button" type="submit" onClick={login} text="Login" />
               </div>
               <div className="form__error">
