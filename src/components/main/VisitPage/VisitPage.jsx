@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 import { Button } from "../../common/Button";
+import { NewVisit } from '../../common/NewVisit';
 import { SearchResultList } from "../../common/SearchResultList/SearchResultList";
 import { Modal } from "../../common/Modal";
-import { Close } from "../../common/Close";
 
 import { APIInteractor } from "../../../services";
 import { removeClassName, upperFirstLetter, getLastElement } from "../../../services/utils";
@@ -71,26 +71,20 @@ export class VisitPage extends Component {
     this.setState({ isModalOpen: false });
   }
 
+  onSubmit = () => {
+    this.getUserVisits().then((result) => {
+      this.setState({ visits: [...result] });
+      this.updateFilters();
+    });
+  }
+
   render() {
     const filterVisits = <SearchResultList result={this.state.filterVisits} onClick={this.showDetails} />
 
     return (
       <main>
         <Modal isModalOpen={this.state.isModalOpen}>
-          <form className="new-visit">
-            <div className="new-visit__heading-container">
-              <div className="new-visit__heading">
-                <h2 className="new-visit-title">Create new visit</h2>
-              </div>
-            </div>
-            <div className="new-visit__inputs-container">
-
-            </div>
-            <div className="new-visit__button-container">
-
-            </div>
-            <Close onClick={this.closeModal}/>
-          </form>
+          <NewVisit onClose={this.closeModal} onSubmit={this.onSubmit} />
         </Modal>
         <article className="visits">
           <div className="visits__my">

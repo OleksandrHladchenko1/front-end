@@ -62,21 +62,21 @@ export const ChangePassword = () => {
             <div className="form__inputs-container">
               <Input
                 className="form__old-password form-input"
-                placaholder="Enter old password"
+                placeholder="Enter old password"
                 name="oldPassword"
                 onChange={onChangeInfo}
                 type="password"
               />
               <Input
                 className="form__new-password1 form-input"
-                placaholder="Enter new password"
+                placeholder="Enter new password"
                 name="newPassword1"
                 onChange={onChangeInfo}
                 type="password"
               />
               <Input
                 className="form__new-password2 form-input"
-                placaholder="Repeat new password"
+                placeholder="Repeat new password"
                 name="newPassword2"
                 onChange={onChangeInfo}
                 type="password"

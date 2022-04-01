@@ -7,7 +7,7 @@ import './Input.scss';
 
 export const Input = ({
   type,
-  placaholder,
+  placeholder,
   className,
   onChange,
   name,
@@ -21,7 +21,7 @@ export const Input = ({
       <input
         type={type} 
         name={name}
-        placeholder={placaholder}
+        placeholder={placeholder}
         className={`input-text ${className}`}
         onChange={onChange}
         value={value}
@@ -33,7 +33,7 @@ export const Input = ({
 
 Input.propTypes = {
   className: PropTypes.string,
-  placaholder: PropTypes.string,
+  placeholder: PropTypes.string,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   onChange: PropTypes.func,
@@ -43,7 +43,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  placaholder: ' ',
+  placeholder: ' ',
   type: 'text',
   onChange: noop,
   value: undefined,

@@ -52,14 +52,14 @@ export const Login = () => {
               <div className="form__inputs-container login">
                 <Input
                   className="form__email form-input"
-                  placaholder="Enter your email"
+                  placeholder="Enter your email"
                   name="email" onChange={onChangeInfo}
                   label="Email"
                 />
                 <Input
                   className="form__password form-input"
                   type="password"
-                  placaholder="Enter your password"
+                  placeholder="Enter your password"
                   name="password"
                   onChange={onChangeInfo}
                   label="Password"

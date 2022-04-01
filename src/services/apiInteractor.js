@@ -69,4 +69,19 @@ export class APIInteractor {
 			throw err.response.data.message;
 		}
 	};
+
+	createVisit = async (visit) => {
+		try {
+			const result = await axios({
+				method: 'post',
+				url: `http://localhost:8080/api/userVisits/addUserVisit/${localStorage.getItem('userId')}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: visit,
+			});
+			console.log(result);
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
 };

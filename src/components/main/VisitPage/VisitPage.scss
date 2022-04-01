@@ -54,16 +54,3 @@
 .active {
   background: rgb(226, 221, 221);
 }
-
-.new-visit {
-  height: 500px;
-  width: 400px;
-  background: #fff;
-  padding: 20px;
-  position: relative;
-  z-index: 2;
-
-  &__heading {
-    text-align: center;
-  }
-}

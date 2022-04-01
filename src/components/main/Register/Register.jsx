@@ -86,7 +86,7 @@ export const Register = () => {
               <div className="form__inputs-container">
                 <Input
                   className="form__email form-input"
-                  placaholder="Enter your email"
+                  placeholder="Enter your email"
                   name="email"
                   onChange={onChangeInfo}
                   label="Email"
@@ -96,7 +96,7 @@ export const Register = () => {
                 }
                 <Input
                   className="form__first-name form-input"
-                  placaholder="Enter your firstname"
+                  placeholder="Enter your firstname"
                   name="firstName"
                   onChange={onChangeInfo}
                   label="First Name"
@@ -106,7 +106,7 @@ export const Register = () => {
                 }
                 <Input
                   className="form__phone-number form-input"
-                  placaholder="Enter your phone number"
+                  placeholder="Enter your phone number"
                   name="phoneNumber"
                   onChange={onChangeInfo}
                   label="Phone Number"
@@ -117,7 +117,7 @@ export const Register = () => {
                 <Input
                   className="form__password form-input"
                   type="password"
-                  placaholder="Enter your password"
+                  placeholder="Enter your password"
                   name="password"
                   onChange={onChangeInfo}
                   label="Password"  

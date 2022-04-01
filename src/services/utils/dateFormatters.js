@@ -27,3 +27,32 @@ export const transformMonthIndex = (index) => {
   if(index[0] === '0') return index[1];
   return index;
 };
+
+export const formatVisitDate = (date) => {
+  console.log(date);
+  const year = date.substring(0, 4);
+  const month = date.substring(5, 7);
+  const day = date.substring(8, 10);
+  const hour = date.substring(11, 13);
+  const minute = date.substring(14, 16);
+
+  console.log(`${year}-${month}-${day} ${hour}:${minute}:00`);
+  return `${year}-${month}-${day} ${hour}:${minute}:00`;
+
+};
+
+export const validateWorkingDay = (data) => {
+  const date = new Date(data);
+  const dayIndex = date.getDay();
+  const result = dayIndex === 0 || dayIndex === 6 ? false : true;
+  return result;
+};
+
+export const validateWorkingHour = (data) => {
+  const date = new Date(data);
+  const hour = date.getHours();
+  const result = hour < 8 || hour > 18 ? false : true;
+  return result;
+};
+
+export const validateIsCorrectDate = (data) => new Date(data) > new Date();
