@@ -84,4 +84,18 @@ export class APIInteractor {
 			throw err.response.data.message;
 		}
 	};
+
+	updateUserInfo = async (user) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: 'http://localhost:8080/api/users/updateInfo',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: user,
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "../Button";
 import { Close } from "../Close";
@@ -7,7 +7,7 @@ import { Input } from "../Input";
 import { APIInteractor } from "../../../services";
 
 import './NewVisit.scss';
-import { validateField, validateIsCorrectDate, validateWorkingDay, validateWorkingHour } from "../../../services/utils";
+import { validateField, validateIsPastDate, validateWorkingDay, validateWorkingHour } from "../../../services/utils";
 
 export const NewVisit = ({ onClose, onSubmit }) => {
   const [error, setError] = useState({
@@ -32,7 +32,7 @@ export const NewVisit = ({ onClose, onSubmit }) => {
       setError({ isError: true, message: 'Please, fill date and time' });
       return false;
     }
-    if(!validateIsCorrectDate(visit.dateOfVisit)) {
+    if(!validateIsPastDate(visit.dateOfVisit)) {
       setError({ isError: true, message: 'Sorry, you chose wrong date :(' });
       return false;
     }
@@ -51,7 +51,6 @@ export const NewVisit = ({ onClose, onSubmit }) => {
   const createVisit = (e) => {
     e.preventDefault();
     if(validateVisitDate()) {
-      console.log('created');
       apiInteractor.createVisit(visit).then(() => {
         onClose();
         onSubmit();
@@ -74,6 +73,7 @@ export const NewVisit = ({ onClose, onSubmit }) => {
           onChange={onChangeInfo}
           name="dateOfVisit"
           label="Visit date"
+          required
         />
         <div className="new-visit__comment-container">
           <label htmlFor="comment">Comment</label>

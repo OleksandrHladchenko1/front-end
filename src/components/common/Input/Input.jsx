@@ -1,6 +1,8 @@
 import React from 'react';
 import { noop } from 'lodash';
 
+import { RequiredStar } from '../RequiredStar';
+
 import PropTypes from 'prop-types';
 
 import './Input.scss';
@@ -14,10 +16,11 @@ export const Input = ({
   value,
   pattern,
   label,
+  required,
 }) => {
   return (
     <div className='input-container'>
-      <label className='input-label' htmlFor={name}>{label}</label>
+      <label className='input-label' htmlFor={name}>{label}{required ? <RequiredStar /> : ''}</label>
       <input
         type={type} 
         name={name}
@@ -40,6 +43,7 @@ Input.propTypes = {
   value: PropTypes.string,
   pattern: PropTypes.string,
   label: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -49,4 +53,5 @@ Input.defaultProps = {
   value: undefined,
   pattern: null,
   label: '',
+  isRequired: false,
 };

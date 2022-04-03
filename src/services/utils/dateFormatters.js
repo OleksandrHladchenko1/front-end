@@ -4,7 +4,7 @@ export const formatDate = (date) => {
   if(!date) return;
   const shortDate = date.substr(0, 10);
   const year = shortDate.substr(0, 4);
-  const day = shortDate.substring(8, 10);
+  const day = parseInt(shortDate.substring(8, 10)) + 1;
   const monthIndex = shortDate.substring(5, 7); 
   const month = findMonth(monthIndex);
 
@@ -55,4 +55,13 @@ export const validateWorkingHour = (data) => {
   return result;
 };
 
-export const validateIsCorrectDate = (data) => new Date(data) > new Date();
+export const validateIsPastDate = (data) => new Date(data) > new Date();
+
+export const validateIsFutureDate = (data) => new Date(data) < new Date();
+
+export const formatForDatePickerValue = (data) => {
+  if(!data) return false;
+  const day = parseInt(data.substring(8, 10)) + 1;
+  const formatDate = day < 10 ? `0${day}` : day;
+  return `${data.substring(0, 8)}${formatDate}`;
+};

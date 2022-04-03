@@ -1,0 +1,48 @@
+.edit-user {
+  position: relative;
+  width: 750px;
+  height: 515px;
+  background: #fff;
+
+  &__heading {
+    text-align: center;
+    margin: 20px;
+    padding: 5px;
+  }
+
+  &__line {
+    background: red;
+    width: 90%;
+    height: 2px;
+    margin: 0 auto;
+    background: linear-gradient(to right, rgb(93, 0, 255), rgb(76, 208, 215));
+  }
+
+  &__inputs {
+    display: flex;
+    justify-content: space-between;
+    padding: 36px;
+  }
+
+  &__left {
+    width: 35%;
+
+    & > * {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__right {
+    width: 60%;
+
+    & > * {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__submit {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 36px;
+  }
+}

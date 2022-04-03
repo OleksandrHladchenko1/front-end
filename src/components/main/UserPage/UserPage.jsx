@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import { NoValue } from '../../common/NoValue';
 import { Button } from '../../common/Button';
+import { Modal } from '../../common/Modal';
+import { EditUserInfo } from "../../common/EditUserInfo";
 
 import { APIInteractor } from "../../../services";
 import { formatDate } from "../../../services/utils";
@@ -13,18 +15,41 @@ export class UserPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { user: {} }
+    this.state = {
+      user: {},
+      isModalOpen: false,
+    };
   }
 
   apiInteractor = new APIInteractor();
 
-  componentDidMount = async () => {
+  getUserById = async () => {
     const result = await this.apiInteractor.getUserById(localStorage.getItem('userId'));
-    this.setState({ user: result });
+    return result;
+  }
+
+  componentDidMount = async () => {
+    this.getUserById().then((result) => {
+      this.setState({ user: result });
+    });
   }
 
   addCarInfo() {
     console.log('a');
+  }
+
+  showEditModal = () => {
+    this.setState({ isModalOpen: true });
+  }
+
+  hideEditModal = () => {
+    this.setState({ isModalOpen: false });
+  }
+
+  onSubmitEditInfo = () => {
+    this.getUserById().then((result) => {
+      this.setState({ user: result })
+    });
   }
 
   render() {
@@ -52,6 +77,13 @@ export class UserPage extends Component {
 
     return (
       <main>
+        <Modal isModalOpen={this.state.isModalOpen}>
+          <EditUserInfo
+            onClose={this.hideEditModal}
+            user={this.state.user}
+            onSubmit={this.onSubmitEditInfo}
+          />
+        </Modal>
         <article className="user">
           <div className="user__background">
             <div className="user__image-container">
@@ -93,8 +125,20 @@ export class UserPage extends Component {
                 </div>
               </div>
               <div className="user__button-group">
-                <Button text={changePasswordButton} className="user__change-password success button" />
-                <Button text={addCarButton} onClick={this.addCarInfo} className="user__add-car success button" />
+                <Button
+                  text={changePasswordButton}
+                  className="user__change-password success button users-buttons"
+                />
+                <Button
+                  text={addCarButton}
+                  onClick={this.addCarInfo}
+                  className="user__add-car success button users-buttons"
+                />
+                <Button
+                  text="Edit information"
+                  onClick={this.showEditModal}
+                  className="user__add-car success button users-buttons"
+                />
               </div>
             </div>
           </div>
