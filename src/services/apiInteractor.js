@@ -1,4 +1,5 @@
 import axios from "axios";
+import { concatCarNumber } from "./utils";
 
 export class APIInteractor {
   login = async (user) => {
@@ -93,6 +94,26 @@ export class APIInteractor {
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: user,
 			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	createCar = async (car) => {
+		const number = concatCarNumber(car.carCode, car.carNumber, car.carSeries);
+		try {
+			const result = await axios({
+				method: 'post',
+				url: 'http://localhost:8080/api/userCars/addUserCar',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: {
+					...car,
+					number,
+					userId: localStorage.getItem('userId'),
+				},
+			});
+			console.log(result);
 			return result;
 		} catch (err) {
 			throw err.response.data.message;

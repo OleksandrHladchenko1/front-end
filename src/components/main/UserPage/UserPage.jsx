@@ -34,10 +34,6 @@ export class UserPage extends Component {
     });
   }
 
-  addCarInfo() {
-    console.log('a');
-  }
-
   showEditModal = () => {
     this.setState({ isModalOpen: true });
   }
@@ -70,7 +66,7 @@ export class UserPage extends Component {
     );
 
     const addCarButton = (
-      <Link className='user__change-password link' to='/changePassword'>
+      <Link className='user__change-password link' to='/car'>
         Add car
       </Link>
     );
@@ -131,7 +127,6 @@ export class UserPage extends Component {
                 />
                 <Button
                   text={addCarButton}
-                  onClick={this.addCarInfo}
                   className="user__add-car success button users-buttons"
                 />
                 <Button

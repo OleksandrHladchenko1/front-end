@@ -16,7 +16,7 @@ export const validatePassword = (value) => {
 }
 
 export const validateField = (value) => {
-  if(value.trim === '' || value.length <= 3) {
+  if(value.trim === '' || value.length < 2) {
     return false;
   }
   return true;
@@ -31,3 +31,16 @@ export const validatePhoneNumber = (value) => {
 
   return regExp.test(value);
 }
+
+export const validateYear = (year) => {
+  if(year.trim() === '' || isNaN(year)) {
+    return false;
+  }
+  const newYear = new Date().getFullYear();
+
+  return newYear >= year;
+};
+
+export const validateCarNumber = (number) => number.length === 4 && !isNaN(number);
+
+export const validateEngineNumber = (number) => number.length === 8 && !isNaN(number);

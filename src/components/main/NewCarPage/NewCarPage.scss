@@ -1,0 +1,41 @@
+.car {
+  height: 91.6vh;
+  padding: 30px 90px 0;
+  background: linear-gradient(#127199, #123d99);
+
+  &__container {
+    background: #fff;
+    padding: 20px;
+    position: relative;
+  }
+
+  &__heading {
+    text-align: center;
+  }
+
+  &__line {
+    width: 100%;
+    height: 2px;
+    margin: 0 auto;
+    background: linear-gradient(to right, rgb(93, 0, 255), rgb(76, 208, 215));
+  }
+
+  &__basic-info-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 15px;
+  }
+
+  &__submit {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+  }
+
+  &__error-text {
+    position: absolute;
+    bottom: 110px;
+    left: 70%;
+  }
+}
