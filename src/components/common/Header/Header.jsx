@@ -33,7 +33,7 @@ export const Header = () => {
                 </Link>
               </li>
               <li className="header__link">
-                <Link className="header__logout" to="/login" onClick={logout}>
+                <Link className="header__logout" to="/" onClick={logout}>
                   Logout
                 </Link>
               </li>

@@ -3,6 +3,7 @@ import { concatCarNumber } from "./utils";
 
 export class APIInteractor {
   login = async (user) => {
+		console.log(user);
     try {
 			const result = await axios({
 				method: 'post',
@@ -35,6 +36,25 @@ export class APIInteractor {
 				url: `http://localhost:8080/api/users/me/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
+			if(result.status === 200) {
+				localStorage.setItem('email', result.data.user.email);
+				return result.data.user;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	getWorkerById = async (id) => {
+		console.log('inside');
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/workers/getWorkerById/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+
+			console.log(result);
 			if(result.status === 200) {
 				localStorage.setItem('email', result.data.user.email);
 				return result.data.user;
