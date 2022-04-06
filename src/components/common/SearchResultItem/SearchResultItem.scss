@@ -1,6 +1,6 @@
 .item {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 2fr 2fr 1fr;
   padding: 5px;
 
   &:hover {
@@ -11,31 +11,10 @@
     padding: 0 10px;
   }
 
-  &__date {
-    width: 200px;
-  }
-
   &__details-button {
     background: transparent;
     border: none;
     cursor: pointer;
     position: relative;
-
-    &:hover:before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      width: 70%;
-      height: 1px;
-      background: blue;
-    }
   }
-}
-
-.even {
-  background-color: rgb(214, 232, 245);
-}
-
-.odd {
-  background-color: rgb(225, 228, 231);
 }

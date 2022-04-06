@@ -194,3 +194,9 @@ export const carEngineTypes = [
   'Електродвигун',
   'Гібрид',
 ];
+
+export const visitStatuses = [
+  'Planned',
+  'In Progress',
+  'Closed',
+];

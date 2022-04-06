@@ -29,14 +29,12 @@ export const transformMonthIndex = (index) => {
 };
 
 export const formatVisitDate = (date) => {
-  console.log(date);
   const year = date.substring(0, 4);
   const month = date.substring(5, 7);
   const day = date.substring(8, 10);
   const hour = date.substring(11, 13);
   const minute = date.substring(14, 16);
 
-  console.log(`${year}-${month}-${day} ${hour}:${minute}:00`);
   return `${year}-${month}-${day} ${hour}:${minute}:00`;
 
 };

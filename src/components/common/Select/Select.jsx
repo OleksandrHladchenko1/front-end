@@ -14,7 +14,9 @@ export const Select = ({
 }) => {
   return (
     <div className="input-container">
-      <label className="input-label" htmlFor={name}>{label}{required ? <RequiredStar /> : ''}</label>
+      { label && 
+        <label className="input-label" htmlFor={name}>{label}{required ? <RequiredStar /> : ''}</label>
+      }
       <select className={className} name={name} onChange={onChange}>
         <option className="disabled" selected disabled hidden>Choose here</option>
         {

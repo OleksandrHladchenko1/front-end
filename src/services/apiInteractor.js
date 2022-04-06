@@ -78,6 +78,20 @@ export class APIInteractor {
 		}
 	};
 
+	getAllVisits = async () => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/api/userVisits/allUserVisits',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			}).then((data) => data.data.visits);
+			console.log(result);
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+
 	getUserVisits = async (body) => {
 		try {
 			const result = await axios({
@@ -100,6 +114,32 @@ export class APIInteractor {
 				data: visit,
 			});
 			console.log(result);
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	getVisitById = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/userVisits/getVisitById/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	getIssuesByVisitId = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/issue/getIssuesByVisitId/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
 			return result;
 		} catch (err) {
 			throw err.response.data.message;

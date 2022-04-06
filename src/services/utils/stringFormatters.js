@@ -7,3 +7,5 @@ export const concatCarNumber = (
   number,
   series,
 ) => `${code} ${number} ${series}`;
+
+export const concatFullName = (firstName, lastName, fatherName) => `${firstName} ${lastName} ${fatherName}`;

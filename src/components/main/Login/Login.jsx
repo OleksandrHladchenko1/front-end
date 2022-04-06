@@ -42,11 +42,7 @@ export const Login = () => {
       apiInteractor.login({ ...userInfo, startStatus }).then(result => {
         setItemToLS('token', result.token);
         setItemToLS('userId', result.user.idUser);
-        if(startStatus === 'User') {
-          navigate('/userPage');
-        } else {
-          console.log('worker');
-        }
+        startStatus === 'User' ? navigate('/userPage') : navigate('/visits');
       });
     } else {
       setEmailError(true);

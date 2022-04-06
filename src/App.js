@@ -7,6 +7,7 @@ import { Register } from './components/main/Register';
 import { UserPage } from './components/main/UserPage/UserPage';
 import { ChangePassword } from './components/main/ChangePassword';
 import { VisitPage } from './components/main/VisitPage';
+import { VisitDetails } from './components/main/VisitDetails';
 import { NewCarPage } from './components/main/NewCarPage';
 import { Header } from './components/common/Header';
 
@@ -21,6 +22,7 @@ const App = () => {
       <Route path='/userPage' element={[<Header key="header"/>, <UserPage key="userPage"/>]} />
       <Route path='/changePassword' element={[<Header key="header"/>, <ChangePassword key="changePassword"/>]} />
       <Route path='/visits' element={[<Header key="header" />, <VisitPage key="visitPage" /> ]} />
+      <Route path='/visits/:id' element={[<Header key="header" />, <VisitDetails key="visitPage" />]} />
       <Route path='/car' element={[<Header key="header" />, <NewCarPage key="newCarPage" /> ]} />
     </Routes>
   );

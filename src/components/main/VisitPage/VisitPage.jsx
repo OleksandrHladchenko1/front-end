@@ -6,7 +6,7 @@ import { SearchResultList } from "../../common/SearchResultList/SearchResultList
 import { Modal } from "../../common/Modal";
 
 import { APIInteractor } from "../../../services";
-import { removeClassName, upperFirstLetter, getLastElement } from "../../../services/utils";
+import { removeClassName, upperFirstLetter, getLastElement, } from "../../../services/utils";
 
 import './VisitPage.scss';
 
@@ -20,7 +20,8 @@ export class VisitPage extends Component {
       filterVisits: [],
       isModalOpen: false,
     }
-
+    
+    this.startStatus = localStorage.getItem('startStatus');
     this.apiInteractor = new APIInteractor();
   }
 
@@ -34,9 +35,14 @@ export class VisitPage extends Component {
   }
 
   getUserVisits = async () => {
-    const result = await this.apiInteractor.getUserVisits({
+    let result;
+
+    result = this.startStatus === 'User' ? 
+    await this.apiInteractor.getUserVisits({
       userId: localStorage.getItem('userId'),
-    });
+    }) :
+    await this.apiInteractor.getAllVisits();
+    
     return result;
   }
 
@@ -59,8 +65,9 @@ export class VisitPage extends Component {
     e.target.classList.toggle('active');
   }
 
-  showDetails = () => {
-    console.log('details');
+  showDetails = (id) => {
+    localStorage.setItem('visitId', id);
+    document.location.pathname = `/visits/${id}`;
   }
 
   openModal = () => {
@@ -116,39 +123,18 @@ export class VisitPage extends Component {
             <div className="visits__results-container">
               {filterVisits}
             </div>
-            <div className="visits__add-container">
-              <Button
-                text="Create visit"
-                onClick={this.openModal}
-                className="visits__add-button button success"
-              />
-            </div>
+            { this.startStatus === 'User' &&
+              <div className="visits__add-container">
+                <Button
+                  text="Create visit"
+                  onClick={this.openModal}
+                  className="visits__add-button button success"
+                />
+              </div>
+            }
           </div>
         </article>
       </main>
     );
   }
 };
-
-/* export const VisitPage = () => {
-  const apiInteractor = new APIInteractor();
-  const [status, setStatus] = useState('Planned');
-  const [visits, setVisits] = useState([]);
-
-  const getData = () => {
-    apiInteractor.getUserVisits({ status, userId: localStorage.getItem('userId') }).then((data) => {
-      setVisits(data);
-    });
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const filterVisits = (e) => {
-    removeClassName('.active', 'active');
-    setStatus(upperFirstLetter(getLastElement(e.target.classList)));
-    e.target.classList.toggle('active');
-    getData();
-  };
-}; */
