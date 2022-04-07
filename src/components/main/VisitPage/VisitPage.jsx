@@ -65,8 +65,9 @@ export class VisitPage extends Component {
     e.target.classList.toggle('active');
   }
 
-  showDetails = (id) => {
+  showDetails = (id, status) => {
     localStorage.setItem('visitId', id);
+    localStorage.setItem('visitStatus', status);
     document.location.pathname = `/visits/${id}`;
   }
 

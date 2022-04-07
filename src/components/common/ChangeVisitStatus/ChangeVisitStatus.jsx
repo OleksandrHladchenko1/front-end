@@ -15,7 +15,7 @@ export const ChangeVisitStatus = ({ currentStatus = '', onChange }) => {
   const filterStatuses = visitStatuses.filter((status) => status !== currentStatus);
 
   useEffect(() => {
-    console.log(status);
+    //console.log(status);
   });
 
   const editLogo = (

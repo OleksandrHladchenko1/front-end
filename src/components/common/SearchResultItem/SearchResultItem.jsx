@@ -11,7 +11,6 @@ export const SearchResultItem = ({ item, onClick, sequence }) => {
   const getClassName = () => {
     return `item ${sequence % 2 === 0 ? 'even' : 'odd'}`;
   };
-
   return (
     <div className={getClassName()}>
       { item.dateOfVisit && (
@@ -23,7 +22,7 @@ export const SearchResultItem = ({ item, onClick, sequence }) => {
           <h5 className="item__phoneNumber">{item.comment || <NoValue />}</h5>
         </>
       )}
-      <Button text="Details" onClick={() => onClick(item.id)} className="item__details-button" />
+      <Button text="Details" onClick={() => onClick(item.id, item.status)} className="item__details-button" />
     </div>
   );
 }

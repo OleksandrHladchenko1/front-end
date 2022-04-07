@@ -2,12 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 91.6vh;
+  height: 150vh;
   background: linear-gradient(#127199, #123d99);
 
   &__container {
     width: 800px;
-    height: 600px;
+    height: 1000px;
     padding: 20px;
     background: #fff;
   }
@@ -33,6 +33,10 @@
   &__left,
   &__right {
     width: 50%;
+  }
+
+  &__change-please {
+    text-align: center;
   }
 }
 

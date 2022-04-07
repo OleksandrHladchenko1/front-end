@@ -200,3 +200,20 @@ export const visitStatuses = [
   'In Progress',
   'Closed',
 ];
+
+export const newIssueShape = {
+  description: '',
+  startTime: '',
+  endTime: '',
+  experience: '',
+  fatherName: '',
+  firstName: '',
+  lastName: '',
+  isBusy: '',
+  price: '',
+  specialistId: '',
+  specialityId: '',
+  phoneNumber: '',
+  speciality: '',
+  workerId: '',
+};

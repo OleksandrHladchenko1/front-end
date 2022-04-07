@@ -46,7 +46,6 @@ export class APIInteractor {
 	};
 
 	getWorkerById = async (id) => {
-		console.log('inside');
 		try {
 			const result = await axios({
 				method: 'get',
@@ -54,11 +53,24 @@ export class APIInteractor {
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 
-			console.log(result);
 			if(result.status === 200) {
 				localStorage.setItem('email', result.data.user.email);
 				return result.data.user;
 			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	getFullFreeWorkersInfo = async () => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/api/workers/getFullFreeWorkerInfo',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			console.log(result.data.workers);
+		  return result.data.workers;
 		} catch (err) {
 			console.log(err);
 		}
@@ -133,11 +145,11 @@ export class APIInteractor {
 		}
 	};
 
-	getIssuesByVisitId = async (id) => {
+	getIssuesByVisitId = async (id, status) => {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/issue/getIssuesByVisitId/${id}`,
+				url: `http://localhost:8080/api/issue/getIssuesByVisitId/${id}/${status}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
