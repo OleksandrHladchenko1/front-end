@@ -8,6 +8,7 @@ import { concatFullName, formatDate, formatTime } from "../../../services/utils"
 import plus from '../../../assets/plus.svg';
 
 import './VisitDetails.scss';
+import { Button } from "../../common/Button";
 
 export class VisitDetails extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ export class VisitDetails extends Component {
       user: {},
       visit: {},
       issues: [],
+      workers: [],
+      isNewVisitVisible: true,
     };
 
     this.apiInteractor = new APIInteractor();
@@ -53,15 +56,11 @@ export class VisitDetails extends Component {
     return Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
       this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), localStorage.getItem('visitStatus')),
+      this.apiInteractor.getFullFreeWorkersInfo(),
     ]);
   }
 
-  componentDidUpdate = () => {
-    console.log(this.state.issues);
-  }
-
-  componentDidMount = async () => {
-    //this.apiInteractor.getFullFreeWorkersInfo();
+  getDataAfterUpdate = async () => {
     if(localStorage.getItem('visitStatus') === 'Planned') {
       this.getDataForPlannedVisit().then((data) => {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
@@ -72,12 +71,18 @@ export class VisitDetails extends Component {
         this.setState({
           ...this.state,
           issues: [...data[1].data.issues],
-        })
+          workers: [...data[2]],
+        });
       });
     }
   }
 
+  componentDidMount = async () => {
+    this.getDataAfterUpdate();
+  }
+
   changeVisitStatus = (status) => {
+    this.apiInteractor.changeVisitStatus(localStorage.getItem('visitId'), status);
     this.setState((prevState) => {
       return {
         ...prevState,
@@ -86,12 +91,38 @@ export class VisitDetails extends Component {
     });
   }
 
+  showNewIssue = () => {
+    this.setState({ isNewVisitVisible: true })
+  }
+
   submitCreateIssue = (issue) => {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        issues: [...prevState.issues, issue],
-      };
+    console.log(issue);
+    const specialist = {
+      isBusy: 'Yes',
+      startTime: issue.startTime,
+      endTime: issue.endTime,
+      id: issue.specialistId,
+    };
+    const newIssue = {
+      visitId: localStorage.getItem('visitId'),
+      specialistId: issue.specialistId,
+      description: issue.description,
+      startTime: issue.startTime,
+      endTime: issue.endTime,
+      price: issue.price,
+    };
+    console.log(newIssue)
+    this.apiInteractor.addIssue(newIssue).then(() => {
+      this.apiInteractor.editSpecialistInfo(specialist).then(() => {
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            issues: [...prevState.issues, issue],
+            isNewVisitVisible: false,
+          };
+        });
+        this.getDataAfterUpdate();
+      });
     });
   }
 
@@ -106,6 +137,7 @@ export class VisitDetails extends Component {
       dateOfVisit,
       status,
     } = this.state.visit
+
     return (
       <main>
         <article className="visit-detail">
@@ -166,8 +198,15 @@ export class VisitDetails extends Component {
             }
             { status === "In Progress" &&
               <>
+                { !this.state.isNewVisitVisible &&
+                  <Button
+                    text={this.addLogo}
+                    className="visit-detail__show-new-issue"
+                    onClick={this.showNewIssue}
+                  />
+                }
                 <div className="visit-detail__add-issue">
-                  <NewVisitEdit onSubmit={this.submitCreateIssue} />
+                  <NewVisitEdit workers={this.state.workers} visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
                 </div>
                 {!!this.state.issues.length  &&
                   <div className="visit-detail__issues-info">{JSON.stringify(this.state.issues)}</div> 

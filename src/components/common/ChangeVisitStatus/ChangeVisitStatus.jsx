@@ -10,12 +10,12 @@ import './ChangeVisitStatus.scss';
 
 export const ChangeVisitStatus = ({ currentStatus = '', onChange }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [status, setStatus] = useState(currentStatus);
+  const [status, setStatus] = useState(localStorage.getItem('visitStatus'));
 
-  const filterStatuses = visitStatuses.filter((status) => status !== currentStatus);
+  const filterStatuses = visitStatuses.filter((visitStatus) => visitStatus !== status);
 
   useEffect(() => {
-    //console.log(status);
+    console.log(status);
   });
 
   const editLogo = (

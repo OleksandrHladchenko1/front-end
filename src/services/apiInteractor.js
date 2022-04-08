@@ -3,7 +3,6 @@ import { concatCarNumber } from "./utils";
 
 export class APIInteractor {
   login = async (user) => {
-		console.log(user);
     try {
 			const result = await axios({
 				method: 'post',
@@ -69,7 +68,6 @@ export class APIInteractor {
 				url: 'http://localhost:8080/api/workers/getFullFreeWorkerInfo',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
-			console.log(result.data.workers);
 		  return result.data.workers;
 		} catch (err) {
 			console.log(err);
@@ -97,7 +95,6 @@ export class APIInteractor {
 				url: 'http://localhost:8080/api/userVisits/allUserVisits',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			}).then((data) => data.data.visits);
-			console.log(result);
 			return result;
 		} catch (err) {
 			throw err.response.data.message;
@@ -125,7 +122,6 @@ export class APIInteractor {
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: visit,
 			});
-			console.log(result);
 			return result;
 		} catch (err) {
 			throw err.response.data.message;
@@ -151,6 +147,20 @@ export class APIInteractor {
 				method: 'get',
 				url: `http://localhost:8080/api/issue/getIssuesByVisitId/${id}/${status}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	addIssue = async (issue) => {
+		try {
+			const result = await axios({
+				method: 'post',
+				url: 'http://localhost:8080/api/issue/addIssue',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: issue,
 			});
 			return result;
 		} catch (err) {
@@ -184,6 +194,34 @@ export class APIInteractor {
 					number,
 					userId: localStorage.getItem('userId'),
 				},
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	changeVisitStatus = async (id, status) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/userVisits/updateVisitStatus/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: { status },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	editSpecialistInfo = async (specialist) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: 'http://localhost:8080/api/specialist/editSpecialist',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: specialist,
 			});
 			console.log(result);
 			return result;

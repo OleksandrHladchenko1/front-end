@@ -4,20 +4,16 @@ import { Input } from "../Input";
 import { Select } from "../Select";
 import { Button } from "../Button";
 
-import { APIInteractor } from "../../../services";
-import { newIssueShape } from "../../../services/utils";
+import { concatFullName, newIssueShape } from "../../../services/utils";
 
 import './NewVisitEdit.scss';
 
-export const NewVisitEdit = ({ onSubmit }) => {
-  const apiInteractor = new APIInteractor();
-  const [freeWorkers, setFreeWorkers] = useState([]);
+export const NewVisitEdit = ({ workers, visible, onSubmit }) => {
   const [newIssueInfo, setNewIssueInfo] = useState(newIssueShape);
-  useEffect(() => {
-    apiInteractor.getFullFreeWorkersInfo().then((data) => {
-      setFreeWorkers([...data]);
-    });
-  }, []);
+
+  /* useEffect(() => {
+    console.log(newIssueInfo);
+  }, [newIssueInfo]); */
 
   const onChangeInfo = (e) => {
     const name = e.target.name;
@@ -26,18 +22,24 @@ export const NewVisitEdit = ({ onSubmit }) => {
   };
 
   const onChangeWorker = (e) => {
-    const worker = freeWorkers.filter((worker) => worker.specialistId === parseInt(e.target.value))[0];
-    console.log(worker);
+    const worker = workers.filter((worker) => worker.specialistId === parseInt(e.target.value))[0];
     setNewIssueInfo({
       ...newIssueInfo,
       ...worker,
     });
   };
 
-  useEffect(() => {
-    console.log(newIssueInfo);
-  });
-  return (
+  const selectData = () => {
+    const dataForRender = workers.map((worker) => {
+      return {
+        value: worker.specialistId,
+        text: `${concatFullName(worker.firstName, worker.lastName, worker.fatherName)} (${worker.speciality})`,
+      };
+    });
+    return dataForRender;
+  };
+
+  return visible && (
     <div className="edit">
       <div className="edit__container">
         <div className="edit__issue-info">
@@ -81,7 +83,7 @@ export const NewVisitEdit = ({ onSubmit }) => {
             name="workers"
             label="Workers"
             className="edit__worker-select"
-            options={freeWorkers}
+            options={selectData()}
             onChange={onChangeWorker}
             required
           />
@@ -92,14 +94,11 @@ export const NewVisitEdit = ({ onSubmit }) => {
             onClick={() => {
               onSubmit(newIssueInfo);
               setNewIssueInfo(newIssueShape);
-              apiInteractor.getFullFreeWorkersInfo().then((data) => {
-                setFreeWorkers([...data]);
-              });
             }}
             className="edit__submit-button button success"
           />
         </div>
       </div>
-    </div>
+    </div>    
   );
 };

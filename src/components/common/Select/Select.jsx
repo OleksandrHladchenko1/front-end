@@ -12,7 +12,6 @@ export const Select = ({
   className,
   onChange,
 }) => {
-  console.log('rerender');
   return (
     <div className="input-container">
       { label && 
@@ -21,7 +20,7 @@ export const Select = ({
       <select className={className} name={name} onChange={onChange}>
         <option className="disabled" selected disabled hidden>Choose here</option>
         {
-          options.map((option, i) => <option key={`${option?.specialistId}-${i}`} value={option.specialistId || option.code || option}>{option.firstName || option.region || option}</option>)
+          options.map((option, i) => <option key={`${option.value}-${i}`} value={option.value}>{option.text}</option>)
         }
       </select>
     </div>
