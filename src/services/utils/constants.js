@@ -33,172 +33,600 @@ export const months = [
 ];
 
 export const carcasTypes = [
-  'Sedan',
-  'SUV',
-  'Compact',
-  'Wagon',
-  'Coupe',
-  'Van',
-  'Hatchback',
-  'Pickup',
-  'Sport coupe',
+  {
+    value: 'Sedan',
+    text: 'Sedan'
+  },
+  {
+    value: 'SUV',
+    text: 'SUV',
+  },
+  {
+    value: 'Compact',
+    text: 'Compact',
+  },
+  {
+    value: 'Wagon',
+    text: 'Wagon',
+  },
+  {
+    value: 'Coupe',
+    text: 'Coupe',
+  },
+  {
+    value: 'Van',
+    text: 'Van',
+  },
+  {
+    value: 'Hatchback',
+    text: 'Hatchback',
+  },
+  {
+    value: 'Pickup',
+    text: 'Pickup',
+  },
+  {
+    value: 'Sport coupe',
+    text: 'Sport coupe',
+  },
 ];
 
 export const carNumberSeries = [
   {
-    region: 'АР Крим',
-    code: 'АК',
-    series: ['КР', 'КО', 'KT'],
+    text: 'АР Крим',
+    value: 'АК',
+    series: [
+      {
+        value: 'КР',
+        text: 'КР',
+      },
+      {
+        value: 'КO',
+        text: 'КO',
+      },
+      {
+        value: 'КR',
+        text: 'КT',
+      },
+    ],
   },
   {
-    region: 'Вінницька обл.',
-    code: 'АВ',
-    series: ['ВІ', 'ВТ', 'ВХ'],
+    text: 'Вінницька обл.',
+    value: 'АВ',
+    series: [
+      {
+        value: 'ВІ',
+        text: 'ВІ',
+      },
+      {
+        value: 'ВТ',
+        text: 'ВТ',
+      },
+      {
+        value: 'ВХ',
+        text: 'ВХ',
+      },
+    ],
   },
   {
-    region: 'Волинська обл.',
-    code: 'АС',
-    series: ['ВО', 'ВК', 'ВМ'],
+    text: 'Волинська обл.',
+    value: 'АС',
+    series: [
+      {
+        value: 'ВО',
+        text: 'ВО',
+      },
+      {
+        value: 'ВК',
+        text: 'ВК',
+      },
+      {
+        value: 'ВМ',
+        text: 'ВМ',
+      },
+    ],
   },
   {
-    region: 'Дніпропетровська обл.',
-    code: 'АЕ',
-    series: ['АА', 'АВ', 'АЕ', 'АК', 'АН'],
+    text: 'Дніпропетровська обл.',
+    value: 'АЕ',
+    series: [
+      {
+        value: 'АА',
+        text: 'АА',
+      },
+      {
+        value: 'АВ',
+        text: 'АВ',
+      },
+      {
+        value: 'АЕ',
+        text: 'АЕ',
+      },
+      {
+        value: 'АК',
+        text: 'АК',
+      },
+      {
+        value: 'АН',
+        text: 'АН',
+      },
+    ],
   },
   {
-    region: 'Донецька обл.',
-    code: 'АН',
-    series: ['ЕА', 'ЕВ', 'ЕК', 'ЕО', 'ЕС'],
+    text: 'Донецька обл.',
+    value: 'АН',
+    series: [
+      {
+        value: 'ЕА',
+        text: 'ЕА',
+      },
+      {
+        value: 'ЕВ',
+        text: 'ЕВ',
+      },
+      {
+        value: 'ЕК',
+        text: 'ЕК',
+      },
+      {
+        value: 'ЕО',
+        text: 'ЕО',
+      },
+      {
+        value: 'ЕС',
+        text: 'ЕС',
+      },
+    ],
   },
   {
-    region: 'Житомирська обл.',
-    code: 'АМ',
-    series: ['ВА', 'ВВ'],
+    text: 'Житомирська обл.',
+    value: 'АМ',
+    series: [
+      {
+        value: 'ВА',
+        text: 'ВА',
+      },
+      {
+        value: 'ВВ',
+        text: 'ВВ',
+      },
+    ],
   },
   {
-    region: 'Закарпатська обл.',
-    code: 'АО',
-    series: ['РЕ', 'РТ'],
+    text: 'Закарпатська обл.',
+    value: 'АО',
+    series: [
+      {
+        value: 'РЕ',
+        text: 'РЕ',
+      },
+      {
+        value: 'РТ',
+        text: 'РТ',
+      },
+    ],
   },
   {
-    region: 'Запорізька обл.',
-    code: 'АР',
-    series: ['НА', 'НЕ', 'НО', 'НР', 'НС'],
+    text: 'Запорізька обл.',
+    value: 'АР',
+    series: [
+      {
+        value: 'НА',
+        text: 'НА',
+      },
+      {
+        value: 'НЕ',
+        text: 'НЕ',
+      },
+      {
+        value: 'НО',
+        text: 'НО',
+      },
+      {
+        value: 'НР',
+        text: 'НР',
+      },
+      {
+        value: 'НС',
+        text: 'НС',
+      },
+    ],
   },
   {
-    region: 'Івано-Франківська обл.',
-    code: 'АТ',
-    series: ['ІВ', 'ІС'],
+    text: 'Івано-Франківська обл.',
+    value: 'АТ',
+    series: [
+      {
+        value: 'ІВ',
+        text: 'ІВ',
+      },
+      {
+        value: 'ІС',
+        text: 'ІС',
+      },
+    ],
   },
   {
-    region: 'м. Київ',
-    code: 'АА',
-    series: ['КА', 'КІ', 'КВ', 'КВ', 'КН'],
+    text: 'м. Київ',
+    value: 'АА',
+    series: [
+      {
+        value: 'КА',
+        text: 'КА',
+      },
+      {
+        value: 'КІ',
+        text: 'КІ',
+      },
+      {
+        value: 'КВ',
+        text: 'КВ',
+      },
+      {
+        value: 'КН',
+        text: 'КН',
+      },
+    ],
   },
   {
-    region: 'Київська обл.',
-    code: 'АІ',
-    series: ['КК', 'КХ', 'КМ'],
+    text: 'Київська обл.',
+    value: 'АІ',
+    series: [
+      {
+        value: 'КК',
+        text: 'КК',
+      },
+      {
+        value: 'КХ',
+        text: 'КХ',
+      },
+      {
+        value: 'КМ',
+        text: 'КМ',
+      },
+    ],
   },
   {
-    region: 'Кропивницька обл.',
-    code: 'ВА',
-    series: ['ОМ', 'ОН', 'ОС'],
+    text: 'Кропивницька обл.',
+    value: 'ВА',
+    series: [
+      {
+        value: 'ОМ',
+        text: 'ОМ',
+      },
+      {
+        value: 'ОН',
+        text: 'ОН',
+      },
+      {
+        value: 'ОС',
+        text: 'ОС',
+      },
+    ],
   },
   {
-    region: 'Луганська обл.',
-    code: 'ВВ',
-    series: ['АМ', 'АО', 'АР', 'АТ', 'АХ'],
+    text: 'Луганська обл.',
+    value: 'ВВ',
+    series: [
+      {
+        value: 'АМ',
+        text: 'АМ',
+      },
+      {
+        value: 'АО',
+        text: 'АО',
+      },
+      {
+        value: 'АР',
+        text: 'АР',
+      },
+      {
+        value: 'АТ',
+        text: 'АТ',
+      },
+      {
+        value: 'АХ',
+        text: 'АХ',
+      },
+    ],
   },
   {
-    region: 'Львівська обл.',
-    code: 'ВС',
-    series: ['ТА', 'ТВ', 'ТН', 'ТС'],
+    text: 'Львівська обл.',
+    value: 'ВС',
+    series: [
+      {
+        value: 'ТА',
+        text: 'ТА',
+      },
+      {
+        value: 'ТВ',
+        text: 'ТВ',
+      },
+      {
+        value: 'ТН',
+        text: 'ТН',
+      },
+      {
+        value: 'ТС',
+        text: 'ТС',
+      },
+    ],
   },
   {
-    region: 'Миколаївська обл.',
-    code: 'ВЕ',
-    series: ['НІ', 'НК', 'НТ'],
+    text: 'Миколаївська обл.',
+    value: 'ВЕ',
+    series: [
+      {
+        value: 'НІ',
+        text: 'НІ',
+      },
+      {
+        value: 'НК',
+        text: 'НК',
+      },
+      {
+        value: 'НТ',
+        text: 'НТ',
+      },
+    ],
   },
   {
-    region: 'Одеська обл.',
-    code: 'ВН',
-    series: ['ОА', 'ОВ', 'ОЕ', 'ОК'],
+    text: 'Одеська обл.',
+    value: 'ВН',
+    series: [
+      {
+        value: 'ОА',
+        text: 'ОА',
+      },
+      {
+        value: 'ОВ',
+        text: 'ОВ',
+      },
+      {
+        value: 'ОЕ',
+        text: 'ОЕ',
+      },
+      {
+        value: 'ОК',
+        text: 'ОК',
+      },
+    ],
   },
   {
-    region: 'Полтавська обл.',
-    code: 'ВІ',
-    series: ['СК', 'СН', 'СС'],
+    text: 'Полтавська обл.',
+    value: 'ВІ',
+    series: [
+      {
+        value: 'СК',
+        text: 'СК',
+      },
+      {
+        value: 'СН',
+        text: 'СН',
+      },
+      {
+        value: 'СС',
+        text: 'СС',
+      },
+    ],
   },
   {
-    region: 'Рівненська обл.',
-    code: 'ВК',
-    series: ['РВ', 'РА', 'РО'],
+    text: 'Рівненська обл.',
+    value: 'ВК',
+    series: [
+      {
+        value: 'РВ',
+        text: 'РВ',
+      },
+      {
+        value: 'РА',
+        text: 'РА',
+      },
+      {
+        value: 'РО',
+        text: 'РО',
+      },
+    ],
   },
   {
-    region: 'м. Севастополь',
-    code: 'СН',
-    series: ['КС'],
+    text: 'м. Севастополь',
+    value: 'СН',
+    series: [
+      {
+        value: 'КС',
+        text: 'КС',
+      },
+    ],
   },
   {
-    region: 'Сумська обл.',
-    code: 'ВМ',
-    series: ['СА', 'СВ', 'СЕ'],
+    text: 'Сумська обл.',
+    value: 'ВМ',
+    series: [
+      {
+        value: 'СА',
+        text: 'СА',
+      },
+      {
+        value: 'СВ',
+        text: 'СВ',
+      },
+      {
+        value: 'СЕ',
+        text: 'СЕ',
+      },
+    ],
   },
   {
-    region: 'Тернопільска обл.',
-    code: 'ВО',
-    series: ['ТЕ', 'ТІ', 'ТК'],
+    text: 'Тернопільска обл.',
+    value: 'ВО',
+    series: [
+      {
+        value: 'ТЕ',
+        text: 'ТЕ',
+      },
+      {
+        value: 'ТІ',
+        text: 'ТІ',
+      },
+      {
+        value: 'ТК',
+        text: 'ТК',
+      },
+    ],
   },
   {
-    region: 'Харківська обл.',
-    code: 'АХ',
-    series: ['ХА', 'ХЕ', 'ХІ', 'ХК'],
+    text: 'Харківська обл.',
+    value: 'АХ',
+    series: [
+      {
+        value: 'ХА',
+        text: 'ХА',
+      },
+      {
+        value: 'ХЕ',
+        text: 'ХЕ',
+      },
+      {
+        value: 'ХІ',
+        text: 'ХІ',
+      },
+      {
+        value: 'ХК',
+        text: 'ХК',
+      },
+    ],
   },
   {
-    region: 'Херсонська обл.',
-    code: 'ВТ',
-    series: ['ХО', 'ХН'],
+    text: 'Херсонська обл.',
+    value: 'ВТ',
+    series: [
+      {
+        value: 'ХО',
+        text: 'ХО',
+      },
+      {
+        value: 'ХН',
+        text: 'ХН',
+      },
+    ],
   },
   {
-    region: 'Хмельницька обл.',
-    code: 'ВХ',
-    series: ['ХМ', 'ХТ'],
+    text: 'Хмельницька обл.',
+    value: 'ВХ',
+    series: [
+      {
+        value: 'ХМ',
+        text: 'ХМ',
+      },
+      {
+        value: 'ХТ',
+        text: 'ХТ',
+      },
+    ],
   },
   {
-    region: 'Черкаська обл.',
-    code: 'СА',
-    series: ['МА', 'МВ', 'МЕ'],
+    text: 'Черкаська обл.',
+    value: 'СА',
+    series: [
+      {
+        value: 'МА',
+        text: 'МА',
+      },
+      {
+        value: 'МВ',
+        text: 'МВ',
+      },
+      {
+        value: 'МЕ',
+        text: 'МЕ',
+      },
+    ],
   },
   {
-    region: 'Чернігівська обл.',
-    code: 'СВ',
-    series: ['МК', 'ММ', 'МН'],
+    text: 'Чернігівська обл.',
+    value: 'СВ',
+    series: [
+      {
+        value: 'МК',
+        text: 'МК',
+      },
+      {
+        value: 'ММ',
+        text: 'ММ',
+      },
+      {
+        value: 'МН',
+        text: 'МН',
+      },
+    ],
   },
   {
-    region: 'Чернівецька обл.',
-    code: 'СЕ',
-    series: ['МО', 'МР', 'МС'],
+    text: 'Чернівецька обл.',
+    value: 'СЕ',
+    series: [
+      {
+        value: 'МО',
+        text: 'МО',
+      },
+      {
+        value: 'МР',
+        text: 'МР',
+      },
+      {
+        value: 'МС',
+        text: 'МС',
+      },
+    ],
   },
 ];
 
 export const carTransmissions = [
-  'Механічна',
-  'Автоматична',
-  'Роботизована',
-  'Варіативна',
+  {
+    value: 'Механічна',
+    text: 'Механічна',
+  },
+  {
+    value: 'Автоматична',
+    text: 'Автоматична',
+  },
+  {
+    value: 'Роботизована',
+    text: 'Роботизована',
+  },
+  {
+    value: 'Варіативна',
+    text: 'Варіативна',
+  },
 ];
 
 export const carEngineTypes = [
-  'ДВЗ',
-  'Електродвигун',
-  'Гібрид',
+  {
+    value: 'ДВЗ',
+    text: 'ДВЗ',
+  },
+  {
+    value: 'Електродвигун',
+    text: 'Електродвигун',
+  },
+  {
+    value: 'Гібрид',
+    text: 'Гібрид',
+  },
 ];
 
 export const visitStatuses = [
-  'Planned',
-  'In Progress',
-  'Closed',
+  {
+    value: 'Planned',
+    text: 'Planned',
+  },
+  {
+    value: 'In Progress',
+    text: 'In Progress',
+  },
+  {
+    value: 'Closed',
+    text: 'Closed',
+  },
 ];
 
 export const newIssueShape = {
@@ -216,4 +644,5 @@ export const newIssueShape = {
   phoneNumber: '',
   speciality: '',
   workerId: '',
+  duration: null,
 };

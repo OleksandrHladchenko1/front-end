@@ -12,7 +12,14 @@ export const ChangeVisitStatus = ({ currentStatus = '', onChange }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [status, setStatus] = useState(localStorage.getItem('visitStatus'));
 
-  const filterStatuses = visitStatuses.filter((visitStatus) => visitStatus !== status);
+  const filterStatuses = visitStatuses
+    .filter((visitStatus) => visitStatus.value !== status)
+    .map((status) =>{
+      return {
+        value: status.value,
+        text: status.text,
+      }
+    });
 
   useEffect(() => {
     console.log(status);

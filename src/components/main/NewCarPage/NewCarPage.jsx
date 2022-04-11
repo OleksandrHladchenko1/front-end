@@ -43,7 +43,7 @@ export const NewCarPage = () => {
   };
 
   const getSeriesFromCode = () => {
-    return carNumberSeries.filter((number) => number.code === carInfo.carCode)[0].series;
+    return carNumberSeries.filter((number) => number.value === carInfo.carCode)[0].series;
   }
 
   const validateFields = () => {

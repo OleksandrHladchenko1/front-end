@@ -63,3 +63,42 @@ export const formatForDatePickerValue = (data) => {
   const formatDate = day < 10 ? `0${day}` : day;
   return `${data.substring(0, 8)}${formatDate}`;
 };
+
+export const getDuration = (start, end) => {
+  if(start.trim() === '' || end.trim() === '') return false;
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  let difference = endDate - startDate;
+
+  const days = Math.floor(difference / 86400000);
+  difference = difference - days * 86400000;
+  const hours = Math.floor(difference / 3600000);
+  difference = difference - hours * 3600000;
+  const minutes = difference / 60000;
+
+  let daysToShow;
+  let hoursToShow;
+  let minutesToShow;
+
+  if(days === 0) {
+    daysToShow = '';
+  } else {
+    daysToShow = days === 1 ? `${days} day` : `${days} days` ;
+  }
+
+  if(hours === 0) {
+    hoursToShow = '';
+  } else {
+    hoursToShow = hours === 1 ? `${hours} hour` : `${hours} hours` ;
+  }
+
+  if(minutes === 0) {
+    minutesToShow = '';
+  } else {
+    minutesToShow = minutes === 1 ? `${minutes} minute` : `${minutes} minutes` ;
+  }
+
+  return `${daysToShow} ${hoursToShow} ${minutesToShow}`;
+};
+
+

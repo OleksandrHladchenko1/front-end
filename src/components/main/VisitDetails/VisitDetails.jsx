@@ -80,8 +80,14 @@ export class VisitDetails extends Component {
   componentDidMount = async () => {
     this.getDataAfterUpdate();
   }
+  componentDidUpdate = async (prevProps, prevState) => {
+    if(prevState.visit.status !== this.state.visit.status) {
+      this.getDataAfterUpdate();
+    }
+  }
 
   changeVisitStatus = (status) => {
+    localStorage.setItem('visitStatus', status);
     this.apiInteractor.changeVisitStatus(localStorage.getItem('visitId'), status);
     this.setState((prevState) => {
       return {
@@ -96,7 +102,7 @@ export class VisitDetails extends Component {
   }
 
   submitCreateIssue = (issue) => {
-    console.log(issue);
+    //console.log(issue);
     const specialist = {
       isBusy: 'Yes',
       startTime: issue.startTime,
@@ -111,7 +117,7 @@ export class VisitDetails extends Component {
       endTime: issue.endTime,
       price: issue.price,
     };
-    console.log(newIssue)
+    //console.log(newIssue);
     this.apiInteractor.addIssue(newIssue).then(() => {
       this.apiInteractor.editSpecialistInfo(specialist).then(() => {
         this.setState((prevState) => {

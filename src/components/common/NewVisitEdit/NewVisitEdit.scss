@@ -1,0 +1,37 @@
+.edit {
+
+  &__container {
+    display: grid;
+    column-gap: 20px;
+    row-gap: 20px;
+    grid-template-areas: "issue worker"
+                         "issue duration"
+                         "issue error"
+                         "issue button";
+  }
+
+  &__issue-info {
+    grid-area: issue;
+  }
+
+  &__worker-info {
+    grid-area: worker;
+  }
+
+  &__errors {
+    grid-area: error;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  &__submit {
+    grid-area: button;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__submit-button {
+    width: 100%;
+  }
+}
