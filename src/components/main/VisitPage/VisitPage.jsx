@@ -122,7 +122,10 @@ export class VisitPage extends Component {
               </ul>
             </div>
             <div className="visits__results-container">
-              {filterVisits}
+              { !this.state.filterVisits.length ?
+                <span>No visits was fount</span> :
+                filterVisits
+              }
             </div>
             { this.startStatus === 'User' &&
               <div className="visits__add-container">

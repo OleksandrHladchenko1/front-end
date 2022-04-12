@@ -27,11 +27,13 @@ export const Header = () => {
                   Visits
                 </Link>
               </li>
-              <li className="header__link">
-                <Link className="header__user-page" to="/userPage">
-                  User Page
-                </Link>
-              </li>
+              { localStorage.getItem('startStatus') === "User" &&
+                <li className="header__link">
+                  <Link className="header__user-page" to="/userPage">
+                    User Page
+                  </Link>
+                </li>
+              }
               <li className="header__link">
                 <Link className="header__logout" to="/" onClick={logout}>
                   Logout

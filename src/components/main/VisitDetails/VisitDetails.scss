@@ -2,12 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150vh;
+  min-height: 91.6vh;
   background: linear-gradient(#127199, #123d99);
 
   &__container {
     width: 800px;
-    height: 1000px;
+    height: 100%;
     padding: 20px;
     background: #fff;
   }
@@ -37,6 +37,12 @@
 
   &__change-please {
     text-align: center;
+  }
+
+  &__line {
+    margin: 20px 0;
+    height: 3px;
+    background: linear-gradient(to right, rgb(93, 0, 255), rgb(76, 208, 215));
   }
 }
 

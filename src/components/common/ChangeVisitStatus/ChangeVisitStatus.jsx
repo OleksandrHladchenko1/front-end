@@ -42,11 +42,14 @@ export const ChangeVisitStatus = ({ currentStatus = '', onChange }) => {
       { !isEditMode &&
       <>
         <span className="status">{currentStatus}</span>
-        <Button
-          text={editLogo}
-          className="change-visit-status-button icons"
-          onClick={() => setIsEditMode(true)}
-        />
+        { localStorage.getItem('visitStatus') !== "Closed" &&
+          localStorage.getItem('startStatus') === "Worker" &&
+          <Button
+            text={editLogo}
+            className="change-visit-status-button icons"
+            onClick={() => setIsEditMode(true)}
+          />
+        }
       </>
       }
       { isEditMode &&

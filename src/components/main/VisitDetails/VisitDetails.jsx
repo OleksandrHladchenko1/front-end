@@ -9,6 +9,7 @@ import plus from '../../../assets/plus.svg';
 
 import './VisitDetails.scss';
 import { Button } from "../../common/Button";
+import { IssueItem } from "../../common/IssueItem/IssueItem";
 
 export class VisitDetails extends Component {
   constructor(props) {
@@ -60,6 +61,13 @@ export class VisitDetails extends Component {
     ]);
   }
 
+  getDataForClosedVisit = async () => {
+    return Promise.all([
+      this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
+      this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), localStorage.getItem('visitStatus')),
+    ]);
+  }
+
   getDataAfterUpdate = async () => {
     if(localStorage.getItem('visitStatus') === 'Planned') {
       this.getDataForPlannedVisit().then((data) => {
@@ -72,6 +80,15 @@ export class VisitDetails extends Component {
           ...this.state,
           issues: [...data[1].data.issues],
           workers: [...data[2]],
+        });
+      });
+    } else {
+      this.getDataForClosedVisit().then((data) => {
+        console.log(data);
+        this.setStateForUserAndvisit(data[0].data.visit[0]);
+        this.setState({
+          ...this.state,
+          issues: [...data[1].data.issues],
         });
       });
     }
@@ -116,6 +133,7 @@ export class VisitDetails extends Component {
       startTime: issue.startTime,
       endTime: issue.endTime,
       price: issue.price,
+      closed: issue.closed,
     };
     //console.log(newIssue);
     this.apiInteractor.addIssue(newIssue).then(() => {
@@ -123,12 +141,29 @@ export class VisitDetails extends Component {
         this.setState((prevState) => {
           return {
             ...prevState,
-            issues: [...prevState.issues, issue],
+            issues: [issue, ...prevState.issues],
             isNewVisitVisible: false,
           };
         });
         this.getDataAfterUpdate();
       });
+    });
+  }
+
+  deleteIssue = (id, specialistId) => {
+    this.apiInteractor.deleteIssue(id).then(() => {
+      this.apiInteractor.editSpecialistInfo({
+        id: specialistId,
+        isBusy: 'No',
+        startTime: null,
+        endTime: null,
+      });
+    });
+    this.setState((prevProps) => {
+      return {
+        ...prevProps,
+        issues: [...prevProps.issues.filter((issue) => issue.issueId !== id)],
+      };
     });
   }
 
@@ -142,7 +177,13 @@ export class VisitDetails extends Component {
     const {
       dateOfVisit,
       status,
-    } = this.state.visit
+    } = this.state.visit;
+console.log(this.state.issues);
+    const issuesList = this.state.issues.map((issue, index) => {
+      return (
+        <IssueItem key={index} issue={issue} onDelete={this.deleteIssue} />
+      );
+    });
 
     return (
       <main>
@@ -214,9 +255,21 @@ export class VisitDetails extends Component {
                 <div className="visit-detail__add-issue">
                   <NewVisitEdit workers={this.state.workers} visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
                 </div>
-                {!!this.state.issues.length  &&
-                  <div className="visit-detail__issues-info">{JSON.stringify(this.state.issues)}</div> 
-                }
+                <hr className="visit-detail__line" />
+                <div className="visit-detail__issues-info">
+                  { issuesList.length === 0 ?
+                      <span>Please, add new issues</span> :
+                      issuesList
+                  }
+                </div> 
+              </>
+            }
+            { status === "Closed" &&
+              <>
+                <hr className="visit-detail__line" />
+                <div className="visit-detail__issues-info">
+                  { issuesList }
+                </div> 
               </>
             }
           </div>

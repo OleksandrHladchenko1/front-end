@@ -168,6 +168,32 @@ export class APIInteractor {
 		}
 	};
 
+	deleteIssue = async (id) => {
+		try {
+			const result = await axios({
+				method: 'delete',
+				url: `http://localhost:8080/api/issue/deleteIssue/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	closeIssue = async (id) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/issue/closeIssue/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
 	updateUserInfo = async (user) => {
 		try {
 			const result = await axios({
@@ -216,6 +242,7 @@ export class APIInteractor {
 	};
 
 	editSpecialistInfo = async (specialist) => {
+		console.log(specialist);
 		try {
 			const result = await axios({
 				method: 'patch',

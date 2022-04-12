@@ -645,4 +645,5 @@ export const newIssueShape = {
   speciality: '',
   workerId: '',
   duration: null,
+  closed: 'No',
 };
