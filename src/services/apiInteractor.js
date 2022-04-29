@@ -227,6 +227,50 @@ export class APIInteractor {
 		}
 	};
 
+	getUserCars = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/userCars/allUserCars/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result.data.cars;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	editUserCar = async (car) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/userCars/editUserCar/${car.id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: {
+					...car,
+					number: concatCarNumber(car.carCode, car.carNumber, car.carSeries),
+				},
+			});
+			console.log(result);
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	deleteUserCar = async (id) => {
+		try {
+			const result = await axios({
+				method: 'delete',
+				url: `http://localhost:8080/api/userCars/deleteUserCar/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
 	changeVisitStatus = async (id, status) => {
 		try {
 			const result = await axios({

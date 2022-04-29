@@ -11,13 +11,15 @@ export const Select = ({
   options,
   className,
   onChange,
+  value,
 }) => {
+  console.log(options);
   return (
     <div className="input-container">
       { label && 
         <label className="input-label" htmlFor={name}>{label}{required ? <RequiredStar /> : ''}</label>
       }
-      <select className={className} name={name} onChange={onChange}>
+      <select className={className} name={name} onChange={onChange} value={value}>
         <option className="disabled" selected disabled hidden>Choose here</option>
         {
           options.map((option, i) => <option key={`${option.value}-${i}`} value={option.value}>{option.text}</option>)

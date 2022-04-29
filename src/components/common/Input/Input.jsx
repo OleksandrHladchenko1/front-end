@@ -40,7 +40,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   pattern: PropTypes.string,
   label: PropTypes.string,
   required: PropTypes.bool,

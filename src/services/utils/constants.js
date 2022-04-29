@@ -647,3 +647,17 @@ export const newIssueShape = {
   duration: null,
   closed: 'No',
 };
+
+export const newCarShape = {
+  name: null,
+  model: null,
+  year: null,
+  color: null,
+  carcas: null,
+  carCode: '',
+  carNumber: null,
+  carSeries: null,
+  transmission: null,
+  engine: null,
+  engineNumber: null,
+};

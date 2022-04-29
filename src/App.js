@@ -9,6 +9,7 @@ import { ChangePassword } from './components/main/ChangePassword';
 import { VisitPage } from './components/main/VisitPage';
 import { VisitDetails } from './components/main/VisitDetails';
 import { NewCarPage } from './components/main/NewCarPage';
+import { UserCarPage } from './components/main/UserCarPage';
 import { Header } from './components/common/Header';
 
 import './App.scss';
@@ -23,7 +24,8 @@ const App = () => {
       <Route path='/changePassword' element={[<Header key="header"/>, <ChangePassword key="changePassword"/>]} />
       <Route path='/visits' element={[<Header key="header" />, <VisitPage key="visitPage" /> ]} />
       <Route path='/visits/:id' element={[<Header key="header" />, <VisitDetails key="visitPage" />]} />
-      <Route path='/car' element={[<Header key="header" />, <NewCarPage key="newCarPage" /> ]} />
+      <Route path='/car' element={[<Header key="header" />, <NewCarPage key="newCarPage" />]} />
+      <Route path='/my-cars' element={[<Header key="header" />, <UserCarPage key="userCarPage" />]} />
     </Routes>
   );
 };

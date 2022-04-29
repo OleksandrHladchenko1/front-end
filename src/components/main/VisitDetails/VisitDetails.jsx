@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { ChangeVisitStatus } from "../../common/ChangeVisitStatus";
-import { NewVisitEdit } from "../../common/NewVisitEdit";
+import { ChangeVisitStatus } from '../../common/ChangeVisitStatus';
+import { NewVisitEdit } from '../../common/NewVisitEdit';
 
-import { APIInteractor } from "../../../services";
-import { concatFullName, formatDate, formatTime } from "../../../services/utils";
+import { APIInteractor } from '../../../services';
+import { concatFullName, formatDate, formatTime } from '../../../services/utils';
 import plus from '../../../assets/plus.svg';
 
 import './VisitDetails.scss';
-import { Button } from "../../common/Button";
-import { IssueItem } from "../../common/IssueItem/IssueItem";
+import { Button } from '../../common/Button';
+import { IssueItem } from '../../common/IssueItem/IssueItem';
 
-export class VisitDetails extends Component {
+class VisitDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -38,42 +38,36 @@ export class VisitDetails extends Component {
     };
     const visitInfo = {
       dateOfVisit: `${formatDate(result.dateOfVisit)} ${formatTime(result.dateOfVisit)}`,
-      status: result.status
+      status: result.status,
     };
     this.setState({
       ...this.state,
       user: { ...userInfo },
       visit: { ...visitInfo },
     });
-  }
+  };
 
-  getDataForPlannedVisit = async () => {
-    return Promise.all([
+  getDataForPlannedVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId'))
     ]);
-  }
 
-  getDataForInProgressVisit = async () => {
-    return Promise.all([
+  getDataForInProgressVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
       this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), localStorage.getItem('visitStatus')),
       this.apiInteractor.getFullFreeWorkersInfo(),
     ]);
-  }
 
-  getDataForClosedVisit = async () => {
-    return Promise.all([
+  getDataForClosedVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
       this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), localStorage.getItem('visitStatus')),
     ]);
-  }
 
   getDataAfterUpdate = async () => {
-    if(localStorage.getItem('visitStatus') === 'Planned') {
+    if (localStorage.getItem('visitStatus') === 'Planned') {
       this.getDataForPlannedVisit().then((data) => {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
       });
-    } else if(localStorage.getItem('visitStatus') === 'In Progress') {
+    } else if (localStorage.getItem('visitStatus') === 'In Progress') {
       this.getDataForInProgressVisit().then((data) => {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
         this.setState({
@@ -84,7 +78,6 @@ export class VisitDetails extends Component {
       });
     } else {
       this.getDataForClosedVisit().then((data) => {
-        console.log(data);
         this.setStateForUserAndvisit(data[0].data.visit[0]);
         this.setState({
           ...this.state,
@@ -92,34 +85,31 @@ export class VisitDetails extends Component {
         });
       });
     }
-  }
+  };
 
-  componentDidMount = async () => {
+  componentDidMount() {
     this.getDataAfterUpdate();
-  }
-  componentDidUpdate = async (prevProps, prevState) => {
-    if(prevState.visit.status !== this.state.visit.status) {
+  };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.visit.status !== this.state.visit.status) {
       this.getDataAfterUpdate();
     }
-  }
+  };
 
   changeVisitStatus = (status) => {
     localStorage.setItem('visitStatus', status);
     this.apiInteractor.changeVisitStatus(localStorage.getItem('visitId'), status);
-    this.setState((prevState) => {
-      return {
+    this.setState((prevState) => ({
         ...prevState,
         visit: { ...prevState.visit, status }
-      };
-    });
-  }
+      }));
+  };
 
   showNewIssue = () => {
-    this.setState({ isNewVisitVisible: true })
-  }
+    this.setState({ isNewVisitVisible: true });
+  };
 
   submitCreateIssue = (issue) => {
-    //console.log(issue);
     const specialist = {
       isBusy: 'Yes',
       startTime: issue.startTime,
@@ -135,20 +125,18 @@ export class VisitDetails extends Component {
       price: issue.price,
       closed: issue.closed,
     };
-    //console.log(newIssue);
+
     this.apiInteractor.addIssue(newIssue).then(() => {
       this.apiInteractor.editSpecialistInfo(specialist).then(() => {
-        this.setState((prevState) => {
-          return {
+        this.setState((prevState) => ({
             ...prevState,
             issues: [issue, ...prevState.issues],
             isNewVisitVisible: false,
-          };
-        });
+          }));
         this.getDataAfterUpdate();
       });
     });
-  }
+  };
 
   deleteIssue = (id, specialistId) => {
     this.apiInteractor.deleteIssue(id).then(() => {
@@ -159,31 +147,26 @@ export class VisitDetails extends Component {
         endTime: null,
       });
     });
-    this.setState((prevProps) => {
-      return {
+    this.setState((prevProps) => ({
         ...prevProps,
         issues: [...prevProps.issues.filter((issue) => issue.issueId !== id)],
-      };
-    });
-  }
+      }));
+  };
 
   render() {
     const {
       fullName,
       discount,
       email,
-      phoneNumber
+      phoneNumber,
     } = this.state.user;
     const {
       dateOfVisit,
       status,
     } = this.state.visit;
-console.log(this.state.issues);
-    const issuesList = this.state.issues.map((issue, index) => {
-      return (
+    const issuesList = this.state.issues.map((issue, index) => (
         <IssueItem key={index} issue={issue} onDelete={this.deleteIssue} />
-      );
-    });
+      ));
 
     return (
       <main>
@@ -230,51 +213,49 @@ console.log(this.state.issues);
                 <div className="visit-detail__right">
                   <div className="visit-detail__status-container">
                     <p className="visit-detail__status strong">Status</p>
-                    <ChangeVisitStatus currentStatus={status} onChange={this.changeVisitStatus} />
+                    <ChangeVisitStatus onChange={this.changeVisitStatus} />
                   </div>
                 </div>
               </div>
             </div>
             <div className="visit-detail__user-info-heading">
-                <h2 className="visit-detail__user-info-heading-text">Issues Information</h2>
-              </div>
-            { status === "Planned" &&
-              <div className="visit-detail__change-please">
+              <h2 className="visit-detail__user-info-heading-text">Issues Information</h2>
+            </div>
+            { status === 'Planned'
+              && <div className="visit-detail__change-please">
                 <p className="visit-detail__change-please-text">Please, change status to "In Progress" to add issues</p>
-              </div>
-            }
-            { status === "In Progress" &&
-              <>
-                { !this.state.isNewVisitVisible &&
-                  <Button
+              </div>}
+            { status === 'In Progress'
+              && localStorage.getItem('startStatus') !== 'User'
+              && <>
+                { !this.state.isNewVisitVisible
+                  && <Button
                     text={this.addLogo}
                     className="visit-detail__show-new-issue"
                     onClick={this.showNewIssue}
-                  />
-                }
+                  />}
                 <div className="visit-detail__add-issue">
                   <NewVisitEdit workers={this.state.workers} visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
                 </div>
-                <hr className="visit-detail__line" />
+              </>}
+            <>
                 <div className="visit-detail__issues-info">
-                  { issuesList.length === 0 ?
-                      <span>Please, add new issues</span> :
-                      issuesList
-                  }
+                  { issuesList.length !== 0 && issuesList }
                 </div> 
               </>
-            }
-            { status === "Closed" &&
+            {/* { status === "Closed" &&
               <>
                 <hr className="visit-detail__line" />
                 <div className="visit-detail__issues-info">
                   { issuesList }
-                </div> 
+                </div>
               </>
-            }
+            } */}
           </div>
         </article>
       </main>
     );
   }
-};
+}
+
+export default VisitDetails;

@@ -6,7 +6,7 @@ import { Select } from "../../common/Select";
 import { Button } from "../../common/Button";
 
 import { APIInteractor } from "../../../services";
-import { carcasTypes, carEngineTypes, carNumberSeries, carTransmissions, validateCarNumber, validateEngineNumber, validateField, validateYear } from "../../../services/utils";
+import { carcasTypes, carEngineTypes, carNumberSeries, carTransmissions, newCarShape, validateCarNumber, validateEngineNumber, validateField, validateYear } from "../../../services/utils";
 
 import './NewCarPage.scss';
 
@@ -17,20 +17,8 @@ export const NewCarPage = () => {
     isError: false,
     message: '',
   });
-  const [carInfo, setCarInfo] = useState({
-    name: '',
-    model: '',
-    year: '',
-    color: '',
-    carcas: '',
-    carCode: '',
-    carNumber: '',
-    carSeries: '',
-    transmission: '',
-    engine: '',
-    engineNumber: '',
-  });
-
+  const [carInfo, setCarInfo] = useState(JSON.parse(localStorage.getItem('carInfo')) ?? newCarShape);
+console.log(carInfo);
   useEffect(() => {
     console.log(error);
   });
@@ -80,7 +68,12 @@ export const NewCarPage = () => {
   const submit = (e) => {
     e.preventDefault();
     if(validateFields()) {
-      apiInteractor.createCar(carInfo).then(() => navigate('/userPage'));
+      if(!localStorage.getItem('carInfo')) {
+        apiInteractor.createCar(carInfo).then(() => navigate('/my-cars'));
+      } else {
+        apiInteractor.editUserCar(carInfo, localStorage.getItem('userId')).then(() => navigate('/my-cars'));
+        localStorage.removeItem('carInfo');
+      }
     }
   }
 
@@ -100,6 +93,7 @@ export const NewCarPage = () => {
                 onChange={onChangeInfo}
                 name="name"
                 label="Car name"
+                value={carInfo.name}
                 required
               />
               <Input
@@ -108,6 +102,7 @@ export const NewCarPage = () => {
                 onChange={onChangeInfo}
                 name="model"
                 label="Model"
+                value={carInfo.model}
                 required
               />
               <Input
@@ -116,6 +111,7 @@ export const NewCarPage = () => {
                 onChange={onChangeInfo}
                 name="year"
                 label="Year"
+                value={carInfo.year}
                 required
               />
               <Input
@@ -124,6 +120,7 @@ export const NewCarPage = () => {
                 onChange={onChangeInfo}
                 name="color"
                 label="Color"
+                value={carInfo.color}
                 required
               />
               <Select
@@ -132,6 +129,7 @@ export const NewCarPage = () => {
                 options={carcasTypes}
                 className="car__carcas form-input"
                 onChange={onChangeInfo}
+                value={carInfo.carcas}
                 required
               />
               <Select
@@ -140,6 +138,7 @@ export const NewCarPage = () => {
                 options={carTransmissions}
                 className="car__transmission form-input"
                 onChange={onChangeInfo}
+                value={carInfo.transmission}
                 required
               />
               <Select
@@ -148,6 +147,7 @@ export const NewCarPage = () => {
                 options={carEngineTypes}
                 className="car__engine form-input"
                 onChange={onChangeInfo}
+                value={carInfo.engine}
                 required
               />
               <Input
@@ -156,6 +156,7 @@ export const NewCarPage = () => {
                 onChange={onChangeInfo}
                 name="engineNumber"
                 label="Engine number"
+                value={carInfo.engineNumber}
                 required
               />
               <div className="car__full-number">
@@ -165,6 +166,7 @@ export const NewCarPage = () => {
                   options={carNumberSeries}
                   className="car__car-code form-input"
                   onChange={onChangeInfo}
+                  value={carInfo.carCode}
                   required
                 />
                 <Input
@@ -173,6 +175,7 @@ export const NewCarPage = () => {
                   onChange={onChangeInfo}
                   name="carNumber"
                   label="Car number"
+                  value={carInfo.carNumber}
                   required
                 />
                 { carInfo.carCode.trim() !== '' &&
@@ -182,6 +185,7 @@ export const NewCarPage = () => {
                     options={getSeriesFromCode()}
                     className="car__car-series form-input"
                     onChange={onChangeInfo}
+                    value={carInfo.carSeries}
                     required
                   />
                 }
@@ -189,7 +193,7 @@ export const NewCarPage = () => {
             </div>
           </div>
           <Button
-            text="Add car"
+            text="Save"
             onClick={submit}
             type="submit"
             className="car__submit button success"

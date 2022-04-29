@@ -123,7 +123,7 @@ export class VisitPage extends Component {
             </div>
             <div className="visits__results-container">
               { !this.state.filterVisits.length ?
-                <span>No visits was fount</span> :
+                <span>No visits was found</span> :
                 filterVisits
               }
             </div>

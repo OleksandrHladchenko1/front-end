@@ -33,7 +33,7 @@ export const validatePhoneNumber = (value) => {
 }
 
 export const validateYear = (year) => {
-  if(year.trim() === '' || isNaN(year)) {
+  if(year.toString().trim() === '' || isNaN(year)) {
     return false;
   }
   const newYear = new Date().getFullYear();

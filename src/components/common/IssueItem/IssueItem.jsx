@@ -61,20 +61,22 @@ export const IssueItem =  ({ issue, onDelete }) => {
             <p className="issue__sub-info-text">{`${issue.price} UAH`}</p>
           </div>
         </div>
-        <div className="issue__buttons">
-          <div className="issue__buttons-container">
-            <Button
-              text="Delete"
-              className="issue__delete-button"
-              onClick={() => onDelete(issue.issueId, issue.specialistId)}
-            />
-            <Button
-              text="Close"
-              className="issue__close-button"
-              onClick={() => onCloseIssue(issue.issueId)}
-            />
+        { localStorage.getItem('startStatus') !== "User" &&
+          <div className="issue__buttons">
+            <div className="issue__buttons-container">
+              <Button
+                text="Delete"
+                className="issue__delete-button"
+                onClick={() => onDelete(issue.issueId, issue.specialistId)}
+              />
+              <Button
+                text="Close"
+                className="issue__close-button"
+                onClick={() => onCloseIssue(issue.issueId)}
+              />
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   );

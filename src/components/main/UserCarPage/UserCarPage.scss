@@ -1,0 +1,18 @@
+.my-car {
+  min-height: 91.6vh;
+  background: linear-gradient(#127199, #123d99);
+  overflow: hidden;
+  position: relative;
+
+  &__container {
+    width: 60%;
+    margin: 0 auto;
+    min-height: 91.6vh;
+    background: #fff;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+  }
+}
