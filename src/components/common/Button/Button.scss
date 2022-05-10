@@ -14,3 +14,11 @@
 .success {
   background: linear-gradient(#1fa121, #248a25);
 }
+
+.red-button {
+  background: rgb(166, 45, 45);
+    
+  &:hover {
+    background: rgb(136, 38, 38);
+  }
+}

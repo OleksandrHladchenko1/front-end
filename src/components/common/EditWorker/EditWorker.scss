@@ -1,0 +1,61 @@
+.edit-worker {
+  width: 750px;
+  height: 600px;
+  background: #fff;
+  position: relative;
+  display: flex;
+  padding: 23px;
+
+  &__left,
+  &__right {
+    width: 50%;
+  }
+
+  &__left-title,
+  &__right-title {
+    text-align: center;
+  }
+
+  &__left {
+    border-right: 1px solid red;
+  }
+  &__right {
+    border-left: 1px solid red;
+  }
+
+  &__inputs {
+    padding: 0 23px 0 0;
+  }
+
+  &__specialities {
+    padding: 0 0 0 23px;
+  }
+
+  &__speciality-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    width: 100%;
+  }
+
+  &__delete-icon,
+  &__add-icon {
+    cursor: pointer;
+    width: 20px;
+  }
+
+  &__all-title {
+    text-align: center;
+  }
+
+  &__all-specialities {
+    padding: 20px 0 20px 23px;
+  }
+
+  &__submit,
+  &__close {
+    margin: 10px 0;
+    width: 100%;
+  }
+}

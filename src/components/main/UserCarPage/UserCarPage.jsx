@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { CarCard } from "../../common/CarCard/CarCard";
 import { Modal } from "../../common/Modal";
+import { AreYouSureModal } from "../../common/AreYouSureModal";
 
 import { APIInteractor } from "../../../services/apiInteractor";
 
 import './UserCarPage.scss';
-import { AreYouSureModal } from "../../common/AreYouSureModal/AreYouSureModal";
 
 export const UserCarPage = () => {
   const [cars, setCars] = useState([]);

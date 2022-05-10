@@ -11,7 +11,7 @@ import './VisitDetails.scss';
 import { Button } from '../../common/Button';
 import { IssueItem } from '../../common/IssueItem/IssueItem';
 
-class VisitDetails extends Component {
+export class VisitDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -257,5 +257,3 @@ class VisitDetails extends Component {
     );
   }
 }
-
-export default VisitDetails;

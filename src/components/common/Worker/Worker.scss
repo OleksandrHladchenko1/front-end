@@ -1,0 +1,42 @@
+.worker {
+
+  &__header-list,
+  &__list {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  &__header-item,
+  &__item {
+    width: 15%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2em;
+    /* border-left: 1px solid red;
+    border-right: 1px solid red; */
+    padding: 5px;
+    overflow: hidden;
+  }
+
+  &__button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: .2s;
+    }
+  }
+
+  &__header-item {
+    border-bottom: 2px solid red;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+}

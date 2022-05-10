@@ -44,6 +44,83 @@ export class APIInteractor {
 		}
 	};
 
+	getAllWorkers = async () => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/api/workers/getAllWorkers',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+
+			if(result.status === 200) {
+				return result.data.workers;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	deleteWorker = async (id) => {
+		try {
+			const result = await axios({
+				method: 'delete',
+				url: `http://localhost:8080/api/workers/deleteWorker/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	getFullWorkersInfo = async () => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/api/workers/getFullWorkerInfo',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+
+			if(result.status === 200) {
+				return result.data.workers;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	getWorkerInfoById = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/workers/getWorkerInfoById/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+
+			if(result.status === 200) {
+				return result.data.worker;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	getWorkerSpecialities = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/workers/getWorkerSpecialities/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+
+			if(result.status === 200) {
+				return result.data.specialities;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 	getWorkerById = async (id) => {
 		try {
 			const result = await axios({
@@ -73,6 +150,37 @@ export class APIInteractor {
 			console.log(err);
 		}
 	};
+
+	editWorker = async (workerId, data) => {
+		console.log(data);
+		console.log(workerId);
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/workers/editWorker/${workerId}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data
+			});
+
+			console.log(result);
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	getAllSpecialities = async () => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/api/speciality/getAll',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+		  return result.data.specialities;
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
 	changePassword = async (passwords) => {
 		try {
@@ -251,7 +359,6 @@ export class APIInteractor {
 					number: concatCarNumber(car.carCode, car.carNumber, car.carSeries),
 				},
 			});
-			console.log(result);
 			return result;
 		} catch (err) {
 			throw err.response.data.message;
@@ -286,13 +393,39 @@ export class APIInteractor {
 	};
 
 	editSpecialistInfo = async (specialist) => {
-		console.log(specialist);
 		try {
 			const result = await axios({
 				method: 'patch',
 				url: 'http://localhost:8080/api/specialist/editSpecialist',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: specialist,
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	addSpecialist = async (specialist) => {
+		try {
+			const result = await axios({
+				method: 'post',
+				url: 'http://localhost:8080/api/specialist/addSpecialist',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: specialist,
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	deleteSpecialist = async (id_worker, id_speciality) => {
+		try {
+			const result = await axios({
+				method: 'delete',
+				url: `http://localhost:8080/api/specialist/deleteSpecialist/${id_worker}/${id_speciality}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
 			});
 			console.log(result);
 			return result;

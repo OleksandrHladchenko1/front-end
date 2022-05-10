@@ -13,6 +13,7 @@ import { UserCarPage } from './components/main/UserCarPage';
 import { Header } from './components/common/Header';
 
 import './App.scss';
+import { AdminPage } from './components/main/AdminPage/AdminPage';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
       <Route path='/visits/:id' element={[<Header key="header" />, <VisitDetails key="visitPage" />]} />
       <Route path='/car' element={[<Header key="header" />, <NewCarPage key="newCarPage" />]} />
       <Route path='/my-cars' element={[<Header key="header" />, <UserCarPage key="userCarPage" />]} />
+      <Route path='/admin' element={[<Header key="header" />, <AdminPage key="admin" />]} />
     </Routes>
   );
 };

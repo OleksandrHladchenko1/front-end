@@ -29,6 +29,16 @@ export const Header = () => {
                   Visits
                 </Link>
               </li>
+              {
+                localStorage.getItem('startStatus') === "Admin" &&
+                <>
+                  <li className="header__link">
+                    <Link className="header__visits" to="/admin">
+                      Admin Page
+                    </Link>
+                  </li>
+                </>
+              }
               { localStorage.getItem('startStatus') === "User" &&
                 <>
                   <li className="header__link">
