@@ -4,11 +4,14 @@ import { Input } from "../Input";
 import { Select } from "../Select";
 import { Button } from "../Button";
 
+import { APIInteractor } from "../../../services";
 import { concatFullName, getDuration, newIssueShape, validateField, validateIsPastDate, validateWorkingDay, validateWorkingHour } from "../../../services/utils";
 
 import './NewVisitEdit.scss';
 
-export const NewVisitEdit = ({ workers, visible, onSubmit }) => {
+export const NewVisitEdit = ({ visible, onSubmit }) => {
+  const apiInteractor = new APIInteractor()
+  const [workers, setWorkers] = useState([]);
   const [error, setError] = useState({
     isError: false,
     message: '',
@@ -16,8 +19,14 @@ export const NewVisitEdit = ({ workers, visible, onSubmit }) => {
   const [newIssueInfo, setNewIssueInfo] = useState(newIssueShape);
 
   useEffect(() => {
-    //console.log(newIssueInfo);
-  }, [newIssueInfo]);
+    apiInteractor.getFullFreeWorkersInfo(newIssueInfo.startTime, newIssueInfo.endTime).then((data) => {
+      setWorkers(data);
+    });
+  }, [newIssueInfo.startTime, newIssueInfo.endTime]);
+
+  useEffect(() => {
+    //setWorkers([]);
+  }, []);
 
   const onChangeInfo = (e) => {
     const name = e.target.name;
@@ -58,10 +67,10 @@ export const NewVisitEdit = ({ workers, visible, onSubmit }) => {
       setError({ isError: true, message: 'Sorry, we don\'t work on weekends :(' });
       return false;
     }
-    if(!validateIsPastDate(newIssueInfo.startTime) || !validateIsPastDate(newIssueInfo.endTime)) {
+   /*  if(!validateIsPastDate(newIssueInfo.startTime) || !validateIsPastDate(newIssueInfo.endTime)) {
       setError({ isError: true, message: 'Sorry, wrong date!' });
       return false;
-    }
+    } */
     if(!validateField(newIssueInfo.price)) {
       setError({ isError: true, message: 'Please, fill in price!' });
       return false;
@@ -75,7 +84,6 @@ export const NewVisitEdit = ({ workers, visible, onSubmit }) => {
   };
 
   const submitNewIssue = () => {
-    console.log('inside');
     if(validateNewIssueFields()) {
       onSubmit(newIssueInfo);
       setNewIssueInfo(newIssueShape)

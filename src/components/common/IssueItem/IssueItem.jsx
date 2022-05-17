@@ -11,20 +11,7 @@ export const IssueItem =  ({ issue, onDelete }) => {
   const [closed, setClosed] = useState(issue.closed);
   const onCloseIssue = (id) => {
     setClosed(true);
-    console.log({
-      id: issue.specialistId,
-      isBusy: 'No',
-      startTime: null,
-      endTime: null,
-    });
-    apiInteractor.closeIssue(id).then(() => {
-      apiInteractor.editSpecialistInfo({
-        id: issue.specialistId,
-        isBusy: 'No',
-        startTime: null,
-        endTime: null,
-      });
-    });
+    apiInteractor.closeIssue(id);
   };
 
   return (
@@ -67,7 +54,7 @@ export const IssueItem =  ({ issue, onDelete }) => {
               <Button
                 text="Delete"
                 className="issue__delete-button"
-                onClick={() => onDelete(issue.issueId, issue.specialistId)}
+                onClick={() => onDelete(issue.issueId)}
               />
               <Button
                 text="Close"

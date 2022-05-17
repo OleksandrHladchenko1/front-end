@@ -1,5 +1,5 @@
 export const validateEmail = (value) => {
-  if(value.trim === '') {
+  if(value.trim() === '') {
     return false;
   }
 
@@ -9,21 +9,22 @@ export const validateEmail = (value) => {
 };
 
 export const validatePassword = (value) => {
-  if(value.trim === '' || value.length <= 6) {
+  if(value.trim() === '' || value.length <= 6) {
     return false;
   }
   return true;
 }
 
 export const validateField = (value) => {
-  if(value.trim === '' || value.length < 2) {
+  console.log(value.toString().length);
+  if(!value.toString().length) {
     return false;
   }
   return true;
 }
 
 export const validatePhoneNumber = (value) => {
-  if(value.trim === '') {
+  if(value.trim() === '') {
     return false;
   }
 

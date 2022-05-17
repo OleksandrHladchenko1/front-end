@@ -138,11 +138,11 @@ export class APIInteractor {
 		}
 	};
 
-	getFullFreeWorkersInfo = async () => {
+	getFullFreeWorkersInfo = async (start, end) => {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: 'http://localhost:8080/api/workers/getFullFreeWorkerInfo',
+				url: `http://localhost:8080/api/workers/getFullFreeWorkerInfo/${start.length ? start : null }/${end.length ? end : null}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 		  return result.data.workers;
@@ -152,8 +152,6 @@ export class APIInteractor {
 	};
 
 	editWorker = async (workerId, data) => {
-		console.log(data);
-		console.log(workerId);
 		try {
 			const result = await axios({
 				method: 'patch',
@@ -161,8 +159,6 @@ export class APIInteractor {
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data
 			});
-
-			console.log(result);
 			return result;
 		} catch (err) {
 			console.log(err);
@@ -427,10 +423,37 @@ export class APIInteractor {
 				url: `http://localhost:8080/api/specialist/deleteSpecialist/${id_worker}/${id_speciality}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
 			});
-			console.log(result);
 			return result;
 		} catch (err) {
 			throw err.response.data.message;
 		}
 	};
+
+
+	createPDF = async (body) => {
+		try {
+			await axios ({
+				method: 'POST',
+				url: 'http://localhost:8080/api/document/create',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: { state: body },
+			});
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	downloadPDF = async () => {
+		try {
+			const result = await axios ({
+				method: 'GET',
+				url: 'http://localhost:8080/api/document/fetch',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				responseType: 'blob',
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
 };

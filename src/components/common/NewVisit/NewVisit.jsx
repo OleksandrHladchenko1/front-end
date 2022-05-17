@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "../Button";
 import { Close } from "../Close";
@@ -8,6 +8,7 @@ import { APIInteractor } from "../../../services";
 
 import './NewVisit.scss';
 import { validateField, validateIsPastDate, validateWorkingDay, validateWorkingHour } from "../../../services/utils";
+import { Select } from "../Select";
 
 export const NewVisit = ({ onClose, onSubmit }) => {
   const [error, setError] = useState({
@@ -17,7 +18,23 @@ export const NewVisit = ({ onClose, onSubmit }) => {
   const apiInteractor = new APIInteractor();
   const [visit, setVisit] = useState({
     dateOfVisit: '',
+    carId: '',
     comment: '',
+  });
+  const [userCars, setUserCars] = useState([]);
+
+  useEffect(() => {
+    apiInteractor.getUserCars(localStorage.getItem('userId')).then((data) => {
+      const newData = data.map(item => ({
+        value: item.id,
+        text: `${item.name} ${item.model} (${item.color})`,
+      }));
+      setUserCars(newData);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(visit);
   });
 
   const onChangeInfo = (e) => {
@@ -42,6 +59,10 @@ export const NewVisit = ({ onClose, onSubmit }) => {
     }
     if(!validateWorkingHour(visit.dateOfVisit)) {
       setError({ isError: true, message: 'Sorry, we work from 8AM to 6PM :(' });
+      return false;
+    }
+    if(!validateField(visit.carId)) {
+      setError({ isError: true, message: 'Please, choose a car!' });
       return false;
     }
 
@@ -73,6 +94,14 @@ export const NewVisit = ({ onClose, onSubmit }) => {
           onChange={onChangeInfo}
           name="dateOfVisit"
           label="Visit date"
+          required
+        />
+        <Select
+          options={userCars}
+          label="Choose your car"
+          className="new-visit__car form-input"
+          onChange={onChangeInfo}
+          name="carId"
           required
         />
         <div className="new-visit__comment-container">

@@ -6,7 +6,17 @@ import { Select } from "../../common/Select";
 import { Button } from "../../common/Button";
 
 import { APIInteractor } from "../../../services";
-import { carcasTypes, carEngineTypes, carNumberSeries, carTransmissions, newCarShape, validateCarNumber, validateEngineNumber, validateField, validateYear } from "../../../services/utils";
+import {
+  carcasTypes,
+  carEngineTypes,
+  carNumberSeries,
+  carTransmissions,
+  newCarShape,
+  validateCarNumber,
+  validateEngineNumber,
+  validateField,
+  validateYear,
+} from "../../../services/utils";
 
 import './NewCarPage.scss';
 
@@ -178,7 +188,7 @@ console.log(carInfo);
                   value={carInfo.carNumber}
                   required
                 />
-                { carInfo.carCode.trim() !== '' &&
+                { carInfo.carCode &&
                   <Select
                     name="carSeries"
                     label="Series"

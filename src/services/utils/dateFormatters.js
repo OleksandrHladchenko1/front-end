@@ -53,7 +53,9 @@ export const validateWorkingHour = (data) => {
   return result;
 };
 
-export const validateIsPastDate = (data) => new Date(data) > new Date();
+export const validateIsPastDate = (data) => {
+  console.log(new Date(data) > new Date());
+};
 
 export const validateIsFutureDate = (data) => new Date(data) < new Date();
 
@@ -65,7 +67,7 @@ export const formatForDatePickerValue = (data) => {
 };
 
 export const getDuration = (start, end) => {
-  if(start.trim() === '' || end.trim() === '') return false;
+  if(!start || !end) return false;
   const startDate = new Date(start);
   const endDate = new Date(end);
   let difference = endDate - startDate;

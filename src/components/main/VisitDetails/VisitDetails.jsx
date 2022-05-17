@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { saveAs } from 'file-saver';
 
 import { ChangeVisitStatus } from '../../common/ChangeVisitStatus';
 import { NewVisitEdit } from '../../common/NewVisitEdit';
@@ -16,11 +17,12 @@ export class VisitDetails extends Component {
     super(props);
 
     this.state = {
+      car: {},
       user: {},
       visit: {},
       issues: [],
-      workers: [],
       isNewVisitVisible: true,
+      status: localStorage.getItem('visitStatus'),
     };
 
     this.apiInteractor = new APIInteractor();
@@ -40,10 +42,22 @@ export class VisitDetails extends Component {
       dateOfVisit: `${formatDate(result.dateOfVisit)} ${formatTime(result.dateOfVisit)}`,
       status: result.status,
     };
+    const carInfo = {
+      name: `${result.name} ${result.model}`,
+      carcas: result.carcas,
+      color: result.color,
+      year: result.year,
+      number: result.number,
+      engineNumber: result.engineNumber,
+      transmission: result.transmission,
+      engine: result.engine,
+    };
+
     this.setState({
       ...this.state,
       user: { ...userInfo },
       visit: { ...visitInfo },
+      car: { ...carInfo },
     });
   };
 
@@ -53,27 +67,25 @@ export class VisitDetails extends Component {
 
   getDataForInProgressVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
-      this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), localStorage.getItem('visitStatus')),
-      this.apiInteractor.getFullFreeWorkersInfo(),
+      this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), this.state.status),
     ]);
 
   getDataForClosedVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
-      this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), localStorage.getItem('visitStatus')),
+      this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), this.state.status),
     ]);
 
   getDataAfterUpdate = async () => {
-    if (localStorage.getItem('visitStatus') === 'Planned') {
+    if (this.state.status === 'Planned') {
       this.getDataForPlannedVisit().then((data) => {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
       });
-    } else if (localStorage.getItem('visitStatus') === 'In Progress') {
+    } else if (this.state.status === 'In Progress') {
       this.getDataForInProgressVisit().then((data) => {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
         this.setState({
           ...this.state,
           issues: [...data[1].data.issues],
-          workers: [...data[2]],
         });
       });
     } else {
@@ -97,12 +109,13 @@ export class VisitDetails extends Component {
   };
 
   changeVisitStatus = (status) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      visit: { ...prevState.visit, status }
+    }));
+    this.setState({ status });
     localStorage.setItem('visitStatus', status);
     this.apiInteractor.changeVisitStatus(localStorage.getItem('visitId'), status);
-    this.setState((prevState) => ({
-        ...prevState,
-        visit: { ...prevState.visit, status }
-      }));
   };
 
   showNewIssue = () => {
@@ -110,12 +123,6 @@ export class VisitDetails extends Component {
   };
 
   submitCreateIssue = (issue) => {
-    const specialist = {
-      isBusy: 'Yes',
-      startTime: issue.startTime,
-      endTime: issue.endTime,
-      id: issue.specialistId,
-    };
     const newIssue = {
       visitId: localStorage.getItem('visitId'),
       specialistId: issue.specialistId,
@@ -127,31 +134,31 @@ export class VisitDetails extends Component {
     };
 
     this.apiInteractor.addIssue(newIssue).then(() => {
-      this.apiInteractor.editSpecialistInfo(specialist).then(() => {
-        this.setState((prevState) => ({
-            ...prevState,
-            issues: [issue, ...prevState.issues],
-            isNewVisitVisible: false,
-          }));
-        this.getDataAfterUpdate();
-      });
+      this.setState((prevState) => ({
+          ...prevState,
+          issues: [issue, ...prevState.issues],
+          isNewVisitVisible: false,
+        }));
+      this.getDataAfterUpdate();
     });
   };
 
-  deleteIssue = (id, specialistId) => {
-    this.apiInteractor.deleteIssue(id).then(() => {
-      this.apiInteractor.editSpecialistInfo({
-        id: specialistId,
-        isBusy: 'No',
-        startTime: null,
-        endTime: null,
-      });
-    });
+  deleteIssue = (id) => {
+    this.apiInteractor.deleteIssue(id);
     this.setState((prevProps) => ({
         ...prevProps,
         issues: [...prevProps.issues.filter((issue) => issue.issueId !== id)],
       }));
   };
+
+  getPDF = () => {
+    this.apiInteractor.createPDF(JSON.stringify(this.state)).then(() => {
+      this.apiInteractor.downloadPDF().then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `${this.state.visit.dateOfVisit}_${this.state.user.fullName}.pdf`);
+      });
+    });
+  }
 
   render() {
     const {
@@ -160,10 +167,18 @@ export class VisitDetails extends Component {
       email,
       phoneNumber,
     } = this.state.user;
+    const { dateOfVisit } = this.state.visit;
+    const { status }= this.state;
     const {
-      dateOfVisit,
-      status,
-    } = this.state.visit;
+      name,
+      carcas,
+      color,
+      year,
+      engine,
+      transmission,
+      number,
+      engineNumber,
+    } = this.state.car;
     const issuesList = this.state.issues.map((issue, index) => (
         <IssueItem key={index} issue={issue} onDelete={this.deleteIssue} />
       ));
@@ -201,6 +216,49 @@ export class VisitDetails extends Component {
             </div>
             <div className="visit-detail__visit-info">
               <div className="visit-detail__user-info-heading">
+                <h2 className="visit-detail__user-info-heading-text">Car Information</h2>
+              </div>
+              <div className="visit-detail__user-info-main">
+                <div className="visit-detail__left">
+                  <div className="visit-detail__visit-date-container">
+                    <p className="visit-detail__visit-date strong">Name</p>
+                    <span className="visit-detail__visit-date-text main-info">{name}</span>
+                  </div>
+                  <div className="visit-detail__visit-date-container">
+                    <p className="visit-detail__visit-date strong">Year</p>
+                    <span className="visit-detail__visit-date-text main-info">{year}</span>
+                  </div>
+                  <div className="visit-detail__status-container">
+                    <p className="visit-detail__status strong">Transmission</p>
+                    <span className="visit-detail__visit-date-text main-info">{transmission}</span>
+                  </div>
+                  <div className="visit-detail__status-container">
+                    <p className="visit-detail__status strong">Car number</p>
+                    <span className="visit-detail__visit-date-text main-info">{number}</span>
+                  </div>
+                </div>
+                <div className="visit-detail__right">
+                  <div className="visit-detail__status-container">
+                    <p className="visit-detail__status strong">Carcas</p>
+                    <span className="visit-detail__visit-date-text main-info">{carcas}</span>
+                  </div>
+                  <div className="visit-detail__status-container">
+                    <p className="visit-detail__status strong">Color</p>
+                    <span className="visit-detail__visit-date-text main-info">{color}</span>
+                  </div>
+                  <div className="visit-detail__status-container">
+                    <p className="visit-detail__status strong">Engine</p>
+                    <span className="visit-detail__visit-date-text main-info">{engine}</span>
+                  </div>
+                  <div className="visit-detail__status-container">
+                    <p className="visit-detail__status strong">Engine number</p>
+                    <span className="visit-detail__visit-date-text main-info">{engineNumber}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="visit-detail__visit-info">
+              <div className="visit-detail__user-info-heading">
                 <h2 className="visit-detail__user-info-heading-text">Visit Information</h2>
               </div>
               <div className="visit-detail__user-info-main">
@@ -215,42 +273,45 @@ export class VisitDetails extends Component {
                     <p className="visit-detail__status strong">Status</p>
                     <ChangeVisitStatus onChange={this.changeVisitStatus} />
                   </div>
+                  { !!this.state.issues.length &&
+                    <Button
+                      text="Get Document"
+                      onClick={this.getPDF}
+                      className="success"
+                    />
+                  }
                 </div>
               </div>
             </div>
-            <div className="visit-detail__user-info-heading">
-              <h2 className="visit-detail__user-info-heading-text">Issues Information</h2>
-            </div>
-            { status === 'Planned'
-              && <div className="visit-detail__change-please">
-                <p className="visit-detail__change-please-text">Please, change status to "In Progress" to add issues</p>
-              </div>}
+            { status === 'Planned' && localStorage.getItem('startStatus') === 'Worker'
+              && 
+              <>
+                <div className="visit-detail__user-info-heading">
+                  <h2 className="visit-detail__user-info-heading-text">Issues Information</h2>
+                </div>
+                <div className="visit-detail__change-please">
+                  <p className="visit-detail__change-please-text">Please, change status to "In Progress" to add issues</p>
+                </div>
+              </>
+            }
             { status === 'In Progress'
               && localStorage.getItem('startStatus') !== 'User'
               && <>
                 { !this.state.isNewVisitVisible
                   && <Button
-                    text={this.addLogo}
+                    text={`Add new Issue ${this.addLogo}`}
                     className="visit-detail__show-new-issue"
                     onClick={this.showNewIssue}
                   />}
                 <div className="visit-detail__add-issue">
-                  <NewVisitEdit workers={this.state.workers} visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
+                  <NewVisitEdit visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
                 </div>
               </>}
             <>
-                <div className="visit-detail__issues-info">
-                  { issuesList.length !== 0 && issuesList }
-                </div> 
-              </>
-            {/* { status === "Closed" &&
-              <>
-                <hr className="visit-detail__line" />
-                <div className="visit-detail__issues-info">
-                  { issuesList }
-                </div>
-              </>
-            } */}
+              <div className="visit-detail__issues-info">
+                { issuesList.length !== 0 && issuesList }
+              </div> 
+            </>
           </div>
         </article>
       </main>
