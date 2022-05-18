@@ -456,4 +456,18 @@ export class APIInteractor {
 			throw err.response.data.message;
 		}
 	}
+
+	getWorkload = async () => {
+		try {
+			const result = await axios ({
+				method: 'GET',
+				url: 'http://localhost:8080/api/statistics/workload',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			console.log(result.data.workload);
+			return result.data.workload;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
 };

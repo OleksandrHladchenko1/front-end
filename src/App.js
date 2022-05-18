@@ -10,10 +10,11 @@ import { VisitPage } from './components/main/VisitPage';
 import { VisitDetails } from './components/main/VisitDetails';
 import { NewCarPage } from './components/main/NewCarPage';
 import { UserCarPage } from './components/main/UserCarPage';
+import { AdminPage } from './components/main/AdminPage';
+import { StatisticsPage } from './components/main/StatisticsPage';
 import { Header } from './components/common/Header';
 
 import './App.scss';
-import { AdminPage } from './components/main/AdminPage/AdminPage';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
       <Route path='/car' element={[<Header key="header" />, <NewCarPage key="newCarPage" />]} />
       <Route path='/my-cars' element={[<Header key="header" />, <UserCarPage key="userCarPage" />]} />
       <Route path='/admin' element={[<Header key="header" />, <AdminPage key="admin" />]} />
+      <Route path='/statistics' element={[<Header key="header" />, <StatisticsPage key="statistics" />]} />
     </Routes>
   );
 };

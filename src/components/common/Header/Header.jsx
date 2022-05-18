@@ -37,6 +37,11 @@ export const Header = () => {
                       Admin Page
                     </Link>
                   </li>
+                  <li className="header__link">
+                    <Link className="header__visits" to="/statistics">
+                      Statistics
+                    </Link>
+                  </li>
                 </>
               }
               { localStorage.getItem('startStatus') === "User" &&
