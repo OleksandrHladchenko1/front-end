@@ -1,19 +1,21 @@
+import { FormattedMessage } from "react-intl";
+
 export const registerErrors = {
   email: {
     error: false,
-    message: 'Wrong email!',
+    message: <FormattedMessage id="register.error.email" />,
   },
   firstName: {
     error: false,
-    message: 'Wrong firstname!',
+    message: <FormattedMessage id="register.error.firstName" />,
   },
   phoneNumber: {
     error: false,
-    message: 'Wrong phone number!',
+    message: <FormattedMessage id="register.error.phoneNumber" />,
   },
   password: {
     error: false,
-    message: 'Wrong password!'
+    message: <FormattedMessage id="register.error.password" />,
   },
 };
 

@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { FormattedMessage } from 'react-intl';
 
 import { Logo } from "../Logo";
+import { Button } from "../Button";
+import { Context } from "../Wrapper";
 
 import logo from '../../../assets/logo.svg';
 
 import './Header.scss';
 
 export const Header = () => {
+  const context = useContext(Context);
+
   const logout = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('userId');
@@ -26,7 +31,7 @@ export const Header = () => {
             <ul className="header__link-container">
               <li className="header__link">
                 <Link className="header__visits" to="/visits">
-                  Visits
+                  <FormattedMessage id="header.visits" />
                 </Link>
               </li>
               {
@@ -34,12 +39,12 @@ export const Header = () => {
                 <>
                   <li className="header__link">
                     <Link className="header__visits" to="/admin">
-                      Admin Page
+                      <FormattedMessage id="header.adminPage" />
                     </Link>
                   </li>
                   <li className="header__link">
                     <Link className="header__visits" to="/statistics">
-                      Statistics
+                      <FormattedMessage id="header.statistics" />
                     </Link>
                   </li>
                 </>
@@ -48,22 +53,41 @@ export const Header = () => {
                 <>
                   <li className="header__link">
                     <Link className="header__user-page" to="/userPage">
-                      My Profile
+                      <FormattedMessage id="header.myProfile" />
                     </Link>
                   </li>
                   <li className="header__link">
                     <Link className="header__user-cars" to="/my-cars">
-                      My Cars
+                      <FormattedMessage id="header.myCars" />
                     </Link>
                   </li>
                 </>
               }
               <li className="header__link">
+                <Button
+                  text="UA"
+                  onClick={(e) => {
+                    localStorage.setItem('language', e.target.value);
+                    context.selectLang(e);
+                  }}
+                  value="uk"
+                  className="change-lang ua"
+                />
+                <Button
+                  text="EN"
+                  onClick={(e) => {
+                    localStorage.setItem('language', e.target.value);
+                    context.selectLang(e);
+                  }}
+                  value="en-US"
+                  className="change-lang en"
+                />
+              </li>
+              <li className="header__link">
                 <Link className="header__logout" to="/" onClick={logout}>
-                  Logout
+                  <FormattedMessage id="header.logout" />
                 </Link>
               </li>
-              
             </ul>
           </nav>
         </div>

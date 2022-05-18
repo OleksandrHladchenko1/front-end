@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { Button } from "../Button";
 import { NoValue } from '../NoValue';
@@ -22,7 +23,11 @@ export const SearchResultItem = ({ item, onClick, sequence }) => {
           <h5 className="item__phoneNumber">{item.comment || <NoValue />}</h5>
         </>
       )}
-      <Button text="Details" onClick={() => onClick(item.id, item.status)} className="item__details-button" />
+      <Button
+        text={<FormattedMessage id="visitItem.details" />}
+        onClick={() => onClick(item.id, item.status)}
+        className="item__details-button"
+      />
     </div>
   );
 }

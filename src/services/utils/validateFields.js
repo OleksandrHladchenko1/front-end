@@ -16,7 +16,6 @@ export const validatePassword = (value) => {
 }
 
 export const validateField = (value) => {
-  console.log(value.toString().length);
   if(!value.toString().length) {
     return false;
   }

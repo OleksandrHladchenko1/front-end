@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 import { NoValue } from '../../common/NoValue';
 import { Button } from '../../common/Button';
@@ -61,13 +62,13 @@ export class UserPage extends Component {
 
     const changePasswordButton = (
       <Link className='user__change-password link' to='/changePassword'>
-        Change Password
+        <FormattedMessage id="userPage.changePasswordButton" />
       </Link>
     );
 
     const addCarButton = (
       <Link className='user__change-password link' to='/car'>
-        Add car
+        <FormattedMessage id="userPage.addCarButton" />
       </Link>
     );
 
@@ -92,11 +93,11 @@ export class UserPage extends Component {
             <div className="user__info">
               <div className="user__header-info">
                 <div className="user__bonuses">
-                  <h2 className="user__bonuses-title">Bonuses</h2>
+                  <h2 className="user__bonuses-title"><FormattedMessage id="userPage.bonuses" /></h2>
                   <h3 className="user__bonuses-amount">{discount} %</h3>
                 </div>
                 <div className="user__birthday">
-                  <h2 className="user__birthday-title">Birthday</h2>
+                  <h2 className="user__birthday-title"><FormattedMessage id="userPage.birthday" /></h2>
                   <h3 className="user__birthday-amount">{formatDate(dateOfBirth) || <NoValue />}</h3>
                 </div>
               </div>
@@ -108,14 +109,16 @@ export class UserPage extends Component {
                 </div>
               </div>
               <div className="user__contacts">
-                <h2 className="user__contacts-heading">Contact info</h2>
+                <h2 className="user__contacts-heading">
+                  <FormattedMessage id="userPage.contactInfo" />
+                </h2>
                 <div className="user__email-phone">
                   <div className="user__phone-container">
-                    <h3 className="user__phone-text">Phone</h3>
+                    <h3 className="user__phone-text"><FormattedMessage id="userPage.phoneNumber" /></h3>
                     <h4 className="user__phone">{phoneNumber}</h4>
                   </div>
                   <div className="user__email-container">
-                    <h3 className="user__email-text">E-mail</h3>
+                    <h3 className="user__email-text"><FormattedMessage id="userPage.email" /></h3>
                     <h4 className="user__email">{email}</h4>
                   </div>
                 </div>
@@ -130,7 +133,7 @@ export class UserPage extends Component {
                   className="user__add-car success button users-buttons"
                 />
                 <Button
-                  text="Edit information"
+                  text={<FormattedMessage id="userPage.editInfoButton" />}
                   onClick={this.showEditModal}
                   className="user__add-car success button users-buttons"
                 />

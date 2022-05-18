@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 import { Button } from "../Button";
 import { Close } from "../Close";
 import { Input } from "../Input";
+import { Select } from "../Select";
 
 import { APIInteractor } from "../../../services";
 
 import './NewVisit.scss';
-import { validateField, validateIsPastDate, validateWorkingDay, validateWorkingHour } from "../../../services/utils";
-import { Select } from "../Select";
+import {
+  validateField,
+  validateIsPastDate,
+  validateWorkingDay,
+  validateWorkingHour,
+} from "../../../services/utils";
 
-export const NewVisit = ({ onClose, onSubmit }) => {
+const NewVisit = ({ onClose, onSubmit, intl }) => {
   const [error, setError] = useState({
     isError: false,
     message: '',
@@ -46,23 +52,23 @@ export const NewVisit = ({ onClose, onSubmit }) => {
 
   const validateVisitDate = () => {
     if(!validateField(visit.dateOfVisit)) {
-      setError({ isError: true, message: 'Please, fill date and time' });
+      setError({ isError: true, message: <FormattedMessage id="newVisit.error.date.fill" /> });
       return false;
     }
     if(!validateIsPastDate(visit.dateOfVisit)) {
-      setError({ isError: true, message: 'Sorry, you chose wrong date :(' });
+      setError({ isError: true, message: <FormattedMessage id="newVisit.error.date.wrongDate" /> });
       return false;
     }
     if(!validateWorkingDay(visit.dateOfVisit)) {
-      setError({ isError: true, message: 'Sorry, we don\'t work on weekends :(' });
+      setError({ isError: true, message: <FormattedMessage id="newVisit.error.date.weekends" /> });
       return false;
     }
     if(!validateWorkingHour(visit.dateOfVisit)) {
-      setError({ isError: true, message: 'Sorry, we work from 8AM to 6PM :(' });
+      setError({ isError: true, message: <FormattedMessage id="newVisit.error.date.notWorkHours" /> });
       return false;
     }
     if(!validateField(visit.carId)) {
-      setError({ isError: true, message: 'Please, choose a car!' });
+      setError({ isError: true, message: <FormattedMessage id="newVisit.error.car.fill" /> });
       return false;
     }
 
@@ -83,33 +89,37 @@ export const NewVisit = ({ onClose, onSubmit }) => {
     <form className="new-visit" method="POST">
       <div className="new-visit__heading-container">
         <div className="new-visit__heading">
-          <h2 className="new-visit-title">Create new visit</h2>
+          <h2 className="new-visit-title">
+            <FormattedMessage id="newVisit.title" />
+          </h2>
         </div>
       </div>
       <div className="new-visit__inputs-container">
         <Input
           type="datetime-local"
-          placeholder="Choose date"
+          placeholder={intl.formatMessage({ id: "newVisit.date.placeholder" })}
           className="new-visit__date form-input"
           onChange={onChangeInfo}
           name="dateOfVisit"
-          label="Visit date"
+          label={<FormattedMessage id="newVisit.date.label" />}
           required
         />
         <Select
           options={userCars}
-          label="Choose your car"
+          label={<FormattedMessage id="newVisit.car.label" />}
           className="new-visit__car form-input"
           onChange={onChangeInfo}
           name="carId"
           required
         />
         <div className="new-visit__comment-container">
-          <label htmlFor="comment">Comment</label>
+          <label htmlFor="comment">
+            <FormattedMessage id="newVisit.comment.label" />
+          </label>
           <textarea
             className="new-visit__comment form-input"
             name="comment"
-            placeholder="Your comment..."
+            placeholder={intl.formatMessage({ id: "newVisit.comment.placeholder" })}
             onChange={onChangeInfo}
           >
           </textarea>
@@ -117,7 +127,7 @@ export const NewVisit = ({ onClose, onSubmit }) => {
       </div>
       <div className="new-visit__button-container">
         <Button
-          text="Create"
+          text={<FormattedMessage id="newVisit.create" />}
           onClick={createVisit}
           className="new-visit__button form-button"
           type="submit"
@@ -130,3 +140,5 @@ export const NewVisit = ({ onClose, onSubmit }) => {
     </form>
   );
 };
+
+export default injectIntl(NewVisit);

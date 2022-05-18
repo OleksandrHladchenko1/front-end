@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 import './Button.scss';
 
-export const Button = ({ text, type, className, onClick }) => {
+export const Button = ({ text, type, className, onClick, value }) => {
   return (
-    <button type={type} className={className} onClick={onClick} >{text}</button>
+    <button value={value} type={type} className={className} onClick={onClick} >{text}</button>
   );
 };
 
@@ -19,10 +19,12 @@ Button.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string.isRequired,
   type: PropTypes.string,
+  value: PropTypes.string,
 };
 
 Button.defaultProps = {
   text: '',
   type: 'button',
   onClick: noop,
+  value: null,
 };

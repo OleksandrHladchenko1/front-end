@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { saveAs } from 'file-saver';
 
 import { ChangeVisitStatus } from '../../common/ChangeVisitStatus';
 import { NewVisitEdit } from '../../common/NewVisitEdit';
+import { Button } from '../../common/Button';
+import { IssueItem } from '../../common/IssueItem';
 
 import { APIInteractor } from '../../../services';
 import { concatFullName, formatDate, formatTime } from '../../../services/utils';
 import plus from '../../../assets/plus.svg';
 
 import './VisitDetails.scss';
-import { Button } from '../../common/Button';
-import { IssueItem } from '../../common/IssueItem/IssueItem';
 
 export class VisitDetails extends Component {
   constructor(props) {
@@ -189,26 +190,36 @@ export class VisitDetails extends Component {
           <div className="visit-detail__container">
             <div className="visit-detail__user-info">
               <div className="visit-detail__user-info-heading">
-                <h2 className="visit-detail__user-info-heading-text">User Information</h2>
+                <h2 className="visit-detail__user-info-heading-text">
+                  <FormattedMessage id="visitDetails.userInfo" />
+                </h2>
               </div>
               <div className="visit-detail__user-info-main">
                 <div className="visit-detail__left">
                   <div className="visit-detail__fullname-container">
-                    <p className="visit-detail__fullname strong">Full name</p>
+                    <p className="visit-detail__fullname strong">
+                      <FormattedMessage id="visitDetails.userInfo.fullName" />
+                    </p>
                     <span className="visit-detail__fullname-text main-info">{fullName}</span>
                   </div>
                   <div className="visit-detail__discount-container">
-                    <p className="visit-detail__discount strong">Discount</p>
+                    <p className="visit-detail__discount strong">
+                      <FormattedMessage id="visitDetails.userInfo.discount" />
+                    </p>
                     <span className="visit-detail__discount-text main-info">{discount}</span>
                   </div>
                 </div>
                 <div className="visit-detail__right">
                   <div className="visit-detail__email-container">
-                    <p className="visit-detail__email strong">E-mail</p>
+                    <p className="visit-detail__email strong">
+                      <FormattedMessage id="visitDetails.userInfo.email" />
+                    </p>
                     <span className="visit-detail__email-text main-info">{email}</span>
                   </div>
                   <div className="visit-detail__phoneNumber-container">
-                    <p className="visit-detail__phoneNumber strong">Phone number</p>
+                    <p className="visit-detail__phoneNumber strong">
+                      <FormattedMessage id="visitDetails.userInfo.phoneNumber" />
+                    </p>
                     <span className="visit-detail__phoneNumber-text main-info">{phoneNumber}</span>
                   </div>
                 </div>
@@ -216,42 +227,60 @@ export class VisitDetails extends Component {
             </div>
             <div className="visit-detail__visit-info">
               <div className="visit-detail__user-info-heading">
-                <h2 className="visit-detail__user-info-heading-text">Car Information</h2>
+                <h2 className="visit-detail__user-info-heading-text">
+                  <FormattedMessage id="visitDetails.carInfo" />
+                </h2>
               </div>
               <div className="visit-detail__user-info-main">
                 <div className="visit-detail__left">
                   <div className="visit-detail__visit-date-container">
-                    <p className="visit-detail__visit-date strong">Name</p>
+                    <p className="visit-detail__visit-date strong">
+                      <FormattedMessage id="visitDetails.carInfo.name" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{name}</span>
                   </div>
                   <div className="visit-detail__visit-date-container">
-                    <p className="visit-detail__visit-date strong">Year</p>
+                    <p className="visit-detail__visit-date strong">
+                      <FormattedMessage id="visitDetails.carInfo.year" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{year}</span>
                   </div>
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Transmission</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.carInfo.transmission" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{transmission}</span>
                   </div>
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Car number</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.carInfo.carNumber" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{number}</span>
                   </div>
                 </div>
                 <div className="visit-detail__right">
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Carcas</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.carInfo.carcas" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{carcas}</span>
                   </div>
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Color</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.carInfo.color" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{color}</span>
                   </div>
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Engine</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.carInfo.engine" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{engine}</span>
                   </div>
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Engine number</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.carInfo.engineNumber" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{engineNumber}</span>
                   </div>
                 </div>
@@ -259,18 +288,24 @@ export class VisitDetails extends Component {
             </div>
             <div className="visit-detail__visit-info">
               <div className="visit-detail__user-info-heading">
-                <h2 className="visit-detail__user-info-heading-text">Visit Information</h2>
+                <h2 className="visit-detail__user-info-heading-text">
+                  <FormattedMessage id="visitDetails.visitInfo" />
+                </h2>
               </div>
               <div className="visit-detail__user-info-main">
                 <div className="visit-detail__left">
                   <div className="visit-detail__visit-date-container">
-                    <p className="visit-detail__visit-date strong">Visit date</p>
+                    <p className="visit-detail__visit-date strong">
+                      <FormattedMessage id="visitDetails.visitInfo.date" />
+                    </p>
                     <span className="visit-detail__visit-date-text main-info">{dateOfVisit}</span>
                   </div>
                 </div>
                 <div className="visit-detail__right">
                   <div className="visit-detail__status-container">
-                    <p className="visit-detail__status strong">Status</p>
+                    <p className="visit-detail__status strong">
+                      <FormattedMessage id="visitDetails.visitInfo.status" />
+                    </p>
                     <ChangeVisitStatus onChange={this.changeVisitStatus} />
                   </div>
                   { !!this.state.issues.length &&

@@ -8,8 +8,9 @@ import { APIInteractor } from "../../../services";
 import { setItemToLS, validateEmail, validatePassword } from "../../../services/utils";
 
 import './Login.scss';
+import { FormattedMessage, injectIntl, } from "react-intl";
 
-export const Login = () => {
+const Login = ({ intl }) => {
   const startStatus = localStorage.getItem('startStatus');
   const navigate = useNavigate();
   const apiInteractor = new APIInteractor();
@@ -65,32 +66,37 @@ export const Login = () => {
               <div className="form__inputs-container login">
                 <Input
                   className="form__email form-input"
-                  placeholder="Enter your email"
+                  placeholder={intl.formatMessage({ id: "login.email.placeholder" })}
                   name="email" onChange={onChangeInfo}
-                  label="Email"
+                  label={<FormattedMessage id="login.email.label" />}
                 />
                 <Input
                   className="form__password form-input"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={intl.formatMessage({ id: "login.password.placeholder" })}
                   name="password"
                   onChange={onChangeInfo}
-                  label="Password"
+                  label={<FormattedMessage id="login.password.label" />}
                 />
-                <Button className="form__submit form-button button" type="submit" onClick={login} text="Login" />
+                <Button
+                  className="form__submit form-button button"
+                  type="submit"
+                  onClick={login}
+                  text={<FormattedMessage id="login.button" />}
+                />
               </div>
               <div className="form__error">
                 {emailError && 
-                  <p className="form__email-error error">Wrong email or password!</p>
+                  <p className="form__email-error error">{<FormattedMessage id="login.error" />}</p>
                 }
               </div>
               {
                 startStatus === 'User' &&
                 <div className="form__regirect">
                   <p className="form__redirect-text">
-                    If you don`t have an account you can{' '}
+                  {<FormattedMessage id="login.dontHaveAccount" />}{' '}
                     <Link className='form__link' to='/register'>
-                      Register
+                      <FormattedMessage id="login.gotoRegister" />
                     </Link>
                   </p>
                 </div>
@@ -102,3 +108,5 @@ export const Login = () => {
     </main>
   );
 };
+
+export default injectIntl(Login);

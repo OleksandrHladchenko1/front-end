@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FormattedMessage, injectIntl } from "react-intl";
 
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
@@ -9,7 +10,7 @@ import { registerErrors, validateEmail, validateField, validatePassword, validat
 
 import './Register.scss';
 
-export const Register = () => {
+const Register = ({ intl }) => {
   const navigate = useNavigate();
   const apiInteractor = new APIInteractor();
   const [userInfo, setUserInfo] = useState({
@@ -86,30 +87,30 @@ export const Register = () => {
               <div className="form__inputs-container">
                 <Input
                   className="form__email form-input"
-                  placeholder="Enter your email"
+                  placeholder={intl.formatMessage({ id: "register.email.placeholder" })}
                   name="email"
                   onChange={onChangeInfo}
-                  label="Email"
+                  label={<FormattedMessage id="register.email.label" />}
                 />
                 {errors.email.error &&
                   <p className="form__email-error error">{errors.email.message}</p>
                 }
                 <Input
                   className="form__first-name form-input"
-                  placeholder="Enter your firstname"
+                  placeholder={intl.formatMessage({ id: "register.firstName.placeholder" })}
                   name="firstName"
                   onChange={onChangeInfo}
-                  label="First Name"
+                  label={<FormattedMessage id="register.firstName.label" />}
                 />
                 {errors.firstName.error &&
                   <p className="form__first-name-error error">{errors.firstName.message}</p>
                 }
                 <Input
                   className="form__phone-number form-input"
-                  placeholder="Enter your phone number"
+                  placeholder={intl.formatMessage({ id: "register.phoneNumber.placeholder" })}
                   name="phoneNumber"
                   onChange={onChangeInfo}
-                  label="Phone Number"
+                  label={<FormattedMessage id="register.phoneNumber.label" />}
                 />
                 {errors.phoneNumber.error &&
                   <p className="form__phone-number-error error">{errors.phoneNumber.message}</p>
@@ -117,21 +118,26 @@ export const Register = () => {
                 <Input
                   className="form__password form-input"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={intl.formatMessage({ id: "register.password.placeholder" })}
                   name="password"
                   onChange={onChangeInfo}
-                  label="Password"  
+                  label={<FormattedMessage id="register.password.label" />}
                 />
                 {errors.password.error &&
                   <p className="form__password-error error">{errors.password.message}</p>
                 }
-                <Button className="form__submit form-button button" type="submit" onClick={register} text="Register" />
+                <Button
+                  className="form__submit form-button button"
+                  type="submit"
+                  onClick={register}
+                  text={<FormattedMessage id="register.button" />}
+                />
               </div>
               <div className="form__regirect">
                 <p className="form__redirect-text">
-                  If you don`t have an account you can{' '}
+                  <FormattedMessage id="register.haveAccount" />{' '}
                   <Link className='form__link' to='/login'>
-                    Login
+                    <FormattedMessage id="register.gotoLogin" />
                   </Link>
                 </p>
               </div>
@@ -142,3 +148,5 @@ export const Register = () => {
     </main>
   );
 };
+
+export default injectIntl(Register);

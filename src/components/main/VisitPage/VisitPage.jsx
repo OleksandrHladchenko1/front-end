@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Button } from "../../common/Button";
-import { NewVisit } from '../../common/NewVisit';
+import NewVisit from '../../common/NewVisit/NewVisit';
 import { SearchResultList } from "../../common/SearchResultList/SearchResultList";
 import { Modal } from "../../common/Modal";
 
@@ -9,6 +9,7 @@ import { APIInteractor } from "../../../services";
 import { removeClassName, upperFirstLetter, getLastElement, } from "../../../services/utils";
 
 import './VisitPage.scss';
+import { FormattedMessage } from "react-intl";
 
 export class VisitPage extends Component {
   constructor(props) {
@@ -100,21 +101,21 @@ export class VisitPage extends Component {
               <ul className="visits__filter">
                 <li className="visits__filter-critetia">
                   <Button
-                    text="Planned"
+                    text={<FormattedMessage id="visitPage.planned" />}
                     onClick={this.filterVisits}
                     className="visits__button planned active"
                   />
                 </li>
                 <li className="visits__filter-critetia">
                   <Button
-                    text="In Progress"
+                    text={<FormattedMessage id="visitPage.inProgress" />}
                     onClick={this.filterVisits}
                     className="visits__button inProgress"
                   />
                 </li>
                 <li className="visits__filter-critetia">
                   <Button
-                    text="Closed"
+                    text={<FormattedMessage id="visitPage.closed" />}
                     onClick={this.filterVisits}
                     className="visits__button closed"
                   />
@@ -123,14 +124,14 @@ export class VisitPage extends Component {
             </div>
             <div className="visits__results-container">
               { !this.state.filterVisits.length ?
-                <span>No visits was found</span> :
+                <span className="no-visits"><FormattedMessage id="visitPage.noVisits" /></span> :
                 filterVisits
               }
             </div>
             { this.startStatus === 'User' &&
               <div className="visits__add-container">
                 <Button
-                  text="Create visit"
+                  text={<FormattedMessage id="visitPage.createVisit" />}
                   onClick={this.openModal}
                   className="visits__add-button button success"
                 />

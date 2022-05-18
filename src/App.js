@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { StartPage } from './components/main/StartPage/StartPage';
-import { Login } from './components/main/Login';
-import { Register } from './components/main/Register';
+import Login from './components/main/Login/Login';
+import Register from './components/main/Register/Register';
 import { UserPage } from './components/main/UserPage/UserPage';
 import { ChangePassword } from './components/main/ChangePassword';
 import { VisitPage } from './components/main/VisitPage';

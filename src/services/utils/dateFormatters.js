@@ -54,7 +54,7 @@ export const validateWorkingHour = (data) => {
 };
 
 export const validateIsPastDate = (data) => {
-  console.log(new Date(data) > new Date());
+  return new Date(data) > new Date();
 };
 
 export const validateIsFutureDate = (data) => new Date(data) < new Date();
