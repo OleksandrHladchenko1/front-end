@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Input } from "../Input";
 import { Select } from "../Select";
@@ -10,6 +11,7 @@ import { concatFullName, getDuration, newIssueShape, validateField, validateIsPa
 import './NewVisitEdit.scss';
 
 export const NewVisitEdit = ({ visible, onSubmit }) => {
+  const intl = useIntl();
   const apiInteractor = new APIInteractor()
   const [workers, setWorkers] = useState([]);
   const [error, setError] = useState({
@@ -94,12 +96,14 @@ export const NewVisitEdit = ({ visible, onSubmit }) => {
     <form className="edit">
       <div className="edit__container">
         <div className="edit__issue-info">
-          <h3 className="edit__issue-title">Add issue info</h3>
+          <h3 className="edit__issue-title">
+            <FormattedMessage id="newIssue.issueInfo.title" />
+          </h3>
           <Input
-            placeholder="Description"
+            placeholder={intl.formatMessage({ id: 'newIssue.issueInfo.description.placeholder' })}
             className="edit__description form-input"
             name="description"
-            label="Description"
+            label={<FormattedMessage id="newIssue.issueInfo.description.label" />}
             value={newIssueInfo.description}
             onChange={onChangeInfo}
             required
@@ -108,7 +112,7 @@ export const NewVisitEdit = ({ visible, onSubmit }) => {
             type="datetime-local"
             className="edit__startTime form-input"
             name="startTime"
-            label="Start of work"
+            label={<FormattedMessage id="newIssue.issueInfo.start.label" />}
             value={newIssueInfo.startTime}
             onChange={onChangeInfo}
             required
@@ -117,7 +121,7 @@ export const NewVisitEdit = ({ visible, onSubmit }) => {
             type="datetime-local"
             className="edit__endTime form-input"
             name="endTime"
-            label="End of work"
+            label={<FormattedMessage id="newIssue.issueInfo.end.label" />}
             value={newIssueInfo.endTime}
             onChange={onChangeInfo}
             required
@@ -126,17 +130,19 @@ export const NewVisitEdit = ({ visible, onSubmit }) => {
             type="number"
             className="edit__price form-input"
             name="price"
-            label="Price (UAH)"
+            label={<FormattedMessage id="newIssue.issueInfo.price.label" />}
             value={newIssueInfo.price}
             onChange={onChangeInfo}
             required
           />
         </div>
         <div className="edit__worker-info">
-          <h3 className="edit__issue-title">Add worker info</h3>
+          <h3 className="edit__issue-title">
+            <FormattedMessage id="newIssue.workerInfo.title" />
+          </h3>
           <Select
             name="workers"
-            label="Workers"
+            label={<FormattedMessage id="newIssue.workerInfo.workers.label" />}
             className="edit__worker-select form-input"
             options={selectData()}
             onChange={onChangeWorker}
@@ -144,7 +150,12 @@ export const NewVisitEdit = ({ visible, onSubmit }) => {
           />
         </div>
         <div className="edit__duration">
-          <h3 className="edit__duration-text">Duration: {`${getDuration(newIssueInfo.startTime, newIssueInfo.endTime) || '-'}`}</h3>
+          <h3 className="edit__duration-text">
+            <FormattedMessage
+              id="newIssue.workerInfo.duration"
+              values={{ duration: `${getDuration(newIssueInfo.startTime, newIssueInfo.endTime)}` }}
+            />
+          </h3>
         </div>
         <div className="edit__errors">
           { error.isError &&
@@ -153,7 +164,7 @@ export const NewVisitEdit = ({ visible, onSubmit }) => {
         </div>
         <div className="edit__submit">
           <Button
-            text="Save"
+            text={<FormattedMessage id="newIssue.workerInfo.button.save" />}
             onClick={submitNewIssue}
             className="edit__submit-button button success"
           />

@@ -16,7 +16,7 @@ export const validatePassword = (value) => {
 }
 
 export const validateField = (value) => {
-  if(!value.toString().length) {
+  if(!value || !value.toString().length) {
     return false;
   }
   return true;
@@ -26,10 +26,8 @@ export const validatePhoneNumber = (value) => {
   if(value.trim() === '') {
     return false;
   }
-
-  const regExp = /[+]\d{12}/gmi;
-
-  return regExp.test(value);
+  //const regExp = /[+]\d{12}/gmi;
+  return value.length === 13;
 }
 
 export const validateYear = (year) => {

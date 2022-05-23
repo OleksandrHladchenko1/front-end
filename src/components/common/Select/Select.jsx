@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { RequiredStar } from "../RequiredStar";
 
@@ -13,13 +14,16 @@ export const Select = ({
   onChange,
   value,
 }) => {
+  const intl = useIntl();
   return (
     <div className="input-container">
       { label && 
         <label className="input-label" htmlFor={name}>{label}{required ? <RequiredStar /> : ''}</label>
       }
       <select className={className} name={name} onChange={onChange} value={value}>
-        <option className="disabled" selected disabled>Choose here</option>
+        <option className="disabled" selected disabled>
+          {intl.formatMessage({ id:"select.defaultMessage" })}
+        </option>
         {
           options.map((option, i) => <option key={`${option.value}-${i}`} value={option.value}>{option.text}</option>)
         }

@@ -60,7 +60,7 @@ const Login = ({ intl }) => {
   return (
     <main>
       <article className={`form ${selectBackground()}`}>
-        <div className="form__container">
+        <div className="form__container" id="login">
           <form className="form__form" method="POST">
             <div className="form__form-container">
               <div className="form__inputs-container login">

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
@@ -6,10 +8,9 @@ import { Input } from "../../common/Input";
 import { APIInteractor } from "../../../services";
 
 import './ChangePassword.scss';
-import { validatePassword } from "../../../services/utils";
-import { useNavigate } from "react-router";
 
 export const ChangePassword = () => {
+  const intl = useIntl();
   const navigate = useNavigate();
   const apiInteractor = new APIInteractor();
   const [errors, setErrors] = useState({
@@ -35,48 +36,44 @@ export const ChangePassword = () => {
 
   const changePassword = async (e) => {
     e.preventDefault();
-    if(validatePassword(passwordInfo.newPassword1) && validatePassword(passwordInfo.newPassword2)) {
-      await apiInteractor.changePassword({ ...passwordInfo, email: localStorage.getItem('email') })
-      .then(() => navigate('/userPage'))
-      .catch((data) => {
-        setErrors({
-          ...errors,
-          isError: true,
-          message: data,
-        });
-      });
-    } else {
+    await apiInteractor.changePassword({ ...passwordInfo, email: localStorage.getItem('email') })
+    .then(() => navigate('/userPage'))
+    .catch((data) => {
       setErrors({
         ...errors,
         isError: true,
-        message: 'Empty password or shorter than 6 symbols',
+        message: <FormattedMessage id={data} />,
       });
-    }
+    });
+
   }
 
   return (
     <main>
       <article className="form">
-        <div className="form__container">
+        <div className="form__container" id="change-password-form">
           <form className="form__form">
             <div className="form__inputs-container">
               <Input
+                label={<FormattedMessage id="changePassword.old.label" />}
                 className="form__old-password form-input"
-                placeholder="Enter old password"
+                placeholder={intl.formatMessage({ id: 'changePassword.old.placeholder' })}
                 name="oldPassword"
                 onChange={onChangeInfo}
                 type="password"
               />
               <Input
+                label={<FormattedMessage id="changePassword.new.label" />}
                 className="form__new-password1 form-input"
-                placeholder="Enter new password"
+                placeholder={intl.formatMessage({ id: 'changePassword.new.placeholder' })}
                 name="newPassword1"
                 onChange={onChangeInfo}
                 type="password"
               />
               <Input
+                label={<FormattedMessage id="changePassword.new2.label" />}
                 className="form__new-password2 form-input"
-                placeholder="Repeat new password"
+                placeholder={intl.formatMessage({ id: 'changePassword.new2.placeholder' })}
                 name="newPassword2"
                 onChange={onChangeInfo}
                 type="password"
@@ -85,7 +82,7 @@ export const ChangePassword = () => {
                 className="form__confirm form-button button"
                 type="submit"
                 onClick={changePassword}
-                text="Change Password"
+                text={<FormattedMessage id="changePassword.button.change" />}
               />
               {
                 errors.isError && <p className="form__error error">{errors.message}</p>

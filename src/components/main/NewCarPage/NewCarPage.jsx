@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Input } from "../../common/Input";
 import { Select } from "../../common/Select";
@@ -21,6 +22,7 @@ import {
 import './NewCarPage.scss';
 
 export const NewCarPage = () => {
+  const intl = useIntl();
   const apiInteractor = new APIInteractor();
   const navigate = useNavigate();
   const [error, setError] = useState({
@@ -28,7 +30,7 @@ export const NewCarPage = () => {
     message: '',
   });
   const [carInfo, setCarInfo] = useState(JSON.parse(localStorage.getItem('carInfo')) ?? newCarShape);
-console.log(carInfo);
+
   useEffect(() => {
     console.log(error);
   });
@@ -57,19 +59,19 @@ console.log(carInfo);
       !validateField(carInfo.carNumber) ||
       !validateField(carInfo.carSeries)
     ) {
-      setError({ isError: true, message: 'Fill all the required fields!' });
+      setError({ isError: true, message: <FormattedMessage id="carForm.error.requiredFields" /> });
       return false;
     }
     if(!validateYear(carInfo.year)) {
-      setError({ isError: true, message: 'Wrong year!' });
+      setError({ isError: true, message: <FormattedMessage id="carForm.error.wrongYear" /> });
       return false;
     }
     if(!validateCarNumber(carInfo.carNumber)) {
-      setError({ isError: true, message: 'Wrong car number!' });
+      setError({ isError: true, message: <FormattedMessage id="carForm.error.wrongCarNumber" /> });
       return false;
     }
     if(!validateEngineNumber(carInfo.engineNumber)) {
-      setError({ isError: true, message: 'Wrong engine number!' });
+      setError({ isError: true, message: <FormattedMessage id="carForm.error.wrongEngineNumber" /> });
       return false;
     }
     return true;
@@ -92,50 +94,52 @@ console.log(carInfo);
       <article className="car">
         <form className="car__container" method="POST">  
           <div className="car__heading">
-            <h1 className="car__heading-text">Car Info</h1>
+            <h1 className="car__heading-text">
+              <FormattedMessage id="carForm.title" />
+            </h1>
             <div className="car__line"></div>
           </div>
           <div className="car__basic-info">
             <div className="car__basic-info-container">
               <Input
-                placeholder="Name"
+                placeholder={intl.formatMessage({ id: 'carForm.name.placeholder' })}
                 className="car__name form-input"
                 onChange={onChangeInfo}
                 name="name"
-                label="Car name"
+                label={<FormattedMessage id="carForm.name.label" />}
                 value={carInfo.name}
                 required
               />
               <Input
-                placeholder="Model"
+                placeholder={intl.formatMessage({ id: 'carForm.model.placeholder' })}
                 className="car__model form-input"
                 onChange={onChangeInfo}
                 name="model"
-                label="Model"
+                label={<FormattedMessage id="carForm.model.label" />}
                 value={carInfo.model}
                 required
               />
               <Input
-                placeholder="Year"
+                placeholder={intl.formatMessage({ id: 'carForm.year.placeholder' })}
                 className="car__year form-input"
                 onChange={onChangeInfo}
                 name="year"
-                label="Year"
+                label={<FormattedMessage id="carForm.year.label" />}
                 value={carInfo.year}
                 required
               />
               <Input
-                placeholder="Color"
+                placeholder={intl.formatMessage({ id: 'carForm.color.placeholder' })}
                 className="car__color form-input"
                 onChange={onChangeInfo}
                 name="color"
-                label="Color"
+                label={<FormattedMessage id="carForm.color.label" />}
                 value={carInfo.color}
                 required
               />
               <Select
                 name="carcas"
-                label="Carcas"
+                label={<FormattedMessage id="carForm.carcas.label" />}
                 options={carcasTypes}
                 className="car__carcas form-input"
                 onChange={onChangeInfo}
@@ -144,7 +148,7 @@ console.log(carInfo);
               />
               <Select
                 name="transmission"
-                label="Transmission"
+                label={<FormattedMessage id="carForm.transmission.label" />}
                 options={carTransmissions}
                 className="car__transmission form-input"
                 onChange={onChangeInfo}
@@ -153,7 +157,7 @@ console.log(carInfo);
               />
               <Select
                 name="engine"
-                label="Engine"
+                label={<FormattedMessage id="carForm.engine.label" />}
                 options={carEngineTypes}
                 className="car__engine form-input"
                 onChange={onChangeInfo}
@@ -161,18 +165,18 @@ console.log(carInfo);
                 required
               />
               <Input
-                placeholder="Engine number"
+                placeholder={intl.formatMessage({ id: 'carForm.engineNumber.placeholder' })}
                 className="car__engineNumber form-input"
                 onChange={onChangeInfo}
                 name="engineNumber"
-                label="Engine number"
+                label={<FormattedMessage id="carForm.engineNumber.label" />}
                 value={carInfo.engineNumber}
                 required
               />
               <div className="car__full-number">
                 <Select
                   name="carCode"
-                  label="Code"
+                  label={<FormattedMessage id="carForm.carCode.label" />}
                   options={carNumberSeries}
                   className="car__car-code form-input"
                   onChange={onChangeInfo}
@@ -180,18 +184,18 @@ console.log(carInfo);
                   required
                 />
                 <Input
-                  placeholder="Car number"
+                  placeholder={intl.formatMessage({ id: 'carForm.carNumber.placeholder' })}
                   className="car__number form-input"
                   onChange={onChangeInfo}
                   name="carNumber"
-                  label="Car number"
+                  label={<FormattedMessage id="carForm.carNumber.label" />}
                   value={carInfo.carNumber}
                   required
                 />
                 { carInfo.carCode &&
                   <Select
                     name="carSeries"
-                    label="Series"
+                    label={<FormattedMessage id="carForm.carSeries.label" />}
                     options={getSeriesFromCode()}
                     className="car__car-series form-input"
                     onChange={onChangeInfo}
@@ -203,7 +207,7 @@ console.log(carInfo);
             </div>
           </div>
           <Button
-            text="Save"
+            text={<FormattedMessage id="carForm.button.save" />}
             onClick={submit}
             type="submit"
             className="car__submit button success"

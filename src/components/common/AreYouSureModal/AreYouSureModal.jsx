@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { Button } from "../Button";
 
 import { Close } from '../Close';
@@ -22,12 +23,12 @@ export const AreYouSureModal = ({
         </div>
         <div className="are-you-sure__footer">
           <Button
-            text="YES"
+            text={<FormattedMessage id="areYouSure.yes" />}
             onClick={onSubmit}
             className="are-you-sure__yes"
           />
           <Button
-            text="NO"
+            text={<FormattedMessage id="areYouSure.no" />}
             onClick={onCancel}
             className="are-you-sure__no"
           />

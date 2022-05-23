@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Button } from "../Button";
 import { Close } from "../Close";
@@ -10,6 +11,7 @@ import { APIInteractor } from "../../../services";
 import './EditUserInfo.scss';
 
 export const EditUserInfo = ({ onClose, user, onSubmit }) => {
+  const intl = useIntl();
   const apiInteractor = new APIInteractor();
   const [error, setError] = useState({
     isError: false,
@@ -47,19 +49,27 @@ export const EditUserInfo = ({ onClose, user, onSubmit }) => {
 
   const validateUserInfo = () => {
     if(!validateField(userInfo.firstName)) {
-      setError({ isError: true, message: 'First name must be more than 3 symbols' });
+      setError({ isError: true, message: <FormattedMessage id="editUserInfo.error.firstName" /> });
+      return false;
+    }
+    if(!validateField(userInfo.lastName)) {
+      setError({ isError: true, message: <FormattedMessage id="editUserInfo.error.lastName" /> });
+      return false;
+    }
+    if(!validateField(userInfo.fatherName)) {
+      setError({ isError: true, message: <FormattedMessage id="editUserInfo.error.fatherName" /> });
       return false;
     }
     if(!validateIsFutureDate(userInfo.dateOfBirth)) {
-      setError({ isError: true, message: 'Please, choose a correct date' });
+      setError({ isError: true, message: <FormattedMessage id="editUserInfo.error.birthDate" /> });
       return false;
     }
     if(!validatePhoneNumber(userInfo.phoneNumber)) {
-      setError({ isError: true, message: 'Wrong phone number format' });
+      setError({ isError: true, message: <FormattedMessage id="editUserInfo.error.phoneNumber" /> });
       return false;
     }
     if(!validateEmail(userInfo.email)) {
-      setError({ isError: true, message: 'Wrong e-mail format' });
+      setError({ isError: true, message: <FormattedMessage id="editUserInfo.error.email" /> });
       return false;
     }
     return true;
@@ -69,7 +79,9 @@ export const EditUserInfo = ({ onClose, user, onSubmit }) => {
     <form className="edit-user" method="POST">
       <div className="edit-user__heading-container">
         <div className="edit-user__heading">
-          <h2 className="edit-user-title">Edit information about yourself</h2>
+          <h2 className="edit-user-title">
+            <FormattedMessage id="editUserInfo.title" />
+          </h2>
         </div>
         <div className="edit-user__line"></div>
         <div className="edit-user__errors">
@@ -78,57 +90,57 @@ export const EditUserInfo = ({ onClose, user, onSubmit }) => {
         <div className="edit-user__inputs">
           <div className="edit-user__left">
             <Input
-              placeholder="First name"
+              placeholder={intl.formatMessage({ id: 'editUserInfo.firstName.placeholder' })}
               className="edit-user__firstname form-input"
               onChange={onChangeInfo}
               name="firstName"
-              label="First name"
+              label={<FormattedMessage id="editUserInfo.firstName.label" />}
               value={userInfo.firstName}
               required
             />
             <Input
-              placeholder="Last name"
+              placeholder={intl.formatMessage({ id: 'editUserInfo.lastName.placeholder' })}
               className="edit-user__lastname form-input"
               onChange={onChangeInfo}
               name="lastName"
-              label="Last name"
+              label={<FormattedMessage id="editUserInfo.lastName.label" />}
               value={userInfo.lastName}
             />
             <Input
-              placeholder="Father name"
+              placeholder={intl.formatMessage({ id: 'editUserInfo.fatherName.placeholder' })}
               className="edit-user__fathername form-input"
               onChange={onChangeInfo}
               name="fatherName"
-              label="Father name"
+              label={<FormattedMessage id="editUserInfo.fatherName.label" />}
               value={userInfo.fatherName}
             />
           </div>
           <div className="edit-user__right">
             <Input
-              placeholder="Birth date"
+              placeholder={intl.formatMessage({ id: 'editUserInfo.birthDate.placeholder' })}
               className="edit-user__dateOfBirth form-input"
               onChange={onChangeInfo}
               name="dateOfBirth"
-              label="Birth date"
+              label={<FormattedMessage id="editUserInfo.birthDate.label" />}
               type="date"
               value={userInfo.dateOfBirth}
               required
             />
             <Input
-              placeholder="Phone number"
+              placeholder={intl.formatMessage({ id: 'editUserInfo.phoneNumber.placeholder' })}
               className="edit-user__phoneNumber form-input"
               onChange={onChangeInfo}
               name="phoneNumber"
-              label="Phone number"
+              label={<FormattedMessage id="editUserInfo.phoneNumber.label" />}
               value={userInfo.phoneNumber}
               required
             />
             <Input
-              placeholder="Email"
+              placeholder={intl.formatMessage({ id: 'editUserInfo.email.placeholder' })}
               className="edit-user__email form-input"
               onChange={onChangeInfo}
               name="email"
-              label="Email"
+              label={<FormattedMessage id="editUserInfo.email.label" />}
               value={userInfo.email}
               required
             />
@@ -136,7 +148,7 @@ export const EditUserInfo = ({ onClose, user, onSubmit }) => {
         </div>
         <div className="edit-user__submit">
           <Button
-            text="Update"
+            text={<FormattedMessage id="editUserInfo.button.update" />}
             onClick={submitForm}
             type="submit"
             className="eidt-user__submit-button success button users-buttons"

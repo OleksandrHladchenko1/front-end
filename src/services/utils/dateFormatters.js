@@ -67,7 +67,7 @@ export const formatForDatePickerValue = (data) => {
 };
 
 export const getDuration = (start, end) => {
-  if(!start || !end) return false;
+  if(!start || !end) return '-';
   const startDate = new Date(start);
   const endDate = new Date(end);
   let difference = endDate - startDate;
