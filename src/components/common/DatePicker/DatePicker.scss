@@ -1,0 +1,31 @@
+.pick-date {
+  width: 100%;
+}
+
+.times-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 5px 0;
+}
+
+.button-time {
+  background: transparent;
+  padding: 3px;
+  border: 2px solid #123d99;
+  border-radius: 20px;
+  margin: 5px;
+
+  &:hover {
+    background: linear-gradient(#127199, #123d99);
+    color: #fff;
+  }
+
+  &:active {
+    background: #123d99;
+  }
+}
+
+.clicked {
+  background: #127199;
+  color: #fff;
+}

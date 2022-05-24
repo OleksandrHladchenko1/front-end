@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { Worker } from "../../common/Worker";
 import { Modal } from "../../common/Modal";
 import { AreYouSureModal } from "../../common/AreYouSureModal";
+import { EditWorker } from "../../common/EditWorker";
 
 import { APIInteractor } from "../../../services";
 
 import './AdminPage.scss';
-import { EditWorker } from "../../common/EditWorker/EditWorker";
 
 export const AdminPage = () => {
   const [workers, setWorkers] = useState([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [workerId, setWorkerId] = useState('');
+  const [worker, setWorker] = useState({});
   const apiIneractor = new APIInteractor();
 
   useEffect(() => {
@@ -22,17 +23,17 @@ export const AdminPage = () => {
     });
   }, []);
 
-  /* useEffect(() => {
-    console.log(workers);
+/*   useEffect(() => {
+    console.log(worker);
   }); */
 
-  const openDeleteModal = (id) => {
-    setWorkerId(id);
+  const openDeleteModal = (worker) => {
+    setWorker(worker);
     setIsDeleteModalOpen(true);
   };
 
   const openEditModal = (id) => {
-    setWorkerId(id);
+    setWorker({ id });
     setIsEditModalOpen(true);
   };
 
@@ -41,12 +42,16 @@ export const AdminPage = () => {
   };
 
   const closeEditModal = () => {
-    setIsEditModalOpen(false);
+    apiIneractor.getAllWorkers().then((data) => {
+      console.log(data);
+      setWorkers(data);
+      setIsEditModalOpen(false);
+    });
   };
 
   const deleteWorker = () => {
-    setWorkers([...workers.filter((car) => car.id !== workerId)]);
-    apiIneractor.deleteWorker(workerId);
+    setWorkers([...workers.filter((car) => car.id !== worker.id)]);
+    apiIneractor.deleteWorker(worker.id);
     setIsDeleteModalOpen(false);
   };
 
@@ -66,24 +71,40 @@ export const AdminPage = () => {
         <AreYouSureModal
           onCancel={closeDeleteModal}
           onSubmit={deleteWorker}
-          headerText="Delete worker"
-          mainText="Are you sure to delete this worker?"
+          headerText={
+          <FormattedMessage
+            id="areYouSure.title.deleteWorker"
+            values={{ fullName: worker.fullName }}
+          />}
+          mainText={<FormattedMessage id="areYouSure.text.deleteWorker" />}
         />
       </Modal>
       <Modal isModalOpen={isEditModalOpen}>
-        <EditWorker onClose={closeEditModal} workerId={workerId} />
+        <EditWorker onSubmit={closeEditModal} onClose={closeEditModal} workerId={worker.id} />
       </Modal>
       <article className="admin">
         <div className="admin-container">
           <div className="admin__workers">
             <div className="worker__header">
               <ul className="worker__header-list">
-                <li className="worker__header-item first">First Name</li>
-                <li className="worker__header-item">Last name</li>
-                <li className="worker__header-item">Father Name</li>
-                <li className="worker__header-item">E-mail</li>
-                <li className="worker__header-item">Phone</li>
-                <li className="worker__header-item last">Edit/Delete</li>
+                <li className="worker__header-item first">
+                  <FormattedMessage id="adminPage.table.firstName" />
+                </li>
+                <li className="worker__header-item">
+                  <FormattedMessage id="adminPage.table.lastName" />
+                </li>
+                <li className="worker__header-item">
+                  <FormattedMessage id="adminPage.table.fatherName" />
+                </li>
+                <li className="worker__header-item">
+                  <FormattedMessage id="adminPage.table.email" />
+                </li>
+                <li className="worker__header-item">
+                  <FormattedMessage id="adminPage.table.phone" />
+                </li>
+                <li className="worker__header-item last">
+                  <FormattedMessage id="adminPage.table.editDelete" />
+                </li>
               </ul>
             </div>
             {workerList}

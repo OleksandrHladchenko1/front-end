@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { APIInteractor } from "../../../services";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Close } from "../Close";
 import { Input } from '../Input';
 import { Logo } from "../Logo";
+import { Button } from "../Button";
 
+import { APIInteractor } from "../../../services";
 import remove from '../../../assets/cancel.svg';
 import plus from '../../../assets/plus.svg';
 
 import './EditWorker.scss';
-import { Button } from "../Button";
 
-export const EditWorker = ({ onClose, workerId }) => {
+export const EditWorker = ({ onSubmit, onClose, workerId }) => {
+  const intl = useIntl();
   const [workerInfo, setWorkerInfo] = useState({});
   const [workerSpecialities, setWorkerSpecialities] = useState([]);
   const [allSpecialities, setAllSpecialities] = useState([]);
@@ -36,7 +38,7 @@ export const EditWorker = ({ onClose, workerId }) => {
     apiIneractor.addSpecialist({
       id_worker: workerId,
       id_speciality: id,
-      experience: 1000,
+      experience: 1,
     }).then(() => {
       setWorkerSpecialities(newWorkerSpecialities);
       setAllSpecialities(newAllSpecialities);
@@ -68,59 +70,65 @@ export const EditWorker = ({ onClose, workerId }) => {
 
   const saveChanges = (e) => {
     e.preventDefault();
-    apiIneractor.editWorker(workerId, workerInfo);
-    console.log('submit');
+    apiIneractor.editWorker(workerId, workerInfo).then(() => onSubmit());
   };
 
 
   return (
     <form className="edit-worker" method="POST">
       <div className="edit-worker__left">
-        <h2 className="edit-worker__left-title">Worker info</h2>
+        <h2 className="edit-worker__left-title">
+          <FormattedMessage id="editWorker.info.title" />
+        </h2>
         <div className="edit-worker__inputs">
           <Input
+            placeholder={intl.formatMessage({ id: 'editWorker.info.firstName.placeholder' })}
             value={workerInfo.firstName}
-            label="First Name"
+            label={<FormattedMessage id="editWorker.info.firstName.label" />}
             className="edit-worker__first-name form-input"
             onChange={onChangeInfo}
             name="firstName"
           />
           <Input
+            placeholder={intl.formatMessage({ id: 'editWorker.info.lastName.placeholder' })}
             value={workerInfo.lastName}
-            label="Last Name"
+            label={<FormattedMessage id="editWorker.info.lastName.label" />}
             className="edit-worker__last-name form-input"
             onChange={onChangeInfo}
             name="lastName"
           />
           <Input
+            placeholder={intl.formatMessage({ id: 'editWorker.info.fatherName.placeholder' })}
             value={workerInfo.fatherName}
-            label="Father Name"
+            label={<FormattedMessage id="editWorker.info.fatherName.label" />}
             className="edit-worker__father-name form-input"
             onChange={onChangeInfo}
             name="fatherName"
           />
           <Input
+            placeholder={intl.formatMessage({ id: 'editWorker.info.email.placeholder' })}
             value={workerInfo.email}
-            label="E-mail"
+            label={<FormattedMessage id="editWorker.info.email.label" />}
             className="edit-worker__email form-input"
             onChange={onChangeInfo}
             name="email"
           />
           <Input
+            placeholder={intl.formatMessage({ id: 'editWorker.info.phone.placeholder' })}
             value={workerInfo.phoneNumber}
-            label="Phone Number"
+            label={<FormattedMessage id="editWorker.info.phone.label" />}
             className="edit-worker__phone-number form-input"
             onChange={onChangeInfo}
             name="phoneNumber"
           />
           <Button
-            text="Save changes"
+            text={<FormattedMessage id="editWorker.button.save" />}
             className="edit-worker__submit success button"
             onClick={saveChanges}
             type="submit"
           />
           <Button
-            text="Close"
+            text={<FormattedMessage id="editWorker.button.cancel" />}
             className="edit-worker__close red-button button"
             onClick={onClose}
             type="submit"
@@ -128,7 +136,9 @@ export const EditWorker = ({ onClose, workerId }) => {
         </div>
       </div>
       <div className="edit-worker__right">
-        <h2 className="edit-worker__right-title">Worker's speciality</h2>
+        <h2 className="edit-worker__right-title">
+          <FormattedMessage id="editWorker.worker.speciality.title" />
+        </h2>
         <div className="edit-worker__specialities">
           {
             workerSpecialities.map((speciality, i) => (
@@ -146,7 +156,9 @@ export const EditWorker = ({ onClose, workerId }) => {
           }
         </div>
         <div className="edit-worker__all-specialities">
-          <h3 className="edit-worker__all-title">All specialities</h3>
+          <h3 className="edit-worker__all-title">
+            <FormattedMessage id="editWorker.all.speciality.title" />
+          </h3>
           {
             allSpecialities.map((speciality, i) => (
               <div className="edit-worker__speciality-container" key={i}>
@@ -158,8 +170,7 @@ export const EditWorker = ({ onClose, workerId }) => {
                   onClick={() => addSpeciality(speciality.id)}
                 />
               </div>
-            )
-          )
+            ))
           }
         </div>
       </div>

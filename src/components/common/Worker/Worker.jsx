@@ -37,7 +37,7 @@ export const Worker = ({ worker, sequence, onDelete, onEdit }) => {
         <Button
           text={deleteButton}
           className="worker__button"
-          onClick={() => onDelete(id)}
+          onClick={() => onDelete({ id, fullName: `${firstName} ${lastName} ${fatherName}` })}
         />
       </li>
     </ul>

@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 2fr 1fr 2fr 2fr 2fr 1fr;
   padding: 5px;
+  text-align: center;
 
   &:hover {
     background-color: rgb(211, 216, 215);

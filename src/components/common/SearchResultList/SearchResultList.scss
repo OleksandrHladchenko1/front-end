@@ -1,4 +1,14 @@
 .search-result {
   height: 320px;
   overflow: auto;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr 2fr 2fr 1fr;
+
+  }
+
+  &__item {
+    text-align: center;
+  }
 }

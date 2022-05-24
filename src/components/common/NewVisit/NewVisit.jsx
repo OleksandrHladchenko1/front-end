@@ -5,6 +5,7 @@ import { Button } from "../Button";
 import { Close } from "../Close";
 import { Input } from "../Input";
 import { Select } from "../Select";
+import { DatePicker } from "../DatePicker";
 
 import { APIInteractor } from "../../../services";
 
@@ -75,6 +76,10 @@ const NewVisit = ({ onClose, onSubmit, intl }) => {
     return true;
   };
 
+  const onDateChange = (value) => {
+    setVisit({ ...visit, dateOfVisit: value })
+  };  
+
   const createVisit = (e) => {
     e.preventDefault();
     if(validateVisitDate()) {
@@ -95,15 +100,7 @@ const NewVisit = ({ onClose, onSubmit, intl }) => {
         </div>
       </div>
       <div className="new-visit__inputs-container">
-        <Input
-          type="datetime-local"
-          placeholder={intl.formatMessage({ id: "newVisit.date.placeholder" })}
-          className="new-visit__date form-input"
-          onChange={onChangeInfo}
-          name="dateOfVisit"
-          label={<FormattedMessage id="newVisit.date.label" />}
-          required
-        />
+        <DatePicker onChange={onDateChange} />
         <Select
           options={userCars}
           label={<FormattedMessage id="newVisit.car.label" />}

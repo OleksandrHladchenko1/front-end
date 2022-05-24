@@ -258,6 +258,20 @@ export class APIInteractor {
 		}
 	};
 
+	getFreeVisitsTime = async (day) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/userVisits/getFreeVisits/${day}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			console.log(result.data.visit);
+			return result.data.visit;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+
 	addIssue = async (issue) => {
 		try {
 			const result = await axios({

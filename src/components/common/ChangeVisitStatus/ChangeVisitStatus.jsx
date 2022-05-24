@@ -26,7 +26,7 @@ export const ChangeVisitStatus = ({ onChange }) => {
     <div className="changeStatus">
       <>
         <span className="status">{status}</span>
-        { localStorage.getItem('startStatus') === "Worker" &&
+        { (localStorage.getItem('startStatus') === "Worker" || localStorage.getItem('startStatus') === "Admin") &&
           <Button
             text={editLogo}
             className="change-visit-status-button icons"

@@ -1,5 +1,8 @@
 import { FormattedMessage } from "react-intl";
 
+export const startWorkingHour = `08:00`;
+export const finalWorkingHour = `17:00`;
+
 export const registerErrors = {
   email: {
     error: false,

@@ -15,7 +15,7 @@ export const formatTime = (date) => {
   const hour = date.substring(11, 13);
   const minute = date.substring(14, 16);
 
-  return `${hour}:${minute}`;
+  return `${+hour + 3}:${minute}`;
 };
 
 export const findMonth = (index) => {
@@ -101,6 +101,13 @@ export const getDuration = (start, end) => {
   }
 
   return `${daysToShow} ${hoursToShow} ${minutesToShow}`;
+};
+
+export const getDateForDatePicker = (date) => {
+  const month = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+  const day = date.getDate() > 10 ? date.getDate() : `0${date.getDate()}`;
+
+  return `${date.getFullYear()}-${month}-${day}`;
 };
 
 

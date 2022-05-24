@@ -124,6 +124,7 @@ export class VisitDetails extends Component {
   };
 
   submitCreateIssue = (issue) => {
+    console.log(issue.closed);
     const newIssue = {
       visitId: localStorage.getItem('visitId'),
       specialistId: issue.specialistId,
@@ -318,7 +319,7 @@ export class VisitDetails extends Component {
                 </div>
               </div>
             </div>
-            { status === 'Planned' && localStorage.getItem('startStatus') === 'Worker'
+            { status === 'Planned' && (localStorage.getItem('startStatus') === 'Worker' || localStorage.getItem('startStatus') === 'Admin')
               && 
               <>
                 <div className="visit-detail__user-info-heading">
