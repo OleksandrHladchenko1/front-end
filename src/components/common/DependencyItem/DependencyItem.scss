@@ -1,0 +1,11 @@
+.dependency-item {
+  padding: 5px;
+  border: 2px solid rgb(68, 63, 63);
+  margin-bottom: 5px;
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+}

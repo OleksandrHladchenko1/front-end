@@ -3,8 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import { saveAs } from 'file-saver';
 
 import { ChangeVisitStatus } from '../../common/ChangeVisitStatus';
-import { NewVisitEdit } from '../../common/NewVisitEdit';
 import { Button } from '../../common/Button';
+import { Modal } from "../../common/Modal";
+import { AreYouSureModal } from "../../common/AreYouSureModal";
 import { IssueItem } from '../../common/IssueItem';
 
 import { APIInteractor } from '../../../services';
@@ -12,6 +13,8 @@ import { concatFullName, formatDate, formatTime } from '../../../services/utils'
 import plus from '../../../assets/plus.svg';
 
 import './VisitDetails.scss';
+import { NewIssueModal } from '../../common/NewIssueModal/NewIssueModal';
+import { DependenciesModal } from '../../common/DependenciesModal/DependenciesModal';
 
 export class VisitDetails extends Component {
   constructor(props) {
@@ -22,8 +25,13 @@ export class VisitDetails extends Component {
       user: {},
       visit: {},
       issues: [],
-      isNewVisitVisible: true,
       status: localStorage.getItem('visitStatus'),
+      isModalOpen: false,
+      isNewIssueModalOpen: false,
+      isReviewFinished: false,
+      isDependencyModalOpen: false,
+      isSorted: false,
+      isConfirmationFinishingOpen: false,
     };
 
     this.apiInteractor = new APIInteractor();
@@ -119,8 +127,12 @@ export class VisitDetails extends Component {
     this.apiInteractor.changeVisitStatus(localStorage.getItem('visitId'), status);
   };
 
-  showNewIssue = () => {
-    this.setState({ isNewVisitVisible: true });
+  showNewIssueModal = () => {
+    this.setState({ isNewIssueModalOpen: true });
+  };
+
+  hideNewIssueModal = () => {
+    this.setState({ isNewIssueModalOpen: false });
   };
 
   submitCreateIssue = (issue) => {
@@ -145,11 +157,11 @@ export class VisitDetails extends Component {
     });
   };
 
-  deleteIssue = (id) => {
-    this.apiInteractor.deleteIssue(id);
+  deleteIssue = (description) => {
+    //this.apiInteractor.deleteIssue(id);
     this.setState((prevProps) => ({
         ...prevProps,
-        issues: [...prevProps.issues.filter((issue) => issue.issueId !== id)],
+        issues: [...prevProps.issues.filter((issue) => issue.description !== description)],
       }));
   };
 
@@ -160,6 +172,55 @@ export class VisitDetails extends Component {
         saveAs(pdfBlob, `${this.state.visit.dateOfVisit}_${this.state.user.fullName}.pdf`);
       });
     });
+  }
+
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+  }
+
+  closeDeleteModal = () => {
+    this.setState({ isModalOpen: false });
+  }
+
+  deleteVisit = () => {
+    this.apiInteractor.deleteVisit().then(() => document.location.pathname = '/visits');
+  }
+
+  addIssue = (issue) => {
+    this.setState(prevState => ({
+      ...prevState,
+      issues: [...prevState.issues, issue]
+    }));
+    this.setState({ isNewIssueModalOpen: false });
+  }
+
+  finishReview = () => {
+    this.setState({
+      isReviewFinished: true,
+      isDependencyModalOpen: true,
+    });
+  }
+
+  sortIssues = (sortedIssues) => {
+    this.setState(prevState => ({
+      ...prevState,
+      issues: [...sortedIssues],
+      isSorted: true,
+      isDependencyModalOpen: false,
+    }));
+  }
+
+  openConfarmationFinishing = () => {
+    this.setState({ isConfirmationFinishingOpen: true });
+  }
+
+  closeConfirmationFinishing = () => {
+    this.setState({ isConfirmationFinishingOpen: false });
+  }
+
+  continueFinishing = () => {
+    this.closeConfirmationFinishing();
+    this.finishReview();
   }
 
   render() {
@@ -182,11 +243,42 @@ export class VisitDetails extends Component {
       engineNumber,
     } = this.state.car;
     const issuesList = this.state.issues.map((issue, index) => (
-        <IssueItem key={index} issue={issue} onDelete={this.deleteIssue} />
+        <IssueItem
+          canDelete={!this.state.isSorted}
+          canClose={this.state.isSorted}
+          key={index}
+          issue={issue}
+          onDelete={this.deleteIssue}
+        />
       ));
 
     return (
       <main>
+        <Modal isModalOpen={this.state.isModalOpen}>
+          <AreYouSureModal
+            onCancel={this.closeDeleteModal}
+            onSubmit={this.deleteVisit}
+            headerText={<FormattedMessage id="areYouSure.title.deleteVisit" />}
+            mainText={<FormattedMessage id="areYouSure.text.deleteVisit" />}
+          />
+        </Modal>
+        <Modal isModalOpen={this.state.isConfirmationFinishingOpen}>
+          <AreYouSureModal
+            onCancel={this.closeConfirmationFinishing}
+            onSubmit={this.continueFinishing}
+            headerText="Warning!"
+            mainText="If you click 'Yes', you won't be able to add, edit or delete issues"
+          />
+        </Modal>
+        <Modal isModalOpen={this.state.isNewIssueModalOpen}>
+          <NewIssueModal
+            onClose={this.hideNewIssueModal}
+            onSubmit={this.addIssue}  
+          />
+        </Modal>
+        <Modal isModalOpen={this.state.isDependencyModalOpen}>
+          <DependenciesModal issues={this.state.issues} onFinish={this.sortIssues} />
+        </Modal>
         <article className="visit-detail">
           <div className="visit-detail__container">
             <div className="visit-detail__user-info">
@@ -292,6 +384,11 @@ export class VisitDetails extends Component {
                 <h2 className="visit-detail__user-info-heading-text">
                   <FormattedMessage id="visitDetails.visitInfo" />
                 </h2>
+                <Button
+                  text={<FormattedMessage id="visitDetails.button.delete" />}
+                  onClick={this.openModal}
+                  className="visit-detail__delete-button"
+                />
               </div>
               <div className="visit-detail__user-info-main">
                 <div className="visit-detail__left">
@@ -332,22 +429,31 @@ export class VisitDetails extends Component {
             }
             { status === 'In Progress'
               && localStorage.getItem('startStatus') !== 'User'
-              && <>
-                { !this.state.isNewVisitVisible
-                  && <Button
-                    text={`Add new Issue ${this.addLogo}`}
-                    className="visit-detail__show-new-issue"
-                    onClick={this.showNewIssue}
-                  />}
-                <div className="visit-detail__add-issue">
+              && !this.state.isReviewFinished
+              &&
+              <Button
+                text="Add new issue"  
+                className="visit-detail__show-new-issue success"
+                onClick={this.showNewIssueModal}
+              />
+                /*<div className="visit-detail__add-issue">
                   <NewVisitEdit visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
                 </div>
-              </>}
-            <>
+                 */
+            }
+            {
+              !!issuesList.length &&
+              <Button
+                text="Finish review"
+                className="visit-detail__finish-review success"
+                onClick={this.openConfarmationFinishing}
+              />
+            }
+            {
               <div className="visit-detail__issues-info">
                 { issuesList.length !== 0 && issuesList }
-              </div> 
-            </>
+              </div>
+            }
           </div>
         </article>
       </main>

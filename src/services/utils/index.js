@@ -6,3 +6,4 @@ export * from './stringFormatters';
 export * from './arrayInteractors';
 export * from './classList';
 export * from './highcharts';
+export * from './topologicalSort';

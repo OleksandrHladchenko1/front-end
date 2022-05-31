@@ -272,6 +272,19 @@ export class APIInteractor {
 		}
 	}
 
+	deleteVisit = async () => {
+		try {
+			const result = await axios({
+				method: 'delete',
+				url: `http://localhost:8080/api/userVisits/deleteVisit/${localStorage.getItem('visitId')}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result.data.visit;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+
 	addIssue = async (issue) => {
 		try {
 			const result = await axios({
@@ -478,8 +491,21 @@ export class APIInteractor {
 				url: 'http://localhost:8080/api/statistics/workload',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
-			console.log(result.data.workload);
 			return result.data.workload;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+
+	getProblemTypes = async () => {
+		try {
+			const result = await axios ({
+				method: 'GET',
+				url: 'http://localhost:8080/api/issue/issueTypes',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			console.log(result.data.problems);
+			return result.data.problems;
 		} catch (err) {
 			throw err.response.data.message;
 		}

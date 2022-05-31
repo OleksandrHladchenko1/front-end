@@ -1,0 +1,30 @@
+.dependencies {
+  width: 500px;
+  height: 600px;
+  background: #fff;
+  padding: 10px;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__items-container {
+    border: 1px solid rgb(27, 12, 99);
+    height: 500px;
+    overflow-y: auto;
+  }
+
+  &__finish {
+    margin: 10px 0;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    color: #fff;
+    font-size: 1.1em;
+    border: none;
+
+    &:hover {
+      background: linear-gradient(to right, rgb(16, 42, 238), rgb(25, 175, 72));
+    }
+  }
+}

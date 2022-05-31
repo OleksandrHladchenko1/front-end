@@ -1,0 +1,36 @@
+.new-issue {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  padding: 10px;
+
+  &__header {
+    text-align: center;
+  }
+  
+  &__description-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__submit {
+    margin: 10px 0;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    color: #fff;
+    font-size: 1.1em;
+    border: none;
+
+    &:hover {
+      background: linear-gradient(to right, rgb(16, 42, 238), rgb(25, 175, 72));
+    }
+  }
+
+}
+
+#description {
+  height: 150px;
+  padding: 5px;
+}

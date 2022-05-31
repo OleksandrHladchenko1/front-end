@@ -8,7 +8,12 @@ import { concatFullName, formatVisitDate } from "../../../services/utils";
 
 import './IssueItem.scss';
 
-export const IssueItem =  ({ issue, onDelete }) => {
+export const IssueItem =  ({
+  issue,
+  onDelete,
+  canDelete,
+  canClose,  
+}) => {
   console.log(issue);
   const apiInteractor = new APIInteractor();
   const [closed, setClosed] = useState(issue.closed);
@@ -33,35 +38,6 @@ export const IssueItem =  ({ issue, onDelete }) => {
           </div>
           <div className="issue__sub-info-container">
             <h3 className="issue__sub-info">
-              <FormattedMessage id="issueCard.issue.start" />
-            </h3>
-            <p className="issue__sub-info-text">{formatVisitDate(issue.startTime)}</p>
-          </div>
-          <div className="issue__sub-info-container">
-            <h3 className="issue__sub-info">
-              <FormattedMessage id="issueCard.issue.end" />
-            </h3>
-            <p className="issue__sub-info-text">{formatVisitDate(issue.endTime)}</p>
-          </div>
-        </div>
-        <div className="issue__worker">
-          <h2 className="issue__info-heading">
-            <FormattedMessage id="issueCard.worker.title" />
-          </h2>
-          <div className="issue__sub-info-container">
-            <h3 className="issue__sub-info">
-              <FormattedMessage id="issueCard.worker.fullName" />
-            </h3>
-            <p className="issue__sub-info-text">{concatFullName(issue.firstName, issue.lastName, issue.fatherName)}</p>
-          </div>
-          <div className="issue__sub-info-container">
-            <h3 className="issue__sub-info">
-              <FormattedMessage id="issueCard.worker.speciality" />
-            </h3>
-            <p className="issue__sub-info-text">{`${issue.name} (${issue.experience} years)`}</p>
-          </div>
-          <div className="issue__sub-info-container">
-            <h3 className="issue__sub-info">
               <FormattedMessage id="issueCard.worker.price" />
             </h3>
             <p className="issue__sub-info-text">{`${issue.price} UAH`}</p>
@@ -70,16 +46,20 @@ export const IssueItem =  ({ issue, onDelete }) => {
         { localStorage.getItem('startStatus') !== "User" &&
           <div className="issue__buttons">
             <div className="issue__buttons-container">
-              <Button
-                text={<FormattedMessage id="issueCard.button.delete" />}
-                className="issue__delete-button"
-                onClick={() => onDelete(issue.issueId)}
-              />
-              <Button
-                text={<FormattedMessage id="issueCard.button.close" />}
-                className="issue__close-button"
-                onClick={() => onCloseIssue(issue.issueId)}
-              />
+              { canDelete && 
+                <Button
+                  text={<FormattedMessage id="issueCard.button.delete" />}
+                  className="issue__delete-button"
+                  onClick={() => onDelete(issue.description)}
+                />
+              }
+              { canClose &&
+                <Button
+                  text={<FormattedMessage id="issueCard.button.close" />}
+                  className="issue__close-button"
+                  onClick={() => onCloseIssue(issue.issueId)}
+                />
+              }
             </div>
           </div>
         }
