@@ -1,4 +1,4 @@
-.issue {
+/* .issue {
   position: relative;
   padding: 5px 0;
 
@@ -62,6 +62,26 @@
       background: rgb(44, 136, 36);
     }
   }
+} */
+
+.issue {
+  &__info-heading {
+    text-align: center;
+  }
+
+  &__info {
+    display: flex;
+  }
+
+  &__sub-info-container {
+    padding: 5px;
+  }
+
+  &__sub-info-text {
+    padding: 0 5px;
+  }
+
+  
 }
 
 .visible {

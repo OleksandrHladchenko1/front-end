@@ -115,6 +115,7 @@ export class VisitDetails extends Component {
     if (prevState.visit.status !== this.state.visit.status) {
       this.getDataAfterUpdate();
     }
+    console.log(this.state.issues);
   };
 
   changeVisitStatus = (status) => {

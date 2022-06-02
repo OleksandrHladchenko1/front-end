@@ -194,5 +194,22 @@
   "editWorker.button.save": "Зберегти",
   "editWorker.button.cancel": "Відмінити",
   "editWorker.worker.speciality.title": "Спеціалізації працівника",
-  "editWorker.all.speciality.title": "Всі спеціалізації"
+  "editWorker.all.speciality.title": "Всі спеціалізації",
+  "statistics.workload.title": "Навантаженість працівників",
+  "statistics.workload.totalHours.title": "Загальна кількість годин",
+  "statistics.workload": "Навантаженість",
+  "statistics.workload.hours.total": "годин загалом",
+  "statistics.workload.hours": "годин",
+  "statistics.problems.title": "Найчастіше виявлені проблеми",
+  "statistics.problems.totalTimes.title": "Загальна кількість",
+  "statistics.problems": "Проблеми",
+  "statistics.problems.times.total": "загалом",
+  "problemTypes.engine": "Двигун",
+  "problemTypes.light": "Світло",
+  "problemTypes.transmission": "Трансмісія",
+  "problemTypes.chassis": "Ходова частина",
+  "problemTypes.painting": "Фарбування",
+  "problemTypes.welding": "Зварочні роботи",
+  "problemTypes.tier": "Колеса",
+  "problemTypes.electricity": "Електрика"
 }

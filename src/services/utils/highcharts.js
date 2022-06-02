@@ -32,7 +32,6 @@ export const prepareDrilldownData = array => {
       });
     }
   });
-  console.log(result);
+
   return result;
 };
-

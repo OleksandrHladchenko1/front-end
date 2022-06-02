@@ -497,6 +497,20 @@ export class APIInteractor {
 		}
 	}
 
+	getProblemStatistics = async () => {
+		try {
+			const result = await axios ({
+				method: 'GET',
+				url: 'http://localhost:8080/api/statistics/problems',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			console.log(result.data.problems);
+			return result.data.problems;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+
 	getProblemTypes = async () => {
 		try {
 			const result = await axios ({

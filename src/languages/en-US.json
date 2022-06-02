@@ -194,5 +194,22 @@
   "editWorker.button.save": "Save",
   "editWorker.button.cancel": "Cancel",
   "editWorker.worker.speciality.title": "Worker's specialities",
-  "editWorker.all.speciality.title": "All specialities"
+  "editWorker.all.speciality.title": "All specialities",
+  "statistics.workload.title": "Workers' workload",
+  "statistics.workload.totalHours.title": "Total working hours",
+  "statistics.workload": "Workload",
+  "statistics.workload.hours.total": "hours of total",
+  "statistics.workload.hours": "hours",
+  "statistics.problems.title": "The most frequent problems",
+  "statistics.problems.totalTimes.title": "Total times",
+  "statistics.problems": "Problems",
+  "statistics.problems.times.total": "times of total",
+  "problemTypes.engine": "Engine",
+  "problemTypes.light": "Light",
+  "problemTypes.transmission": "Transmission",
+  "problemTypes.chassis": "Chassis",
+  "problemTypes.painting": "Painting",
+  "problemTypes.welding": "Welding",
+  "problemTypes.tier": "Tier",
+  "problemTypes.electricity": "Electricity"
 }
