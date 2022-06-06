@@ -5,22 +5,25 @@ import { Button } from "../Button";
 import { Select } from "../Select";
 
 import { APIInteractor } from "../../../services";
-import { concatFullName, formatVisitDate } from "../../../services/utils";
+import { concatFullName, formatVisitDate, getDateForDatePicker, getDateForDatePickerLocal } from "../../../services/utils";
 
 import './IssueItem.scss';
+import { RequiredStar } from "../RequiredStar";
 
 export const IssueItem =  ({
   issue,
   onDelete,
   canDelete,
-  canClose,  
+  canSave,  
 }) => {
-  console.log(issue);
   const apiInteractor = new APIInteractor();
   const [closed, setClosed] = useState(issue.closed);
+  const [isSaved, setIsSaved] = useState(false);
   const [problems, setProblems] = useState([]);
+  const [workers, setWorkers] = useState([]);
+  const [newData, setNewData] = useState({});
   const onCloseIssue = (id) => {
-    setClosed(true);
+    setClosed('Yes');
     apiInteractor.closeIssue(id);
   };
 
@@ -33,6 +36,27 @@ export const IssueItem =  ({
       setProblems(newData);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(newData);
+    console.log(issue);
+    console.log(closed);
+  });
+
+  const onSaveIssue = (id) => {
+    setIsSaved(true);
+    apiInteractor.updateStartEndSpecialist(id, newData);
+  };
+
+  const getWorkersForProblemType = (id) => {
+    apiInteractor.getFreeWorkersForTime(id).then((data) => {
+      const prepareDataForSelectWorker = data.map(item => ({
+        text: `${item.firstName} ${item.lastName} ${item.fatherName}`,
+        value: item.specialistId
+      }));
+      setWorkers(prepareDataForSelectWorker);
+    });
+  };
 
   return (
     <div className="issue">
@@ -55,19 +79,54 @@ export const IssueItem =  ({
               </h3>
               <p className="issue__sub-info-text">{`${issue.price} UAH`}</p>
             </div>
-            <div className="issue__sub-info-container">
-              <Select
-                name="problemType"
-                label="Select problem type"
-                options={problems}
-                className="issue__select-problem-type"
-                onChange={() => console.log('asd')}
-                required
-              />
-            </div>
+            { (!issue.id_specialist && localStorage.getItem('isSorted') === 'Yes') &&
+              <div className="issue__sub-info-container">
+                <Select
+                  name="problemType"
+                  label="Select problem type"
+                  options={problems}
+                  className="issue__select-problem-type"
+                  onChange={(e) => getWorkersForProblemType(e.target.value)}
+                  required
+                />
+              </div>
+            }
           </div>
           <div className="issue__info-container-right">
-
+            { !!workers.length && !isSaved && 
+              <Select
+                name="idSpecialist"
+                label="Select worker"
+                options={workers}
+                className="issue__select-problem-type"
+                onChange={(e) => setNewData({ ...newData, idSpecialist: e.target.value })}
+                required
+              />
+            }
+            { !!newData.idSpecialist && !isSaved &&
+              <>
+                <label>Start<RequiredStar /></label>
+                <input
+                  type="datetime-local"
+                  min={`${getDateForDatePickerLocal(new Date())}`}
+                  className="form-input pick-date"
+                  onChange={(e) => setNewData({ ...newData, start: e.target.value })}
+                />
+                <label>End<RequiredStar /></label>
+                <input
+                  type="datetime-local"
+                  min={`${getDateForDatePickerLocal(new Date())}`}
+                  className="form-input pick-date"
+                  onChange={(e) => setNewData({ ...newData, end: e.target.value })}
+                />
+              </>
+            }
+            { (!!issue.id_specialist || isSaved ) && localStorage.getItem('visitStatus') !== 'Planned' &&
+              <>
+                <p className="issue__startTime">{issue.startTime ?? newData.start}</p>
+                <p className="issue__startTime">{issue.endTime ?? newData.end}</p>
+              </>
+            }
           </div>
           <div className="issue__buttons-container">
 
@@ -80,14 +139,21 @@ export const IssueItem =  ({
                 <Button
                   text={<FormattedMessage id="issueCard.button.delete" />}
                   className="issue__delete-button"
-                  onClick={() => onDelete(issue.description)}
+                  onClick={() => onDelete(issue.id)}
                 />
               }
-              { canClose &&
+              { canSave && !isSaved && /* !localStorage.getItem('isSorted') === 'No' && */
+                <Button
+                  text="Save"
+                  className="issue__save-button"
+                  onClick={() => onSaveIssue(issue.id)}
+                />
+              }
+              { (isSaved || issue.id_specialist) &&
                 <Button
                   text={<FormattedMessage id="issueCard.button.close" />}
                   className="issue__close-button"
-                  onClick={() => onCloseIssue(issue.issueId)}
+                  onClick={() => onCloseIssue(issue.id)}
                 />
               }
             </div>

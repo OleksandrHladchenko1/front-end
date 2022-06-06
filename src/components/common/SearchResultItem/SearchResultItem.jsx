@@ -12,6 +12,7 @@ export const SearchResultItem = ({ item, onClick, sequence }) => {
   const getClassName = () => {
     return `item ${sequence % 2 === 0 ? 'even' : 'odd'}`;
   };
+
   return (
     <div className={getClassName()}>
       { item.dateOfVisit && (
@@ -25,7 +26,7 @@ export const SearchResultItem = ({ item, onClick, sequence }) => {
       )}
       <Button
         text={<FormattedMessage id="visitItem.details" />}
-        onClick={() => onClick(item.id, item.status)}
+        onClick={() => onClick(item.id, item.status, item.isSorted)}
         className="item__details-button"
       />
     </div>

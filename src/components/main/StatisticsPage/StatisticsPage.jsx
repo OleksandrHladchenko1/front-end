@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import drilldown from 'highcharts/modules/drilldown';
 import HighchartsReact from "highcharts-react-official";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { APIInteractor } from '../../../services/apiInteractor';
 import {
   prepareDataForHighcharts,
-  prepareDataForProblems, prepareDrilldownData,
+  prepareDrilldownData,
 } from "../../../services/utils";
 
 import "./StatisticsPage.scss";
@@ -35,6 +35,10 @@ export const StatisticsPage = () => {
       setProblems(newData);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(workload);
+  });
 
   const optionsForWorkload = {
     chart: {

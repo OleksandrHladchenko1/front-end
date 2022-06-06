@@ -66,9 +66,10 @@ export class VisitPage extends Component {
     e.target.classList.toggle('active');
   }
 
-  showDetails = (id, status) => {
+  showDetails = (id, status, isSorted) => {
     localStorage.setItem('visitId', id);
     localStorage.setItem('visitStatus', status);
+    localStorage.setItem('isSorted', isSorted);
     document.location.pathname = `/visits/${id}`;
   }
 

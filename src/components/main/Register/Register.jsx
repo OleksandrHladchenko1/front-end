@@ -11,6 +11,7 @@ import { registerErrors, validateEmail, validateField, validatePassword, validat
 import './Register.scss';
 
 const Register = ({ intl }) => {
+  const startStatus = localStorage.getItem('startStatus');
   const navigate = useNavigate();
   const apiInteractor = new APIInteractor();
   const [userInfo, setUserInfo] = useState({
@@ -32,6 +33,18 @@ const Register = ({ intl }) => {
     const name = e.target.name;
     const value = e.target.value;
     setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  const selectBackground = () => {
+    switch(startStatus) {
+      case 'User':
+        return 'user-bg';
+      case 'Worker': 
+        return 'worker-bg';
+      case 'Admin':
+        return 'admin-bg';
+      default: return;
+    }
   };
 
   const register = (e) => {
@@ -80,7 +93,7 @@ const Register = ({ intl }) => {
 
   return (
     <main>
-      <article className="form">
+      <article className={`form ${selectBackground()}`}>
         <div className="form__container">
           <form className="form__form" method="POST">
             <div className="form__form-container" id="register">

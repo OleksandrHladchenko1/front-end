@@ -245,6 +245,21 @@ export class APIInteractor {
 		}
 	};
 
+	getFreeWorkersForTime = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/workers/getFreeWorkersForProblem/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result.data.workers;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+	
+	
+
 	getIssuesByVisitId = async (id, status) => {
 		try {
 			const result = await axios({
@@ -258,6 +273,78 @@ export class APIInteractor {
 		}
 	};
 
+	getVisitIssuesBeforeSort = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `http://localhost:8080/api/issue/getVisitIssues/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result.data.issues;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	setDependency = async (id, degree, dependsOn) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/issue/editDependency/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: {
+					degree,
+					dependsOn: JSON.stringify(dependsOn),
+				},
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	setSequence = async (data) => {
+		console.log('here set sequence');
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/issue/setSequence`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data,
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	setSorted = async (id) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/userVisits/setSorted/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	getSortedIssues = async () => {
+		console.log('here get sorted');
+		try {
+			const result = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/api/issue/getSortedIssues',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result.data.issues;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
 	getFreeVisitsTime = async (day) => {
 		try {
 			const result = await axios({
@@ -265,7 +352,6 @@ export class APIInteractor {
 				url: `http://localhost:8080/api/userVisits/getFreeVisits/${day}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
-			console.log(result.data.visit);
 			return result.data.visit;
 		} catch (err) {
 			throw err.response.data.message;
@@ -318,6 +404,20 @@ export class APIInteractor {
 				method: 'patch',
 				url: `http://localhost:8080/api/issue/closeIssue/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			return result;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	updateStartEndSpecialist = async (id, data) => {
+		try {
+			const result = await axios({
+				method: 'patch',
+				url: `http://localhost:8080/api/issue/updateStartEndSpecialist/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data
 			});
 			return result;
 		} catch (err) {

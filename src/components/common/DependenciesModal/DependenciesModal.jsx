@@ -1,27 +1,43 @@
 import React from "react";
-import { topologicalSort } from "../../../services/utils";
+
 import { Button } from "../Button";
 import { DependencyItem } from "../DependencyItem/DependencyItem";
+
+import { APIInteractor } from "../../../services";
+import { stringToArray, topologicalSort } from "../../../services/utils";
 
 import './DependenciesModal.scss';
 
 export const DependenciesModal = ({ issues, onFinish }) => {
+  const apiInteractor = new APIInteractor();
   const issuesForModal = [...issues];
 
   const changeIssue = (itemTitle, dependTitle) => {
     const itemElement = issuesForModal.find(item => item.description === itemTitle);
+    itemElement.dependsOn = stringToArray(itemElement.dependsOn);
     const dependsElem = itemElement.dependsOn.find(item => dependTitle === item);
     if(dependsElem) {
       itemElement.dependsOn.splice(itemElement.dependsOn.indexOf(dependTitle), 1);
       itemElement.degree--;
+      apiInteractor.setDependency(
+        itemElement.id, 
+        itemElement.degree,
+        itemElement.dependsOn,
+      );
     } else {
       itemElement.dependsOn.push(dependTitle);
       itemElement.degree++;
+      apiInteractor.setDependency(
+        itemElement.id, 
+        itemElement.degree,
+        itemElement.dependsOn,
+      );
     }
   };
 
   const startTopologicalSort = () => {
     const sortedArray = topologicalSort(issuesForModal);
+    console.log('sorted', sortedArray);
     onFinish(sortedArray);
   };
 

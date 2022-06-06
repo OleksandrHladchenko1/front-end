@@ -1,3 +1,5 @@
+import { stringToArray } from "./stringFormatters";
+
 export const topologicalSort = (elementsArray) => {
   const sortedQueue = [];
   const queue = elementsArray.filter(element => element.degree === 0);
@@ -11,7 +13,8 @@ export const topologicalSort = (elementsArray) => {
       sortedQueue.push(currentNode);
       for(let i = 0, len = array.length; i < len; ++i) {
         const element = array[i];
-        const hasDependencyOnCurrentNode = element.dependsOn.find(dependency => {
+        const elementDependsOn = stringToArray(element.dependsOn);
+        const hasDependencyOnCurrentNode = elementDependsOn.find(dependency => {
           return dependency === currentNode.description;
         });
         if(hasDependencyOnCurrentNode) {
@@ -25,5 +28,4 @@ export const topologicalSort = (elementsArray) => {
   }
 
   return sortedQueue;
-
 };

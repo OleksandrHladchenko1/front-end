@@ -22,7 +22,7 @@ export const DependencyItem = ({ item, issues, onChange }) => {
           <div className="dependency-item__dependencies-container">
             {
               dependedIssues.map((issue, i) => (
-                <div>
+                <div key={i}>
                   <input className="dependency-item__item-checkbox" type="checkbox" onClick={() => onCheckboxClick(issue.description)} />
                   <label className="dependency-item__item-label">{issue.description}</label>
                 </div>

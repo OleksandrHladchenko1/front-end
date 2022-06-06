@@ -9,7 +9,7 @@ import { AreYouSureModal } from "../../common/AreYouSureModal";
 import { IssueItem } from '../../common/IssueItem';
 
 import { APIInteractor } from '../../../services';
-import { concatFullName, formatDate, formatTime } from '../../../services/utils';
+import { concatFullName, formatDate, formatTime, stringToArray } from '../../../services/utils';
 import plus from '../../../assets/plus.svg';
 
 import './VisitDetails.scss';
@@ -30,7 +30,7 @@ export class VisitDetails extends Component {
       isNewIssueModalOpen: false,
       isReviewFinished: false,
       isDependencyModalOpen: false,
-      isSorted: false,
+      isSorted: localStorage.getItem('isSorted') === 'Yes' ? true : false,
       isConfirmationFinishingOpen: false,
     };
 
@@ -76,7 +76,7 @@ export class VisitDetails extends Component {
 
   getDataForInProgressVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
-      this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), this.state.status),
+      // this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), this.state.status),
     ]);
 
   getDataForClosedVisit = async () => Promise.all([
@@ -94,7 +94,7 @@ export class VisitDetails extends Component {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
         this.setState({
           ...this.state,
-          issues: [...data[1].data.issues],
+          // issues: [...data[1].data.issues],
         });
       });
     } else {
@@ -110,6 +110,8 @@ export class VisitDetails extends Component {
 
   componentDidMount() {
     this.getDataAfterUpdate();
+    this.getIssuesBeforeSort();
+    // console.log(stringToArray([]));
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.visit.status !== this.state.visit.status) {
@@ -117,6 +119,12 @@ export class VisitDetails extends Component {
     }
     console.log(this.state.issues);
   };
+
+  getIssuesBeforeSort = async () => {
+    this.apiInteractor.getVisitIssuesBeforeSort(localStorage.getItem('visitId')).then((data) => {
+      this.setState({ issues: [...data] });
+    });
+  }
 
   changeVisitStatus = (status) => {
     this.setState((prevState) => ({
@@ -158,12 +166,14 @@ export class VisitDetails extends Component {
     });
   };
 
-  deleteIssue = (description) => {
-    //this.apiInteractor.deleteIssue(id);
-    this.setState((prevProps) => ({
-        ...prevProps,
-        issues: [...prevProps.issues.filter((issue) => issue.description !== description)],
-      }));
+  deleteIssue = (id) => {
+    this.apiInteractor.deleteIssue(id).then(() => {
+      this.getIssuesBeforeSort();
+    });
+    /* this.setState((prevProps) => ({
+      ...prevProps,
+      issues: [...prevProps.issues.filter((issue) => issue.description !== description)],
+    })); */
   };
 
   getPDF = () => {
@@ -188,11 +198,21 @@ export class VisitDetails extends Component {
   }
 
   addIssue = (issue) => {
-    this.setState(prevState => ({
+    console.log(issue);
+
+    this.apiInteractor.addIssue({
+      ...issue,
+      visitId: localStorage.getItem('visitId'),
+      dependsOn: JSON.stringify(issue.dependsOn),
+    }).then(() => {
+      this.setState({ isNewIssueModalOpen: false });
+      this.getIssuesBeforeSort();
+    });
+    /* this.setState(prevState => ({
       ...prevState,
       issues: [...prevState.issues, issue]
     }));
-    this.setState({ isNewIssueModalOpen: false });
+    this.setState({ isNewIssueModalOpen: false }); */
   }
 
   finishReview = () => {
@@ -202,13 +222,23 @@ export class VisitDetails extends Component {
     });
   }
 
-  sortIssues = (sortedIssues) => {
-    this.setState(prevState => ({
-      ...prevState,
-      issues: [...sortedIssues],
-      isSorted: true,
-      isDependencyModalOpen: false,
+  sortIssues = async (sortedIssues) => {
+    const newArray = sortedIssues.map((item, i) => ({
+      id: item.id,
+      sequence: i
     }));
+    this.apiInteractor.setSequence(newArray).then(() => {
+      this.apiInteractor.setSorted(localStorage.getItem('visitId')).then(() => {
+        localStorage.setItem('isSorted', 'Yes');
+        this.apiInteractor.getSortedIssues().then((data) => {
+          this.setState({
+            issues: data,
+            isSorted: true,
+            isDependencyModalOpen: false,
+          });
+        });
+      });
+    });
   }
 
   openConfarmationFinishing = () => {
@@ -246,7 +276,7 @@ export class VisitDetails extends Component {
     const issuesList = this.state.issues.map((issue, index) => (
         <IssueItem
           canDelete={!this.state.isSorted}
-          canClose={this.state.isSorted}
+          canSave={this.state.isSorted}
           key={index}
           issue={issue}
           onDelete={this.deleteIssue}
@@ -431,6 +461,7 @@ export class VisitDetails extends Component {
             { status === 'In Progress'
               && localStorage.getItem('startStatus') !== 'User'
               && !this.state.isReviewFinished
+              && localStorage.getItem('isSorted') === 'No'
               &&
               <Button
                 text="Add new issue"  
@@ -443,7 +474,7 @@ export class VisitDetails extends Component {
                  */
             }
             {
-              !!issuesList.length &&
+              !!issuesList.length && !this.state.isSorted &&
               <Button
                 text="Finish review"
                 className="visit-detail__finish-review success"
