@@ -1,5 +1,5 @@
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequiredStar } from "../RequiredStar";
 
@@ -25,7 +25,7 @@ export const Select = ({
           {intl.formatMessage({ id:"select.defaultMessage" })}
         </option>
         {
-          options.map((option, i) => <option key={`${option.value}-${i}`} value={option.value}>{option.text}</option>)
+          options.map((option, i) => <option key={`${option.value}-${i}`} value={option.value}>{intl.formatMessage({ id: option.text })}</option>)
         }
       </select>
     </div>

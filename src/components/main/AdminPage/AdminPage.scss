@@ -1,0 +1,12 @@
+.worker {
+  &__container-list {
+    height: 500px;
+    overflow-y: scroll;
+    border: 2px solid black;
+  }
+}
+
+.worker-new {
+  display: flex;
+  justify-content: center;
+}

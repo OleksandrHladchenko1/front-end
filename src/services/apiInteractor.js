@@ -331,12 +331,11 @@ export class APIInteractor {
 		}
 	};
 
-	getSortedIssues = async () => {
-		console.log('here get sorted');
+	getSortedIssues = async (id) => {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: 'http://localhost:8080/api/issue/getSortedIssues',
+				url: `http://localhost:8080/api/issue/getSortedIssues/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.issues;
@@ -530,6 +529,7 @@ export class APIInteractor {
 	};
 
 	addSpecialist = async (specialist) => {
+		console.log(specialist);
 		try {
 			const result = await axios({
 				method: 'post',
@@ -620,6 +620,24 @@ export class APIInteractor {
 			});
 			console.log(result.data.problems);
 			return result.data.problems;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	}
+
+	createWorker = async (data) => {
+		try {
+			const result = await axios ({
+				method: 'POST',
+				url: 'http://localhost:8080/api/workers/createWorker',
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+				data: {
+					startStatus: localStorage.getItem('startStatus'),
+					...data,
+				},
+			});
+			console.log(result.status);
+			return result;
 		} catch (err) {
 			throw err.response.data.message;
 		}

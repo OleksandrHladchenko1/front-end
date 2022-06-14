@@ -8,7 +8,7 @@ import { Modal } from '../../common/Modal';
 import { EditUserInfo } from "../../common/EditUserInfo";
 
 import { APIInteractor } from "../../../services";
-import { formatDate } from "../../../services/utils";
+import { formatBirthDate } from "../../../services/utils";
 
 import './UserPage.scss';
 
@@ -98,7 +98,7 @@ export class UserPage extends Component {
                 </div>
                 <div className="user__birthday">
                   <h2 className="user__birthday-title"><FormattedMessage id="userPage.birthday" /></h2>
-                  <h3 className="user__birthday-amount">{formatDate(dateOfBirth) || <NoValue />}</h3>
+                  <h3 className="user__birthday-amount">{formatBirthDate(dateOfBirth) || <NoValue />}</h3>
                 </div>
               </div>
               <div className="user__main-info">

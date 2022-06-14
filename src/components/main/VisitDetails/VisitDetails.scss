@@ -74,6 +74,18 @@
     height: 3px;
     background: linear-gradient(to right, rgb(93, 0, 255), rgb(76, 208, 215));
   }
+
+  &__doc {
+    width: 50%;
+    border: none;
+    color: #fff;
+    padding: 5px;
+    margin-top: 3px;
+
+    &:hover {
+      background: linear-gradient(#1d961f, #1d721f);
+    }
+  }
 }
 
 .main-info {

@@ -9,23 +9,34 @@ import { EditWorker } from "../../common/EditWorker";
 import { APIInteractor } from "../../../services";
 
 import './AdminPage.scss';
+import { CreateWorkerModal } from "../../common/CreateWorkerModal/CreateWorkerModal";
+import { Button } from "../../common/Button";
+import { ChooseExperience } from "../../common/ChooseExperience/ChooseExperience";
 
 export const AdminPage = () => {
   const [workers, setWorkers] = useState([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isExperienceModalVisible, setIsExperienceModalVisible] = useState(false);
   const [worker, setWorker] = useState({});
+  const [specialist, setSpecialist] = useState({
+    id_worker: '',
+    id_speciality: '',
+    id_problem_type: '',
+    experience: '',
+  });
   const apiIneractor = new APIInteractor();
 
-  useEffect(() => {
+  const getWorkers = () => {
     apiIneractor.getAllWorkers().then((data) => {
       setWorkers(data);
     });
-  }, []);
+  };
 
-/*   useEffect(() => {
-    console.log(worker);
-  }); */
+  useEffect(() => {
+    getWorkers();
+  }, []);
 
   const openDeleteModal = (worker) => {
     setWorker(worker);
@@ -43,7 +54,6 @@ export const AdminPage = () => {
 
   const closeEditModal = () => {
     apiIneractor.getAllWorkers().then((data) => {
-      console.log(data);
       setWorkers(data);
       setIsEditModalOpen(false);
     });
@@ -65,6 +75,35 @@ export const AdminPage = () => {
     />
   );
 
+  const showPlusModal = () => {
+    setIsExperienceModalVisible(true);
+  };
+
+  const onAddSpeciality = ({ id_worker, id_speciality }) => {
+    setSpecialist({
+      ...specialist,
+      id_worker,
+      id_speciality,
+    });
+    showPlusModal();
+  };
+
+  const onSubmitSpecialist = (experience, id_problem_type) => {
+    setSpecialist({
+      ...specialist,
+      experience,
+      id_problem_type,
+    });
+    apiIneractor.addSpecialist({
+      id_worker: specialist.id_worker,
+      id_speciality: specialist.id_speciality,
+      id_problem_type,
+      experience,
+    }).then(() => {
+      setIsExperienceModalVisible(false);
+    });
+  };
+
   return (
     <main>
       <Modal isModalOpen={isDeleteModalOpen}>
@@ -79,8 +118,25 @@ export const AdminPage = () => {
           mainText={<FormattedMessage id="areYouSure.text.deleteWorker" />}
         />
       </Modal>
+      <Modal isModalOpen={isCreateModalOpen}>
+        <CreateWorkerModal
+          onClose={() => setIsCreateModalOpen(false)}
+          onFinish={getWorkers}
+        />
+      </Modal>
       <Modal isModalOpen={isEditModalOpen}>
-        <EditWorker onSubmit={closeEditModal} onClose={closeEditModal} workerId={worker.id} />
+        <EditWorker
+          onSubmit={closeEditModal}
+          onClose={closeEditModal}
+          workerId={worker.id}
+          onPlus={showPlusModal}
+          onAddSpeciality={onAddSpeciality}
+        />
+      </Modal>
+      <Modal isModalOpen={isExperienceModalVisible}>
+        <ChooseExperience
+          onFinish={onSubmitSpecialist}
+        />
       </Modal>
       <article className="admin">
         <div className="admin-container">
@@ -107,7 +163,16 @@ export const AdminPage = () => {
                 </li>
               </ul>
             </div>
-            {workerList}
+            <div className="worker__container-list">
+              {workerList}
+            </div>
+          </div>
+          <div className="worker-new">
+            <Button
+              text="Create new worker"
+              className="worker-new__button success button"
+              onClick={() => setIsCreateModalOpen(true)}
+            />
           </div>
         </div>
       </article>

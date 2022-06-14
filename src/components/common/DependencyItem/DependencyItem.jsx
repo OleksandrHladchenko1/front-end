@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import './DependencyItem.scss';
 
@@ -13,12 +14,16 @@ export const DependencyItem = ({ item, issues, onChange }) => {
       <div className="dependency-item__container">
         <div className="dependency-item__info">
           <div className="dependency-item__description">
-            <h3 className="dependency-item__description-title">Description</h3>
+            <h3 className="dependency-item__description-title">
+              <FormattedMessage id="dependency.description" />
+            </h3>
             <h5 className="dependency-item__description-text">{item.description}</h5>
           </div>
         </div>
         <div className="dependency-item__dependencies">
-          <p className="dependency-item__der-title">This task can depend on...</p>
+          <p className="dependency-item__der-title">
+            <FormattedMessage id="dependency.dependsOn" />  
+          </p>
           <div className="dependency-item__dependencies-container">
             {
               dependedIssues.map((issue, i) => (

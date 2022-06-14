@@ -12,7 +12,12 @@ import plus from '../../../assets/plus.svg';
 
 import './EditWorker.scss';
 
-export const EditWorker = ({ onSubmit, onClose, workerId }) => {
+export const EditWorker = ({
+  onSubmit,
+  onClose,
+  workerId,
+  onAddSpeciality,
+}) => {
   const intl = useIntl();
   const [workerInfo, setWorkerInfo] = useState({});
   const [workerSpecialities, setWorkerSpecialities] = useState([]);
@@ -23,6 +28,9 @@ export const EditWorker = ({ onSubmit, onClose, workerId }) => {
     const speciality = workerSpecialities.find(speciality => speciality.id === id);
     const newWorkerSpecialities = workerSpecialities.filter(speciality => speciality.id !== id);
     const newAllSpecialities = [...allSpecialities, speciality];
+
+    setWorkerSpecialities(newWorkerSpecialities);
+    setAllSpecialities(newAllSpecialities);
 
     apiIneractor.deleteSpecialist(workerId, id).then(() => {
       setWorkerSpecialities(newWorkerSpecialities);
@@ -35,13 +43,11 @@ export const EditWorker = ({ onSubmit, onClose, workerId }) => {
     const newWorkerSpecialities = [...workerSpecialities, speciality];
     const newAllSpecialities = allSpecialities.filter(speciality => speciality.id !== id);
 
-    apiIneractor.addSpecialist({
+    setWorkerSpecialities(newWorkerSpecialities);
+    setAllSpecialities(newAllSpecialities);
+    onAddSpeciality({
       id_worker: workerId,
       id_speciality: id,
-      experience: 1,
-    }).then(() => {
-      setWorkerSpecialities(newWorkerSpecialities);
-      setAllSpecialities(newAllSpecialities);
     });
   };
 
@@ -57,10 +63,6 @@ export const EditWorker = ({ onSubmit, onClose, workerId }) => {
       });
     });
   }, []);
-
-  useEffect(() => {
-    console.log(workerInfo);
-  });
 
   const onChangeInfo = (e) => {
     const name = e.target.name;
@@ -131,7 +133,6 @@ export const EditWorker = ({ onSubmit, onClose, workerId }) => {
             text={<FormattedMessage id="editWorker.button.cancel" />}
             className="edit-worker__close red-button button"
             onClick={onClose}
-            type="submit"
           />
         </div>
       </div>

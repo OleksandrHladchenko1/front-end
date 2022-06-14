@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import { Select } from "../Select";
 
 import { APIInteractor } from "../../../services";
-import { concatFullName, formatVisitDate, getDateForDatePicker, getDateForDatePickerLocal } from "../../../services/utils";
+import { formatDate, formatTime, formatTime2, formatVisitDate, getDateForDatePicker, getDateForDatePickerLocal } from "../../../services/utils";
 
 import './IssueItem.scss';
 import { RequiredStar } from "../RequiredStar";
@@ -16,6 +16,7 @@ export const IssueItem =  ({
   canDelete,
   canSave,  
 }) => {
+  console.log(issue);
   const apiInteractor = new APIInteractor();
   const [closed, setClosed] = useState(issue.closed);
   const [isSaved, setIsSaved] = useState(false);
@@ -44,8 +45,10 @@ export const IssueItem =  ({
   });
 
   const onSaveIssue = (id) => {
-    setIsSaved(true);
-    apiInteractor.updateStartEndSpecialist(id, newData);
+    if(newData.end) {
+      setIsSaved(true);
+      apiInteractor.updateStartEndSpecialist(id, newData);
+    }
   };
 
   const getWorkersForProblemType = (id) => {
@@ -79,13 +82,13 @@ export const IssueItem =  ({
               </h3>
               <p className="issue__sub-info-text">{`${issue.price} UAH`}</p>
             </div>
-            { (!issue.id_specialist && localStorage.getItem('isSorted') === 'Yes') &&
+            { (!issue.id_specialist && localStorage.getItem('isSorted') === 'Yes') && !isSaved &&
               <div className="issue__sub-info-container">
                 <Select
                   name="problemType"
                   label="Select problem type"
                   options={problems}
-                  className="issue__select-problem-type"
+                  className="issue__select-problem-type form-input"
                   onChange={(e) => getWorkersForProblemType(e.target.value)}
                   required
                 />
@@ -98,7 +101,7 @@ export const IssueItem =  ({
                 name="idSpecialist"
                 label="Select worker"
                 options={workers}
-                className="issue__select-problem-type"
+                className="issue__select-problem-type form-input"
                 onChange={(e) => setNewData({ ...newData, idSpecialist: e.target.value })}
                 required
               />
@@ -123,8 +126,14 @@ export const IssueItem =  ({
             }
             { (!!issue.id_specialist || isSaved ) && localStorage.getItem('visitStatus') !== 'Planned' &&
               <>
-                <p className="issue__startTime">{issue.startTime ?? newData.start}</p>
-                <p className="issue__startTime">{issue.endTime ?? newData.end}</p>
+                <div className="issue__start-end-container">
+                  <h3 className="issue__start">
+                    Start: {`${formatDate(issue.startTime ?? newData.start)} ${formatTime(issue.startTime) || formatTime2(newData.start)}`}
+                  </h3>
+                  <h3 className="issue__end">
+                    End: {`${formatDate(issue.endTime ?? newData.end)} ${formatTime(issue.endTime) || formatTime2(newData.end)}`}
+                  </h3>
+                </div>
               </>
             }
           </div>
@@ -142,17 +151,17 @@ export const IssueItem =  ({
                   onClick={() => onDelete(issue.id)}
                 />
               }
-              { canSave && !isSaved && /* !localStorage.getItem('isSorted') === 'No' && */
+              { canSave && !isSaved && !issue.endTime &&
                 <Button
                   text="Save"
-                  className="issue__save-button"
+                  className="issue__save-button button success"
                   onClick={() => onSaveIssue(issue.id)}
                 />
               }
               { (isSaved || issue.id_specialist) &&
                 <Button
                   text={<FormattedMessage id="issueCard.button.close" />}
-                  className="issue__close-button"
+                  className="issue__close-button button success"
                   onClick={() => onCloseIssue(issue.id)}
                 />
               }

@@ -1,21 +1,37 @@
 import { months } from "./constants";
 
 export const formatDate = (date) => {
-  if(!date) return;
+  console.log(date);
+  if(!date) return false;
   const shortDate = date.substr(0, 10);
   const year = shortDate.substr(0, 4);
-  const day = parseInt(shortDate.substring(8, 10)) + 1;
+  const day = parseInt(shortDate.substring(8, 10));
   const monthIndex = shortDate.substring(5, 7); 
   const month = findMonth(monthIndex);
 
   return `${month} ${day}, ${year}`;
 };
 
+export const formatBirthDate = date => {
+  if(!date) return;
+  const formatted = new Date(date);
+  
+  return `${months[formatted.getMonth()]} ${formatted.getDate()}, ${formatted.getFullYear()}`;
+};
+
 export const formatTime = (date) => {
+  if(!date) return false;
   const hour = date.substring(11, 13);
   const minute = date.substring(14, 16);
 
   return `${+hour + 3}:${minute}`;
+};
+
+export const formatTime2 = (date) => {
+  const hour = date.substring(11, 13);
+  const minute = date.substring(14, 16);
+
+  return `${+hour}:${minute}`;
 };
 
 export const findMonth = (index) => {

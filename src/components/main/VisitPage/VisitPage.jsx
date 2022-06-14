@@ -43,7 +43,7 @@ export class VisitPage extends Component {
       userId: localStorage.getItem('userId'),
     }) :
     await this.apiInteractor.getAllVisits();
-    
+    console.log(result);
     return result;
   }
 

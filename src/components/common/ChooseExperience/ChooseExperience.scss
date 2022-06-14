@@ -1,0 +1,58 @@
+.experience {
+  width: 400px;
+  height: 400px;
+  background: #fff;
+
+  &__container {
+    padding: 10px;
+  }
+
+  &__arrow-left,
+  &__arrow-right {
+    width: 40px; 
+    height: 40px; 
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent; 
+  }
+
+  &__arrow-left {
+    border-right:40px solid rgb(196, 196, 196); 
+  }
+
+  &__arrow-right {
+    border-left:40px solid rgb(196, 196, 196); 
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__numbers {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+  }
+
+  &__amount {
+    font-size: 40px;
+  }
+
+  &__save-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+  }
+
+  &__save {
+    width: 70%;
+  }
+
+}
+
+.active-left {
+  border-right:40px solid rgb(0, 0, 0); 
+}
+.active-right {
+  border-left:40px solid rgb(0, 0, 0); 
+}

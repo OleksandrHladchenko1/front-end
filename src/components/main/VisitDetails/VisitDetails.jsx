@@ -76,7 +76,6 @@ export class VisitDetails extends Component {
 
   getDataForInProgressVisit = async () => Promise.all([
       this.apiInteractor.getVisitById(localStorage.getItem('visitId')),
-      // this.apiInteractor.getIssuesByVisitId(localStorage.getItem('visitId'), this.state.status),
     ]);
 
   getDataForClosedVisit = async () => Promise.all([
@@ -94,7 +93,6 @@ export class VisitDetails extends Component {
         this.setStateForUserAndvisit(data[0].data.visit[0]);
         this.setState({
           ...this.state,
-          // issues: [...data[1].data.issues],
         });
       });
     } else {
@@ -111,13 +109,11 @@ export class VisitDetails extends Component {
   componentDidMount() {
     this.getDataAfterUpdate();
     this.getIssuesBeforeSort();
-    // console.log(stringToArray([]));
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.visit.status !== this.state.visit.status) {
       this.getDataAfterUpdate();
     }
-    console.log(this.state.issues);
   };
 
   getIssuesBeforeSort = async () => {
@@ -145,7 +141,6 @@ export class VisitDetails extends Component {
   };
 
   submitCreateIssue = (issue) => {
-    console.log(issue.closed);
     const newIssue = {
       visitId: localStorage.getItem('visitId'),
       specialistId: issue.specialistId,
@@ -170,13 +165,10 @@ export class VisitDetails extends Component {
     this.apiInteractor.deleteIssue(id).then(() => {
       this.getIssuesBeforeSort();
     });
-    /* this.setState((prevProps) => ({
-      ...prevProps,
-      issues: [...prevProps.issues.filter((issue) => issue.description !== description)],
-    })); */
   };
 
   getPDF = () => {
+    console.log(this.state);
     this.apiInteractor.createPDF(JSON.stringify(this.state)).then(() => {
       this.apiInteractor.downloadPDF().then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
@@ -208,11 +200,6 @@ export class VisitDetails extends Component {
       this.setState({ isNewIssueModalOpen: false });
       this.getIssuesBeforeSort();
     });
-    /* this.setState(prevState => ({
-      ...prevState,
-      issues: [...prevState.issues, issue]
-    }));
-    this.setState({ isNewIssueModalOpen: false }); */
   }
 
   finishReview = () => {
@@ -230,7 +217,7 @@ export class VisitDetails extends Component {
     this.apiInteractor.setSequence(newArray).then(() => {
       this.apiInteractor.setSorted(localStorage.getItem('visitId')).then(() => {
         localStorage.setItem('isSorted', 'Yes');
-        this.apiInteractor.getSortedIssues().then((data) => {
+        this.apiInteractor.getSortedIssues(localStorage.getItem('visitId')).then((data) => {
           this.setState({
             issues: data,
             isSorted: true,
@@ -297,8 +284,8 @@ export class VisitDetails extends Component {
           <AreYouSureModal
             onCancel={this.closeConfirmationFinishing}
             onSubmit={this.continueFinishing}
-            headerText="Warning!"
-            mainText="If you click 'Yes', you won't be able to add, edit or delete issues"
+            headerText={<FormattedMessage id="areYouSure.title.warning" />}
+            mainText={<FormattedMessage id="areYouSure.text.continueSort" />}
           />
         </Modal>
         <Modal isModalOpen={this.state.isNewIssueModalOpen}>
@@ -439,9 +426,9 @@ export class VisitDetails extends Component {
                   </div>
                   { !!this.state.issues.length &&
                     <Button
-                      text="Get Document"
+                      text={<FormattedMessage id="newIssue.getDocument" />}
                       onClick={this.getPDF}
-                      className="success"
+                      className="visit-detail__doc success"
                     />
                   }
                 </div>
@@ -464,19 +451,15 @@ export class VisitDetails extends Component {
               && localStorage.getItem('isSorted') === 'No'
               &&
               <Button
-                text="Add new issue"  
+                text={<FormattedMessage id="visitDetails.addNewIssue" />}  
                 className="visit-detail__show-new-issue success"
                 onClick={this.showNewIssueModal}
               />
-                /*<div className="visit-detail__add-issue">
-                  <NewVisitEdit visible={this.state.isNewVisitVisible} onSubmit={this.submitCreateIssue} />
-                </div>
-                 */
             }
             {
               !!issuesList.length && !this.state.isSorted &&
               <Button
-                text="Finish review"
+                text={<FormattedMessage id="visitDetails.finishReview" />}
                 className="visit-detail__finish-review success"
                 onClick={this.openConfarmationFinishing}
               />

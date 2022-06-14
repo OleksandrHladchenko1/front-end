@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "../Button";
 
 import { Close } from "../Close";
@@ -11,6 +12,7 @@ export const NewIssueModal = ({
   onClose,
   onSubmit,
 }) => {
+  const intl = useIntl();
   const [error, setError] = useState({
     isError: false,
     message: '',
@@ -39,33 +41,29 @@ export const NewIssueModal = ({
     if(!newIssue.description.length || !newIssue.price.length) {
       setError({
         isError: true,
-        message: 'Please, fill all the required fields!',
+        message: <FormattedMessage id="newIssue.error" />,
       })
     } else {
       onSubmit(newIssue);
     }
   };
-  /* useEffect(() => {
-    apiInteractor.getProblemTypes().then(data => {
-      const newData = data.map((item) => ({
-        value: item.id,
-        text: item.name,
-      }));
-      setProblems(newData);
-    });
-  }, []); */ 
 
   return (
     <div className="new-issue">
       <div className="new-issue__conteiner">
         <div className="new-issue__header">
-          <h2 className="new-issue__header-text">Add new issue</h2>
+          <h2 className="new-issue__header-text">
+            <FormattedMessage id="newIssue.issueInfo.title" />
+          </h2>
         </div>
         <div className="new-issue__main">
           <div className="new-issue__description-container">
-            <label htmlFor="description">Description<RequiredStar /></label>
+            <label htmlFor="description">
+              <FormattedMessage id="newIssue.issueInfo.description.label" />
+              <RequiredStar />
+            </label>
             <textarea
-              placeholder="Description..."
+              placeholder={intl.formatMessage({ id: 'newIssue.issueInfo.description.placeholder' })}
               className="new-issue__description form-input"
               onChange={onChangeInfo}
               name="description"
@@ -76,14 +74,14 @@ export const NewIssueModal = ({
           <Input
             type="number"
             name="price"
-            placeholder="Price..."
-            label="Price"
+            placeholder={intl.formatMessage({ id: 'newIssue.issueInfo.price.placeholder' })}
+            label={<FormattedMessage id="newIssue.issueInfo.price.label" />}
             className="new-issue__price form-input"
             onChange={onChangeInfo}
             required
           />
           <Button
-            text="Create"
+            text={<FormattedMessage id="newIssue.workerInfo.button.save" />}
             onClick={createNewIssue}
             className="new-issue__submit success"
           />
