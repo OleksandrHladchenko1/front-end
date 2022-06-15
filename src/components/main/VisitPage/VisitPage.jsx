@@ -117,7 +117,7 @@ export class VisitPage extends Component {
             onCancel={this.onCloseWarning}
             onSubmit={this.goToCarPage}
             headerText={<FormattedMessage id="areYouSure.title.noCar" />}
-            mainText={<FormattedMessage id="areYouSure.text .noCar" />}
+            mainText={<FormattedMessage id="areYouSure.text.noCar" />}
           />
         </Modal>
         <article className="visits">

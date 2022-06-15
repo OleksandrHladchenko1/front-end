@@ -169,7 +169,7 @@ export const AdminPage = () => {
           </div>
           <div className="worker-new">
             <Button
-              text="Create new worker"
+              text={<FormattedMessage id="adminPage.createWorker.button" />}
               className="worker-new__button success button"
               onClick={() => setIsCreateModalOpen(true)}
             />

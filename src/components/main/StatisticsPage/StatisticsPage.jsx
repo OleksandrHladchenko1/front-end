@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import drilldown from 'highcharts/modules/drilldown';
 import HighchartsReact from "highcharts-react-official";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Button } from "../../common/Button";
 
@@ -21,7 +21,7 @@ export const StatisticsPage = () => {
   const [drillData, setDrillData] = useState([]);
   const [isWorkloadVisible, setIsWorkloadVisible] = useState({
     isVisible: true,
-    text: 'Problems',
+    text: <FormattedMessage id="statistics.problems.button" />,
   });
   const apiInteractor = new APIInteractor();
   drilldown(Highcharts);
@@ -53,13 +53,13 @@ export const StatisticsPage = () => {
   const changeStatistics = () => {
     if(isWorkloadVisible.isVisible) {
       setIsWorkloadVisible({
-        text: 'Workload',
+        text: <FormattedMessage id="statistics.workload.button" />,
         isVisible: false,
       });
       getProblemsData();
     } else {
       setIsWorkloadVisible({
-        text: 'Problems',
+        text: <FormattedMessage id="statistics.problems.button" />,
         isVisible: true,
       });
       getWorkloadData();

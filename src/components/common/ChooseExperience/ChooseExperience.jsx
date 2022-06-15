@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { Select } from '../Select';
+import { Button } from "../Button";
 
 import { APIInteractor } from "../../../services";
 
 import './ChooseExperience.scss';
-import { Button } from "../Button";
 
 export const ChooseExperience = ({ onFinish }) => {
   const [counter, setCounter] = useState(0);
@@ -42,7 +43,9 @@ export const ChooseExperience = ({ onFinish }) => {
     <div className="experience">
       <div className="experience__container">
         <div className="experience__choose">
-          <h2 className="experience__title">Set worker's experience</h2>
+          <h2 className="experience__title">
+            <FormattedMessage id="experience.title.first" />
+          </h2>
           <div className="experience__numbers">
             <div
               className={`experience__arrow-left ${counter === 0 ? '' : 'active-left' }`}
@@ -56,20 +59,22 @@ export const ChooseExperience = ({ onFinish }) => {
           </div>
         </div>
         <div className="experience__problem">
-          <h2 className="experience__title">Set worker problem type</h2>
+          <h2 className="experience__title">
+            <FormattedMessage id="experience.title.second" />
+          </h2>
           <div className="experience__problem-container">
             <Select
               className="experience__problem-choose form-input"
               options={problems}
               onChange={(e) => setProblemId(e.target.value)}
-              label="Select worker's problem speciality"
+              label={<FormattedMessage id="experience.speciality.label" />}
             />
           </div>
         </div>
         <div className="experience__save-container">
           <Button
             className="experience__save success button"
-            text="Save"
+            text={<FormattedMessage id="experience.button.save" />}
             onClick={saveChanges}
           />
         </div>
