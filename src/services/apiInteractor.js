@@ -6,7 +6,7 @@ export class APIInteractor {
     try {
 			const result = await axios({
 				method: 'post',
-				url: 'http://localhost:8080/api/auth/login',
+				url: 'https://localhost:3443/api/auth/login',
 				data: user,
 			});
       if(result.status === 200) return result.data;
@@ -19,7 +19,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'post',
-				url: 'http://localhost:8080/api/auth/register',
+				url: 'https://localhost:3443/api/auth/register',
 				data: user,
 			});
 			if(result.status === 201) return result.data;
@@ -32,7 +32,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/users/me/${id}`,
+				url: `https://localhost:3443/api/users/me/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			if(result.status === 200) {
@@ -48,7 +48,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: 'http://localhost:8080/api/workers/getAllWorkers',
+				url: 'https://localhost:3443/api/workers/getAllWorkers',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 
@@ -64,7 +64,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'delete',
-				url: `http://localhost:8080/api/workers/deleteWorker/${id}`,
+				url: `https://localhost:3443/api/workers/deleteWorker/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -77,7 +77,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: 'http://localhost:8080/api/workers/getFullWorkerInfo',
+				url: 'https://localhost:3443/api/workers/getFullWorkerInfo',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 
@@ -93,7 +93,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/workers/getWorkerInfoById/${id}`,
+				url: `https://localhost:3443/api/workers/getWorkerInfoById/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 
@@ -109,7 +109,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/workers/getWorkerSpecialities/${id}`,
+				url: `https://localhost:3443/api/workers/getWorkerSpecialities/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 
@@ -125,7 +125,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/workers/getWorkerById/${id}`,
+				url: `https://localhost:3443/api/workers/getWorkerById/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 
@@ -142,7 +142,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/workers/getFullFreeWorkerInfo/${start.length ? start : null }/${end.length ? end : null}`,
+				url: `https://localhost:3443/api/workers/getFullFreeWorkerInfo/${start.length ? start : null }/${end.length ? end : null}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 		  return result.data.workers;
@@ -155,7 +155,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/workers/editWorker/${workerId}`,
+				url: `https://localhost:3443/api/workers/editWorker/${workerId}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data
 			});
@@ -169,7 +169,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: 'http://localhost:8080/api/speciality/getAll',
+				url: 'https://localhost:3443/api/speciality/getAll',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 		  return result.data.specialities;
@@ -182,7 +182,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: 'http://localhost:8080/api/auth/changePassword',
+				url: 'https://localhost:3443/api/auth/changePassword',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: passwords,
 			});
@@ -196,7 +196,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: 'http://localhost:8080/api/userVisits/allUserVisits',
+				url: 'https://localhost:3443/api/userVisits/allUserVisits',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			}).then((data) => data.data.visits);
 			return result;
@@ -209,7 +209,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/userVisits/allUserVisits/${body.userId}`,
+				url: `https://localhost:3443/api/userVisits/allUserVisits/${body.userId}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			}).then((data) => data.data.visits);
 			return result;
@@ -222,7 +222,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'post',
-				url: `http://localhost:8080/api/userVisits/addUserVisit/${localStorage.getItem('userId')}`,
+				url: `https://localhost:3443/api/userVisits/addUserVisit/${localStorage.getItem('userId')}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: visit,
 			});
@@ -236,7 +236,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/userVisits/getVisitById/${id}`,
+				url: `https://localhost:3443/api/userVisits/getVisitById/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -249,7 +249,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/workers/getFreeWorkersForProblem/${id}`,
+				url: `https://localhost:3443/api/workers/getFreeWorkersForProblem/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.workers;
@@ -264,7 +264,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/issue/getIssuesByVisitId/${id}/${status}`,
+				url: `https://localhost:3443/api/issue/getIssuesByVisitId/${id}/${status}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -277,10 +277,24 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/issue/getVisitIssues/${id}`,
+				url: `https://localhost:3443/api/issue/getVisitIssues/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.issues;
+		} catch (err) {
+			throw err.response.data.message;
+		}
+	};
+
+	countUserCars = async (id) => {
+		try {
+			const result = await axios({
+				method: 'get',
+				url: `https://localhost:3443/api/userCars/getCount/${id}`,
+				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+			});
+			console.log(result);
+			return result;
 		} catch (err) {
 			throw err.response.data.message;
 		}
@@ -290,7 +304,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/issue/editDependency/${id}`,
+				url: `https://localhost:3443/api/issue/editDependency/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: {
 					degree,
@@ -304,11 +318,10 @@ export class APIInteractor {
 	};
 
 	setSequence = async (data) => {
-		console.log('here set sequence');
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/issue/setSequence`,
+				url: `https://localhost:3443/api/issue/setSequence`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data,
 			});
@@ -322,7 +335,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/userVisits/setSorted/${id}`,
+				url: `https://localhost:3443/api/userVisits/setSorted/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -335,7 +348,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/issue/getSortedIssues/${id}`,
+				url: `https://localhost:3443/api/issue/getSortedIssues/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.issues;
@@ -348,7 +361,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/userVisits/getFreeVisits/${day}`,
+				url: `https://localhost:3443/api/userVisits/getFreeVisits/${day}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.visit;
@@ -361,7 +374,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'delete',
-				url: `http://localhost:8080/api/userVisits/deleteVisit/${localStorage.getItem('visitId')}`,
+				url: `https://localhost:3443/api/userVisits/deleteVisit/${localStorage.getItem('visitId')}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.visit;
@@ -374,7 +387,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'post',
-				url: 'http://localhost:8080/api/issue/addIssue',
+				url: 'https://localhost:3443/api/issue/addIssue',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: issue,
 			});
@@ -388,7 +401,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'delete',
-				url: `http://localhost:8080/api/issue/deleteIssue/${id}`,
+				url: `https://localhost:3443/api/issue/deleteIssue/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -401,7 +414,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/issue/closeIssue/${id}`,
+				url: `https://localhost:3443/api/issue/closeIssue/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -414,7 +427,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/issue/updateStartEndSpecialist/${id}`,
+				url: `https://localhost:3443/api/issue/updateStartEndSpecialist/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data
 			});
@@ -428,7 +441,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: 'http://localhost:8080/api/users/updateInfo',
+				url: 'https://localhost:3443/api/users/updateInfo',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: user,
 			});
@@ -443,7 +456,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'post',
-				url: 'http://localhost:8080/api/userCars/addUserCar',
+				url: 'https://localhost:3443/api/userCars/addUserCar',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: {
 					...car,
@@ -461,7 +474,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'get',
-				url: `http://localhost:8080/api/userCars/allUserCars/${id}`,
+				url: `https://localhost:3443/api/userCars/allUserCars/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.cars;
@@ -474,7 +487,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/userCars/editUserCar/${car.id}`,
+				url: `https://localhost:3443/api/userCars/editUserCar/${car.id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: {
 					...car,
@@ -491,7 +504,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'delete',
-				url: `http://localhost:8080/api/userCars/deleteUserCar/${id}`,
+				url: `https://localhost:3443/api/userCars/deleteUserCar/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result;
@@ -504,7 +517,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: `http://localhost:8080/api/userVisits/updateVisitStatus/${id}`,
+				url: `https://localhost:3443/api/userVisits/updateVisitStatus/${id}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: { status },
 			});
@@ -518,7 +531,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'patch',
-				url: 'http://localhost:8080/api/specialist/editSpecialist',
+				url: 'https://localhost:3443/api/specialist/editSpecialist',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: specialist,
 			});
@@ -533,7 +546,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'post',
-				url: 'http://localhost:8080/api/specialist/addSpecialist',
+				url: 'https://localhost:3443/api/specialist/addSpecialist',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: specialist,
 			});
@@ -547,7 +560,7 @@ export class APIInteractor {
 		try {
 			const result = await axios({
 				method: 'delete',
-				url: `http://localhost:8080/api/specialist/deleteSpecialist/${id_worker}/${id_speciality}`,
+				url: `https://localhost:3443/api/specialist/deleteSpecialist/${id_worker}/${id_speciality}`,
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
 			});
 			return result;
@@ -561,7 +574,7 @@ export class APIInteractor {
 		try {
 			await axios ({
 				method: 'POST',
-				url: 'http://localhost:8080/api/document/create',
+				url: 'https://localhost:3443/api/document/create',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: { state: body },
 			});
@@ -574,7 +587,7 @@ export class APIInteractor {
 		try {
 			const result = await axios ({
 				method: 'GET',
-				url: 'http://localhost:8080/api/document/fetch',
+				url: 'https://localhost:3443/api/document/fetch',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				responseType: 'blob',
 			});
@@ -588,7 +601,7 @@ export class APIInteractor {
 		try {
 			const result = await axios ({
 				method: 'GET',
-				url: 'http://localhost:8080/api/statistics/workload',
+				url: 'https://localhost:3443/api/statistics/workload',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			return result.data.workload;
@@ -601,7 +614,7 @@ export class APIInteractor {
 		try {
 			const result = await axios ({
 				method: 'GET',
-				url: 'http://localhost:8080/api/statistics/problems',
+				url: 'https://localhost:3443/api/statistics/problems',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			console.log(result.data.problems);
@@ -615,7 +628,7 @@ export class APIInteractor {
 		try {
 			const result = await axios ({
 				method: 'GET',
-				url: 'http://localhost:8080/api/issue/issueTypes',
+				url: 'https://localhost:3443/api/issue/issueTypes',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			console.log(result.data.problems);
@@ -629,7 +642,7 @@ export class APIInteractor {
 		try {
 			const result = await axios ({
 				method: 'POST',
-				url: 'http://localhost:8080/api/workers/createWorker',
+				url: 'https://localhost:3443/api/workers/createWorker',
 				headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
 				data: {
 					startStatus: localStorage.getItem('startStatus'),

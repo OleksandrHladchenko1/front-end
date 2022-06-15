@@ -148,6 +148,8 @@
   "areYouSure.text.deleteVisit": "Ви впевнені, що хочете видалити цей візит?",
   "areYouSure.title.warning": "Увага!",
   "areYouSure.text.continueSort": "Якщо ви натисните 'Так', надалі ви не зможете додавати, редагувати або видаляти проблеми",
+  "areYouSure.title.noCar": "Йой! Схоже ви не додали авто",
+  "areYouSure.text.noCar": "Якщо ви хочете створити візит, вам необхідно додати авто! Бажаєте додати?",
   "carCard.carNumber": "Номер авто",
   "carCard.engineNumber": "Номер двигуна",
   "carCard.engineType": "Тип двигуна",

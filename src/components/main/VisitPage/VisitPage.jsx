@@ -10,6 +10,7 @@ import { removeClassName, upperFirstLetter, getLastElement, } from "../../../ser
 
 import './VisitPage.scss';
 import { FormattedMessage } from "react-intl";
+import { AreYouSureModal } from "../../common/AreYouSureModal";
 
 export class VisitPage extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export class VisitPage extends Component {
       visits: [],
       filterVisits: [],
       isModalOpen: false,
+      isWarningOpen: false,
     }
     
     this.startStatus = localStorage.getItem('startStatus');
@@ -74,7 +76,13 @@ export class VisitPage extends Component {
   }
 
   openModal = () => {
-    this.setState({ isModalOpen: true });
+    this.apiInteractor.countUserCars(localStorage.getItem('userId'))
+      .then(() => {
+        this.setState({ isModalOpen: true });
+      })
+      .catch(() => {
+        this.setState({ isWarningOpen: true });
+      });
   }
 
   closeModal = () => {
@@ -88,6 +96,14 @@ export class VisitPage extends Component {
     });
   }
 
+  onCloseWarning = () => {
+    this.setState({ isWarningOpen: false });
+  }
+
+  goToCarPage = () => {
+    document.location.pathname = '/car';
+  }
+
   render() {
     const filterVisits = <SearchResultList result={this.state.filterVisits} onClick={this.showDetails} />
 
@@ -95,6 +111,14 @@ export class VisitPage extends Component {
       <main>
         <Modal isModalOpen={this.state.isModalOpen}>
           <NewVisit onClose={this.closeModal} onSubmit={this.onSubmit} />
+        </Modal>
+        <Modal isModalOpen={this.state.isWarningOpen}>
+          <AreYouSureModal
+            onCancel={this.onCloseWarning}
+            onSubmit={this.goToCarPage}
+            headerText={<FormattedMessage id="areYouSure.title.noCar" />}
+            mainText={<FormattedMessage id="areYouSure.text .noCar" />}
+          />
         </Modal>
         <article className="visits">
           <div className="visits__my">

@@ -148,6 +148,8 @@
   "areYouSure.text.deleteVisit": "Are you sure to delete this visit?",
   "areYouSure.title.warning": "Warning!",
   "areYouSure.text.continueSort": "If you click 'Yes', you won't be able to add, edit or delete issues",
+  "areYouSure.title.noCar": "Oops! Looks like you don't have a car",
+  "areYouSure.text.noCar": "If you want to cerate new visit, you should add a car! Would you like?",
   "carCard.carNumber": "Car number",
   "carCard.engineNumber": "Engine number",
   "carCard.engineType": "Engine type",
